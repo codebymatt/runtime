@@ -5,10 +5,13 @@ RunTime lets you record how far and fast you run, and then helps you track your 
 beautiful visualisations. The word *beautiful* is key here, otherwise I'll never use it.
 
 ### Development Environment Setup
-Coming soon to a README near you
+Coming soon to a README near you.
 
 ### Build/Test/Run
 Also coming soon to a README near you. This one, in fact.
+
+### Branching Strategy
+Look, the README isn't finished yet, ok?
 
 Further, more specific documentation can be found in the relevant subfolders.
 
@@ -34,5 +37,5 @@ It's my hope that working in smaller bursts will allow for this; sticking to YAG
 encouraged.
 
 If I really want one, I'll build an iOS app to plug into the backend. If my Android using friends
-really want one, I'll consider build an Android App for them if they ask nicely. Or my parents. They
-deserve all the nice things.
+really want one, I'll consider building an Android App for them if they ask nicely. Or my parents.
+They deserve all the nice things.

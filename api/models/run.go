@@ -10,3 +10,5 @@ type Run struct {
 	TimeTaken int       `json:"time_taken"`
 	Distance  int       `json:"distance"`
 }
+
+type Runs []Run

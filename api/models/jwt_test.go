@@ -44,3 +44,9 @@ func TestJWTIsDecodedProperly(t *testing.T) {
 func TestJWTIsEncodedProperly(t *testing.T) {
 
 }
+
+func TestReturnUserForAGivenJWT(t *testing.T) {
+	// Generate/declare JWT
+	// Get claim
+	// Retrieve models from email
+}

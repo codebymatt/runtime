@@ -1,3 +1,5 @@
+--  Presupposes database has already been created
+
 CREATE TABLE users (
     id          SERIAL UNIQUE NOT NULL,
     email       TEXT PRIMARY KEY,

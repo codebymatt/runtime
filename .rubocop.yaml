@@ -1,0 +1,5 @@
+Layout/IndentationWidth:
+  Width: 4
+  Enabled: true
+
+Metrics/LineLength: 100

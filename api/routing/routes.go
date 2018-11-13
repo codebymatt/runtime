@@ -13,6 +13,6 @@ var routes = Routes{
 		"GET",
 		"/",
 		"Index",
-		handlers.Index,
+		handlers.IndexHandler,
 	},
 }

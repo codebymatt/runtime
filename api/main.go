@@ -1,20 +1,20 @@
 package main
 
 import (
-	"database/sql"
+	"fmt"
 	"log"
-	"runtime/api/db"
+	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
-const SQL_DRIVER = "postgres"
-
 func main() {
-	var err error
+	r := mux.NewRouter()
 
-	config := db.GetDBConfig()
-	db.Db, err = sql.Open(SQL_DRIVER, config)
+	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, "%s", "Everything's fine!")
+	})
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	log.Fatal(http.ListenAndServe(":8080", r))
 }

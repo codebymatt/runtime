@@ -5,3 +5,6 @@ Layout/IndentationWidth:
 Metrics/LineLength:
   Enabled: true
   Max: 100
+
+Style/NumericPredicate:
+  Enabled: false

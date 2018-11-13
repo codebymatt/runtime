@@ -6,6 +6,11 @@ import (
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(200)
-	fmt.Fprintf(w, "{status: 200, message: Everything's fine!}")
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "application/json")
+
+	message := "Everything's fine!"
+	responseBody := createJSONResponse(http.StatusOK, message)
+
+	fmt.Fprintf(w, responseBody)
 }

@@ -1,18 +1,12 @@
 package routing
 
 import (
-	"net/http"
 	"runtime/api/handlers"
+	"runtime/api/models"
 )
 
-type Route struct {
-	Method  string
-	Path    string
-	Name    string
-	Handler http.HandlerFunc
-}
-
-type Routes []Route
+type Route = models.Route
+type Routes = models.Routes
 
 var routes = Routes{
 	{

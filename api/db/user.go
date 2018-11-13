@@ -1,3 +1,4 @@
+// NOTE: functionality here is tested in the integrations_test folder
 package db
 
 import "runtime/api/models"

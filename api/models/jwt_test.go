@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"runtime/api/utils"
 	"testing"
 	"time"
@@ -63,7 +62,7 @@ func TestJWTIsDecodedProperly(t *testing.T) {
 
 func TestJWTIsEncodedProperly(t *testing.T) {
 	email := "mgscott@dundermifflin.com"
-	token := createNewJWT(email)
+	token, _ := createNewJWT(email)
 
 	decoded, err := token.Decode()
 	if err != nil {
@@ -74,12 +73,9 @@ func TestJWTIsEncodedProperly(t *testing.T) {
 	validTime := time.Now().UTC().Unix()
 
 	utils.AssertStringsMatch(t, decoded.Email, email)
-	// Panic when both times used
-	fmt.Printf("%d", decodedTime)
-	fmt.Printf("%d", validTime)
-	// if decodedTime < validTime {
-	// 	// 	t.Errorf("Expected expiry time to be before %v, got %v instead", validTime, decodedTime)
-	// }
+	if decodedTime < validTime {
+		t.Errorf("Expected expiry time to be before %v, got %v instead", validTime, decodedTime)
+	}
 }
 
 func TestReturnUserForAGivenJWT(t *testing.T) {

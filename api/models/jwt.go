@@ -2,6 +2,7 @@ package models
 
 import (
 	"os"
+	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
 )
@@ -27,8 +28,17 @@ func (token JWTToken) Decode() (Claims, error) {
 	}
 }
 
-func createNewJWT(email string) JWTToken {
-	return ""
+func createNewJWT(email string) (JWTToken, error) {
+	claims := Claims{
+		Email: email,
+		StandardClaims: jwt.StandardClaims{
+			ExpiresAt: time.Now().Add(time.Hour * 24).Unix(),
+		},
+	}
+	token := jwt.NewWithClaims(JWT_ALG, claims)
+	signedToken, err := token.SignedString(JWT_SECRET)
+
+	return JWTToken(signedToken), err
 }
 
 func keyFunc(*jwt.Token) (interface{}, error) {

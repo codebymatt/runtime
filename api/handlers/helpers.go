@@ -2,17 +2,16 @@ package handlers
 
 import (
 	"encoding/json"
-	"log"
 	"runtime/api/models"
 )
 
-func createJSONResponse(status int, message string) string {
+var InternalFailureMessage = `{"Status":500,"Message":"Something went wrong..."}`
+
+func createJSONResponse(status int, message string) (string, error) {
 	body := models.JSONResponse{Status: status, Message: message}
 	jsonBody, err := json.Marshal(&body)
 
-	if err != nil {
-		// TODO: Proper logging
-		log.Fatal(err)
-	}
-	return string(jsonBody)
+	return string(jsonBody), err
 }
+
+// func ValidateRequest()

@@ -38,48 +38,29 @@ func TestInvalidClaimIsInvalidated(t *testing.T) {
 	}
 }
 
-func TestJWTIsDecodedProperly(t *testing.T) {
-	token := JWTToken(
-		"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbWFpbCI6Im1nc2NvdHRAZHVuZGVybWlmZmxp" +
-			"bi5jb20iLCJleHAiOjQxMTgzNzcyNjB9.BuVCv859HFauWddBnyYm7N2gFx-DqkatnQI_xM-u-4o",
-	)
-	decoded, err := token.Decode()
-	if err != nil {
-		t.Errorf("Received error while parsing token: %v", err)
-	}
-
-	decodedExpiry := decoded.ExpiresAt
-	decodedEmail := decoded.Email
-
-	expectedEmail := "mgscott@dundermifflin.com"
-	expectedExpiry := time.Date(2100, 7, 4, 9, 41, 0, 0, time.UTC).Unix()
-
-	utils.AssertStringsMatch(t, expectedEmail, decodedEmail)
-	if decodedExpiry != expectedExpiry {
-		t.Errorf("Expected expiry time to be before %v, got %v instead", expectedExpiry, decodedExpiry)
-	}
-}
-
 func TestJWTIsEncodedProperly(t *testing.T) {
 	email := "mgscott@dundermifflin.com"
 	token, _ := createNewJWT(email)
 
-	decoded, err := token.Decode()
+	parsedToken, err := jwt.ParseWithClaims(token, &Claims{}, keyFunc)
 	if err != nil {
 		t.Errorf("Received error while parsing token: %v", err)
 	}
 
-	decodedTime := decoded.ExpiresAt
-	validTime := time.Now().UTC().Unix()
+	claims, ok := parsedToken.Claims.(*Claims)
+	if !ok || !parsedToken.Valid {
+		t.Errorf("Invalid token")
+	}
 
-	utils.AssertStringsMatch(t, decoded.Email, email)
+	decodedTime := claims.ExpiresAt
+	validTime := time.Now().Add(time.Hour).UTC().Unix()
+
+	utils.AssertStringsMatch(t, claims.Email, email)
 	if decodedTime < validTime {
-		t.Errorf("Expected expiry time to be before %v, got %v instead", validTime, decodedTime)
+		t.Errorf("Expected expiry time to be after %v, got %v instead", validTime, decodedTime)
 	}
 }
 
-func TestReturnUserForAGivenJWT(t *testing.T) {
-	// Generate/declare JWT
-	// Get claim
-	// Retrieve models from email
+func TestJWTExpiresInADay(t *testing.T) {
+	t.Fail()
 }

@@ -21,6 +21,6 @@ func CheckStatusAndContentTypeOk(t *testing.T, rec *httptest.ResponseRecorder) {
 
 func AssertStringsMatch(t *testing.T, expected, actual string) {
 	if expected != actual {
-		t.Errorf("Received wrong body \nwanted: \n\t%v \ngot: \n\t%v", expected, actual)
+		t.Errorf("Received incorrect data \nwanted: \n\t%v \ngot: \n\t%v", expected, actual)
 	}
 }

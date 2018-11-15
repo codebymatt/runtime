@@ -28,6 +28,6 @@ func createNewJWT(email string) (string, error) {
 	return signedToken, err
 }
 
-func keyFunc(*jwt.Token) (interface{}, error) {
+func JWTKeyFunc(*jwt.Token) (interface{}, error) {
 	return JWT_SECRET, nil
 }

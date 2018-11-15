@@ -42,7 +42,7 @@ func TestJWTIsEncodedProperly(t *testing.T) {
 	email := "mgscott@dundermifflin.com"
 	token, _ := createNewJWT(email)
 
-	parsedToken, err := jwt.ParseWithClaims(token, &Claims{}, keyFunc)
+	parsedToken, err := jwt.ParseWithClaims(token, &Claims{}, JWTKeyFunc)
 	if err != nil {
 		t.Errorf("Received error while parsing token: %v", err)
 	}

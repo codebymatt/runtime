@@ -6,6 +6,7 @@ import (
 )
 
 var InternalFailureMessage = `{"Status":500,"Message":"Something went wrong..."}`
+var ResourceNotFoundMessage = `{"Status":404,"Message":"Resource not found."}`
 
 func createJSONResponse(status int, message string) (string, error) {
 	body := models.JSONResponse{Status: status, Message: message}
@@ -13,5 +14,3 @@ func createJSONResponse(status int, message string) (string, error) {
 
 	return string(jsonBody), err
 }
-
-// func ValidateRequest()

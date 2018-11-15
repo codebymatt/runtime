@@ -7,6 +7,8 @@ import (
 	"testing"
 )
 
+var IndexOkMessage = `{"Status":200,"Message":"Everything's fine!"}`
+
 func TestIndexHandler(t *testing.T) {
 	req, err := http.NewRequest("GET", "/", nil)
 	if err != nil {
@@ -17,7 +19,7 @@ func TestIndexHandler(t *testing.T) {
 	handler := http.HandlerFunc(IndexHandler)
 	handler.ServeHTTP(rec, req)
 
-	expectedBody := `{"Status":200,"Message":"Everything's fine!"}`
+	expectedBody := IndexOkMessage
 
 	utils.CheckStatusAndContentTypeOk(t, rec)
 	utils.AssertStringsMatch(t, expectedBody, rec.Body.String())

@@ -17,11 +17,3 @@ func TestJSONResponseIsCreated(t *testing.T) {
 		t.Errorf("Did not jsonify: expected %v but got %v", expectedResponse, actualResponse)
 	}
 }
-
-func TestRequestWithValidJWTIsAuthorized(t *testing.T) {
-	t.Fail()
-}
-
-func TestRequestWithInvalidJWTIsUnauthorized(t *testing.T) {
-	t.Fail()
-}

@@ -2,6 +2,9 @@
 // normally operate on authorized handlers. That
 // use case should be covered in integration tests
 
+// Integration tests should ensure that the request context
+// is being properly set. I'm currently not sure how to
+// test the context externally to the actual in which it's set.
 package authorization
 
 import (
@@ -13,7 +16,7 @@ import (
 )
 
 func TestRequestWithValidJWTIsAuthorized(t *testing.T) {
-	req, _ := http.NewRequest("POST", "/users", nil)
+	req, _ := http.NewRequest("GET", "/", nil)
 
 	bearer := "Bearer " + validTestToken
 
@@ -32,12 +35,8 @@ func TestRequestWithValidJWTIsAuthorized(t *testing.T) {
 	utils.CheckStatusAndContentTypeOk(t, rec)
 }
 
-func TestRequestWithValidJWTHasClaimsInRequestContext(t *testing.T) {
-	t.Fail()
-}
-
 func TestRequestWithInvalidJWTIsUnauthorized(t *testing.T) {
-	req, _ := http.NewRequest("POST", "/users", nil)
+	req, _ := http.NewRequest("GET", "/", nil)
 
 	bearer := "Bearer " + invalidExpiredToken
 
@@ -48,17 +47,13 @@ func TestRequestWithInvalidJWTIsUnauthorized(t *testing.T) {
 	handler := http.HandlerFunc(AuthorizeRequest(handlers.IndexHandler))
 	handler.ServeHTTP(rec, req)
 
-	expectedBody := handlers.ResourceNotFoundMessage
-	expectedHeader := http.StatusNotFound
+	expectedBody := handlers.UserNotAuthorizedMessage
+	expectedHeader := http.StatusUnauthorized
 
 	utils.AssertStringsMatch(t, expectedBody, rec.Body.String())
 	if rec.Code != expectedHeader {
 		t.Errorf("Expected status %v, got %v instead", expectedHeader, rec.Code)
 	}
-}
-
-func TestRequestWithInvalidJWTHasNoClaimsInRequestContext(t *testing.T) {
-	t.Fail()
 }
 
 func TestJWTIsRetrievedFromHeader(t *testing.T) {

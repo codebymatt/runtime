@@ -1,6 +1,7 @@
 package authorization
 
 import (
+	"context"
 	"errors"
 	"net/http"
 	"runtime/api/handlers"
@@ -12,18 +13,18 @@ func AuthorizeRequest(next http.HandlerFunc) http.HandlerFunc {
 		jwt, err := getJWTFromRequestHeader(r)
 		if err != nil {
 			// TODO: Log `Missing JWT on authorized endpoint`
-			handlers.Handle404(w, r)
+			handlers.HandleUnauthorizedRequest(w, r)
 			return
 		}
 		// Decode JWT
-		valid, _ := GetClaimsIfTokenIsValid(jwt)
+		valid, claims := GetClaimsIfTokenIsValid(jwt)
 		if !valid {
 			// TODO: Log `invalid JWT`
-			handlers.Handle404(w, r)
+			handlers.HandleUnauthorizedRequest(w, r)
 			return
 		}
-		// ctx := context.WithValue(r.Context(), "userEmail", claims.Email)
-		// next.ServeHTTP(w, r.WithContext(ctx))
+		ctx := context.WithValue(r.Context(), "userEmail", claims.Email)
+		next.ServeHTTP(w, r.WithContext(ctx))
 	}
 }
 

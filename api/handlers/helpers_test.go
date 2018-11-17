@@ -23,9 +23,14 @@ func TestJSONResponseIsCreated(t *testing.T) {
 	}
 }
 
-func Test404MessageIsCreated(t *testing.T) {
+func Test404MessageIsCorrect(t *testing.T) {
 	expectedMessage := `{"Status":404,"Message":"Resource not found."}`
 	utils.AssertStringsMatch(t, expectedMessage, ResourceNotFoundMessage)
+}
+
+func TestUserNotAuthorizedMessageIsCorrect(t *testing.T) {
+	expectedMessage := `{"Status":401,"Message":"User not authorized."}`
+	utils.AssertStringsMatch(t, expectedMessage, UserNotAuthorizedMessage)
 }
 
 func TestReturn404MethodReturnsAsExpected(t *testing.T) {
@@ -41,6 +46,29 @@ func TestReturn404MethodReturnsAsExpected(t *testing.T) {
 
 	if status := rec.Code; status != http.StatusNotFound {
 		t.Errorf("Received wrong status code: wanted %v, got %v", http.StatusNotFound, status)
+	}
+
+	if contentType := rec.Header().Get("Content-Type"); contentType != "application/json" {
+		t.Errorf(
+			"Received wrong content type: wanted %v but got %v",
+			"application/json", contentType,
+		)
+	}
+}
+
+func TestUnauthorizedRequestIsHandledCorrectly(t *testing.T) {
+	req, _ := http.NewRequest("GET", "/", nil)
+
+	rec := httptest.NewRecorder()
+	handler := http.HandlerFunc(HandleUnauthorizedRequest)
+	handler.ServeHTTP(rec, req)
+
+	expectedBody := UserNotAuthorizedMessage
+
+	utils.AssertStringsMatch(t, expectedBody, rec.Body.String())
+
+	if status := rec.Code; status != http.StatusUnauthorized {
+		t.Errorf("Received wrong status code: wanted %v, got %v", http.StatusUnauthorized, status)
 	}
 
 	if contentType := rec.Header().Get("Content-Type"); contentType != "application/json" {

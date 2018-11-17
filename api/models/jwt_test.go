@@ -61,6 +61,19 @@ func TestJWTIsEncodedProperly(t *testing.T) {
 	}
 }
 
-func TestJWTExpiresInADay(t *testing.T) {
-	t.Fail()
+func TestJWTExpiresAfterADay(t *testing.T) {
+	token, _ := createNewJWT("mgscott@dundermifflin.com")
+	expectedExpiry := time.Now().Add(time.Hour * 24).Unix()
+
+	parsedToken, _ := jwt.ParseWithClaims(token, &Claims{}, JWTKeyFunc)
+	claims, _ := parsedToken.Claims.(*Claims)
+
+	decodedTime := claims.ExpiresAt
+	decodedTimeAsTimeType := time.Unix(decodedTime, 0)
+	decodedTimeTimestamp := decodedTimeAsTimeType.Format(time.RFC3339)
+
+	if decodedTime < expectedExpiry-30 || decodedTime > expectedExpiry+30 {
+		t.Errorf("Expected expiry time to be a day from now, got %v instead", decodedTimeTimestamp)
+	}
+
 }

@@ -7,8 +7,6 @@ import (
 	"testing"
 )
 
-var IndexOkMessage = `{"Status":200,"Message":"Everything's fine!"}`
-
 func TestIndexHandler(t *testing.T) {
 	req, err := http.NewRequest("GET", "/", nil)
 	if err != nil {

@@ -1,5 +1,3 @@
 package models
 
-// CreateUser
-
 // RetrieveUser

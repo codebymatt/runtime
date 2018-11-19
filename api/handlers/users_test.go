@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func TestUserCreationHandler(t *testing.T) {
+func TestShouldCreateUser(t *testing.T) {
 	data := `{
 			"user": {
 				"first_name":"Dwight,

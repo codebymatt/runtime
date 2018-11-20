@@ -10,6 +10,8 @@ import (
 )
 
 var db *sql.DB
+var BCRYPT_SECRET = os.Getenv("RUNTIME_BCRYPT_SECRET")
+var BCRYPT_COST = os.Getenv("RUNTIME_BCRYPT_COST")
 
 type Config struct {
 	HOST     string

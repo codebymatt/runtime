@@ -36,6 +36,4 @@ shipped (my eternal struggle. Not that I write elegant code. Or ship things for 
 It's my hope that working in smaller bursts will allow for this; sticking to YAGNI is
 encouraged.
 
-If I really want one, I'll build an iOS app to plug into the backend. If my Android using friends
-really want one, I'll consider building an Android App for them if they ask nicely. Or my parents.
-They deserve all the nice things.
+If I really want one, I'll build an iOS app to plug into the backend.

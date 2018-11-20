@@ -1,6 +1,7 @@
 package db
 
 import (
+	"runtime/api/models"
 	"testing"
 	"time"
 
@@ -14,12 +15,13 @@ func TestShouldCreateUser(t *testing.T) {
 	}
 	defer db.Close()
 
+	columns := []string{"id"}
 	mock.ExpectBegin()
-	mock.ExpectExec("^INSERT INTO users (.+) VALUES (.+) RETURNING id$").
-		WillReturnResult(sqlmock.NewResult(1, 1))
+	mock.ExpectQuery("^INSERT INTO users (.+) VALUES (.+) RETURNING id$").
+		WillReturnRows(sqlmock.NewRows(columns).AddRow(1))
 	mock.ExpectCommit()
 
-	user := User{
+	user := models.User{
 		Email:      "mgscott@dundermifflin.com",
 		FirstName:  "Michael",
 		LastName:   "Scott",
@@ -27,9 +29,9 @@ func TestShouldCreateUser(t *testing.T) {
 		DateJoined: time.Now(),
 	}
 
-	id, err := CreateUser(user)
-	if err != nil || id != 1 {
-		t.Errorf("User could not be created: %s", err)
+	err = CreateUser(db, &user)
+	if err != nil || user.Id != 1 {
+		t.Errorf("User could not be created: %v", err)
 	}
 
 	if err = mock.ExpectationsWereMet(); err != nil {

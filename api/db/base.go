@@ -9,7 +9,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-var DB *sql.DB
+var db *sql.DB
 
 type Config struct {
 	HOST     string
@@ -17,27 +17,6 @@ type Config struct {
 	USER     string
 	PASSWORD string
 	DBNAME   string
-}
-
-func init() {
-	DB, err := createNewDB()
-	if err != nil {
-		log.Fatalf("Could not create database connection: %s", err)
-	}
-}
-
-type dbStore struct {
-	db *sql.DB
-}
-
-func GetDBConfig() string {
-	cfg := createConfigFromEnvironment()
-
-	cfgString := fmt.Sprintf(
-		"user=%s password=%s dbname=%s host=%s port=%s sslmode=disable",
-		cfg.USER, cfg.PASSWORD, cfg.DBNAME, cfg.HOST, cfg.PORT)
-
-	return cfgString
 }
 
 func createConfigFromEnvironment() Config {
@@ -50,23 +29,29 @@ func createConfigFromEnvironment() Config {
 	}
 }
 
-type PgDB struct {
-	Db  *sql.DB
-	cfg Config
+func createConnectionString() string {
+	cfg := createConfigFromEnvironment()
+	connString := fmt.Sprintf(
+		connectionStringTemplate,
+		cfg.USER,
+		cfg.PASSWORD,
+		cfg.DBNAME,
+		cfg.HOST,
+		cfg.PORT,
+	)
+	return connString
 }
 
-func createNewDB() (*sql.DB, error) {
-	db, err := sql.Open("postgres", GetDBConfig())
+var connectionStringTemplate = "user=%s password=%s dbname=%s host=%s port=%s sslmode=disable"
 
+func InitDB() {
+	connectionString := createConnectionString()
+	db, err := sql.Open("postgres", connectionString)
 	if err != nil {
-		// TODO: LOG ERRORS
-		return db, err
+		log.Panic(err)
 	}
 
-	if err = db.Ping(); err != nil {
-		// TODO: LOG ERRORS
-		return db, err
+	if err := db.Ping(); err != nil {
+		log.Panic(err)
 	}
-
-	return db, err
 }

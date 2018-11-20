@@ -1,25 +1,34 @@
 package main
 
 import (
-	"fmt"
-	"runtime/api/models"
-
-	jwt "github.com/dgrijalva/jwt-go"
+	"database/sql"
+	"log"
+	"net/http"
+	"runtime/api/db"
+	"runtime/api/routing"
 )
 
 func main() {
-	// r := routing.NewRouter()
 
-	// log.Fatal(http.ListenAndServe(":8080", r))
+	DB := initDb()
+	defer DB.Close()
 
-	claims := models.Claims{
-		Email: "mgscott@dundermifflin.com",
-		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: 0,
-		},
+	if err := DB.Ping(); err != nil {
+		log.Panic(err)
 	}
-	token := jwt.NewWithClaims(models.JWT_ALG, claims)
-	signedToken, _ := token.SignedString(models.JWT_SECRET)
 
-	fmt.Println(signedToken)
+	r := routing.NewRouter()
+
+	log.Fatal(http.ListenAndServe(":8080", r))
+}
+
+func initDb() *sql.DB {
+	connectionString := db.CreateConnectionString()
+	DB := db.DB
+	DB, err := sql.Open("postgres", connectionString)
+
+	if err != nil {
+		log.Panic(err)
+	}
+	return DB
 }

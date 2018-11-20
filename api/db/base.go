@@ -3,15 +3,15 @@ package db
 import (
 	"database/sql"
 	"fmt"
-	"log"
 	"os"
 
 	_ "github.com/lib/pq"
 )
 
-var db *sql.DB
+var DB *sql.DB
 var BCRYPT_SECRET = os.Getenv("RUNTIME_BCRYPT_SECRET")
 var BCRYPT_COST = os.Getenv("RUNTIME_BCRYPT_COST")
+var connectionStringTemplate = "user=%s password=%s dbname=%s host=%s port=%s sslmode=disable"
 
 type Config struct {
 	HOST     string
@@ -31,7 +31,7 @@ func createConfigFromEnvironment() Config {
 	}
 }
 
-func createConnectionString() string {
+func CreateConnectionString() string {
 	cfg := createConfigFromEnvironment()
 	connString := fmt.Sprintf(
 		connectionStringTemplate,
@@ -42,18 +42,4 @@ func createConnectionString() string {
 		cfg.PORT,
 	)
 	return connString
-}
-
-var connectionStringTemplate = "user=%s password=%s dbname=%s host=%s port=%s sslmode=disable"
-
-func InitDB() {
-	connectionString := createConnectionString()
-	db, err := sql.Open("postgres", connectionString)
-	if err != nil {
-		log.Panic(err)
-	}
-
-	if err := db.Ping(); err != nil {
-		log.Panic(err)
-	}
 }

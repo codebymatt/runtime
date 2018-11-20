@@ -5,7 +5,9 @@ import (
 	"database/sql"
 	"fmt"
 	"runtime/api/models"
+	"strings"
 	"time"
+	"unicode/utf8"
 )
 
 var createUserStatement = `
@@ -17,6 +19,10 @@ var TIME_FORMAT = time.RFC3339
 
 func CreateUser(db *sql.DB, u *models.User) error {
 	formattedTime := u.DateJoined.Format(TIME_FORMAT)
+	err := validateUserData(*u)
+	if err != nil {
+		return fmt.Errorf("User data was invalid")
+	}
 
 	tx, err := db.Begin()
 	if err != nil {
@@ -47,4 +53,29 @@ func CreateUser(db *sql.DB, u *models.User) error {
 		// TODO: Log error
 	}
 	return err
+}
+
+func validateUserData(u models.User) error {
+	if !validEmail(u.Email) {
+		return fmt.Errorf("Invalid email")
+	}
+
+	if !validPassword(u.Password) {
+		return fmt.Errorf("Invalid password")
+	}
+	return nil
+}
+
+func validEmail(email string) bool {
+	if email == "" || !strings.ContainsRune(email, '@') {
+		return false
+	}
+	return true
+}
+
+func validPassword(password string) bool {
+	if password == "" || utf8.RuneCountInString(password) > 72 {
+		return false
+	}
+	return true
 }

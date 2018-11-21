@@ -25,7 +25,7 @@ func TestShouldCreateUser(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Content-Type", REQUIRED_CONTENT_TYPE)
 	rec := httptest.NewRecorder()
 	handler := http.HandlerFunc(CreateUserHandler)
 

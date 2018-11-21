@@ -83,3 +83,23 @@ func TestErrorShouldBeThrownIfJWTIsEmpty(t *testing.T) {
 		t.Errorf("Expected empty bearer token to throw err, but got %v", jwt)
 	}
 }
+
+func TestRequestThatsNotJSONShouldBeRejected(t *testing.T) {
+	req, _ := http.NewRequest("GET", "/", nil)
+
+	bearer := "Bearer " + validTestToken
+
+	req.Header.Set("Content-Type", handlers.REQUIRED_CONTENT_TYPE)
+	req.Header.Set("Authorization", bearer)
+	rec := httptest.NewRecorder()
+
+	indexHandler := http.HandlerFunc(handlers.IndexHandler)
+	handler := http.HandlerFunc(CheckContentType(AuthorizeRequest(indexHandler)))
+
+	handler.ServeHTTP(rec, req)
+
+	expectedBody := handlers.IndexOkMessage
+
+	utils.AssertStringsMatch(t, expectedBody, rec.Body.String())
+	utils.CheckStatusAndContentTypeOk(t, rec)
+}

@@ -9,8 +9,11 @@ import (
 
 var IndexOkMessage = `{"Status":200,"Message":"Everything's fine!"}`
 var InternalFailureMessage = `{"Status":500,"Message":"Something went wrong..."}`
-var ResourceNotFoundMessage = `{"Status":404,"Message":"Resource not found."}`
-var UserNotAuthorizedMessage = `{"Status":401,"Message":"User not authorized."}`
+var ResourceNotFoundMessage = `{"Status":404,"Message":"resource_not_found"}`
+var UserNotAuthorizedMessage = `{"Status":401,"Message":"invalid_session"}`
+var UnacceptedMediaTypeMessage = `{"Status":415,"Message":"invalid_content_type"}`
+
+var REQUIRED_CONTENT_TYPE = "application/json"
 
 func createJSONResponse(status int, message string) (string, error) {
 	body := models.JSONResponse{Status: status, Message: message}
@@ -20,9 +23,9 @@ func createJSONResponse(status int, message string) (string, error) {
 }
 
 func Handle404(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", REQUIRED_CONTENT_TYPE)
 
-	message := "Resource not found."
+	message := "resource_not_found"
 	responseBody, err := createJSONResponse(http.StatusNotFound, message)
 
 	if err != nil {
@@ -36,9 +39,9 @@ func Handle404(w http.ResponseWriter, r *http.Request) {
 }
 
 func HandleUnauthorizedRequest(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", REQUIRED_CONTENT_TYPE)
 
-	message := "User not authorized."
+	message := "invalid_session"
 	responseBody, err := createJSONResponse(http.StatusUnauthorized, message)
 
 	if err != nil {

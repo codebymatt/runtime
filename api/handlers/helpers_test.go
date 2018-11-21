@@ -24,12 +24,12 @@ func TestJSONResponseIsCreated(t *testing.T) {
 }
 
 func Test404MessageIsCorrect(t *testing.T) {
-	expectedMessage := `{"Status":404,"Message":"Resource not found."}`
+	expectedMessage := `{"Status":404,"Message":"resource_not_found"}`
 	utils.AssertStringsMatch(t, expectedMessage, ResourceNotFoundMessage)
 }
 
 func TestUserNotAuthorizedMessageIsCorrect(t *testing.T) {
-	expectedMessage := `{"Status":401,"Message":"User not authorized."}`
+	expectedMessage := `{"Status":401,"Message":"invalid_session"}`
 	utils.AssertStringsMatch(t, expectedMessage, UserNotAuthorizedMessage)
 }
 

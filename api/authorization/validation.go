@@ -36,3 +36,14 @@ func getJWTFromRequestHeader(req *http.Request) (string, error) {
 	}
 	return token, nil
 }
+
+func CheckContentType(next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		contentType := r.Header.Get("Content-Type")
+		if contentType != handlers.REQUIRED_CONTENT_TYPE {
+			handlers.HandleInvalidContentType(w, r)
+			return
+		}
+		next.ServeHTTP(w, r)
+	}
+}

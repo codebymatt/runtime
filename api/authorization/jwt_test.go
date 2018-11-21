@@ -6,21 +6,8 @@ import (
 	"time"
 )
 
-// Email: 'mgscott@dundermifflin.com'
-// Expiry: time.Date(2100, 7, 4, 9, 41, 0, 0, time.UTC).Unix()
-var validTestToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbWFpbCI6Im1nc2NvdHRAZHVuZGVybWlmZ" +
-	"mxpbi5jb20iLCJleHAiOjQxMTgzNzcyNjB9.BuVCv859HFauWddBnyYm7N2gFx-DqkatnQI_xM-u-4o"
-
-// ExpiresAt is Unix(0)
-var invalidExpiredToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbWFpbCI6Im1nc2NvdHRAZHVuZGVy" +
-	"bWlmZmxpbi5jb20ifQ.k4wBjS9OrIkeOL2JB91zQdYGa8Wpa4B8S53bzKE8GvY"
-
-// Signature is invalid
-var invalidSignedToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbWFpbCI6Im1nc2NvdHRAZHVuZGVyb" +
-	"WlmZmxpbi5jb20iLCJleHAiOjQxMTgzNzcyNjB9.wellthisgotchanged"
-
 func TestValidJWTsAreAuthorized(t *testing.T) {
-	valid, _ := GetClaimsIfTokenIsValid(validTestToken)
+	valid, _ := GetClaimsIfTokenIsValid(utils.ValidTestToken)
 
 	if !valid {
 		t.Errorf("Token should be valid, but isn't")
@@ -28,7 +15,7 @@ func TestValidJWTsAreAuthorized(t *testing.T) {
 }
 
 func TestInvalidJWTsAreNotAuthorized(t *testing.T) {
-	valid, _ := GetClaimsIfTokenIsValid(invalidSignedToken)
+	valid, _ := GetClaimsIfTokenIsValid(utils.InvalidSignedToken)
 
 	if valid {
 		t.Errorf("Token shouldn't be valid, but is")
@@ -36,7 +23,7 @@ func TestInvalidJWTsAreNotAuthorized(t *testing.T) {
 }
 
 func TestExpiredJWTsAreNotAuthorized(t *testing.T) {
-	valid, _ := GetClaimsIfTokenIsValid(invalidExpiredToken)
+	valid, _ := GetClaimsIfTokenIsValid(utils.InvalidExpiredToken)
 
 	if valid {
 		t.Errorf("Token shouldn't be valid, but is")
@@ -44,7 +31,7 @@ func TestExpiredJWTsAreNotAuthorized(t *testing.T) {
 }
 
 func TestJWTClaimsAreDecodedCorrectly(t *testing.T) {
-	_, claims := GetClaimsIfTokenIsValid(validTestToken)
+	_, claims := GetClaimsIfTokenIsValid(utils.ValidTestToken)
 
 	expectedEmail := "mgscott@dundermifflin.com"
 	expectedExpiry := time.Date(2100, 7, 4, 9, 41, 0, 0, time.UTC).Unix()

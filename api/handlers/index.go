@@ -6,7 +6,7 @@ import (
 )
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", REQUIRED_CONTENT_TYPE)
+	w.Header().Set("Content-Type", API_CONTENT_TYPE)
 
 	message := "Everything's fine!"
 	responseBody, err := createJSONResponse(http.StatusOK, message)

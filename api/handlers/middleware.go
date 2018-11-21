@@ -1,11 +1,9 @@
-package authorization
+package handlers
 
 import (
 	"context"
-	"errors"
 	"net/http"
-	"runtime/api/handlers"
-	"strings"
+	"runtime/api/authorization"
 )
 
 func AuthorizeRequest(next http.HandlerFunc) http.HandlerFunc {
@@ -13,14 +11,14 @@ func AuthorizeRequest(next http.HandlerFunc) http.HandlerFunc {
 		jwt, err := getJWTFromRequestHeader(r)
 		if err != nil {
 			// TODO: Log `Missing JWT on authorized endpoint`
-			handlers.HandleUnauthorizedRequest(w, r)
+			handleUnauthorizedRequest(w, r)
 			return
 		}
 		// Decode JWT
-		valid, claims := GetClaimsIfTokenIsValid(jwt)
+		valid, claims := authorization.GetClaimsIfTokenIsValid(jwt)
 		if !valid {
 			// TODO: Log `invalid JWT`
-			handlers.HandleUnauthorizedRequest(w, r)
+			handleUnauthorizedRequest(w, r)
 			return
 		}
 		ctx := context.WithValue(r.Context(), "userEmail", claims.Email)
@@ -28,20 +26,11 @@ func AuthorizeRequest(next http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
-func getJWTFromRequestHeader(req *http.Request) (string, error) {
-	authHeader := req.Header.Get("Authorization")
-	token := strings.TrimPrefix(authHeader, "Bearer ")
-	if token == "" {
-		return token, errors.New("No token present in header")
-	}
-	return token, nil
-}
-
 func CheckContentType(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		contentType := r.Header.Get("Content-Type")
-		if contentType != handlers.REQUIRED_CONTENT_TYPE {
-			handlers.HandleInvalidContentType(w, r)
+		if contentType != API_CONTENT_TYPE {
+			handleInvalidContentType(w, r)
 			return
 		}
 		next.ServeHTTP(w, r)

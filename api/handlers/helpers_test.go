@@ -37,7 +37,7 @@ func TestReturn404MethodReturnsAsExpected(t *testing.T) {
 	req, _ := http.NewRequest("GET", "/", nil)
 
 	rec := httptest.NewRecorder()
-	handler := http.HandlerFunc(Handle404)
+	handler := http.HandlerFunc(handle404)
 	handler.ServeHTTP(rec, req)
 
 	expectedBody := ResourceNotFoundMessage
@@ -60,7 +60,7 @@ func TestUnauthorizedRequestIsHandledCorrectly(t *testing.T) {
 	req, _ := http.NewRequest("GET", "/", nil)
 
 	rec := httptest.NewRecorder()
-	handler := http.HandlerFunc(HandleUnauthorizedRequest)
+	handler := http.HandlerFunc(handleUnauthorizedRequest)
 	handler.ServeHTTP(rec, req)
 
 	expectedBody := UserNotAuthorizedMessage
@@ -76,5 +76,33 @@ func TestUnauthorizedRequestIsHandledCorrectly(t *testing.T) {
 			"Received wrong content type: wanted %v but got %v",
 			"application/json", contentType,
 		)
+	}
+}
+
+func TestJWTIsRetrievedFromHeader(t *testing.T) {
+	req, _ := http.NewRequest("GET", "/", nil)
+	bearer := "Bearer " + utils.ValidTestToken
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", bearer)
+
+	jwt, _ := getJWTFromRequestHeader(req)
+
+	if jwt != utils.ValidTestToken {
+		t.Errorf("Expected JWT to be %v, got %v instead", utils.ValidTestToken, jwt)
+	}
+}
+
+func TestErrorShouldBeThrownIfJWTIsEmpty(t *testing.T) {
+	req, _ := http.NewRequest("GET", "/", nil)
+	bearer := "Bearer "
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", bearer)
+
+	jwt, err := getJWTFromRequestHeader(req)
+
+	if err == nil {
+		t.Errorf("Expected empty bearer token to throw err, but got %v", jwt)
 	}
 }

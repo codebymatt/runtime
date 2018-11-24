@@ -3,6 +3,8 @@ package handlers
 import (
 	"net/http"
 	"net/http/httptest"
+	"runtime/api/constants"
+	"runtime/api/models"
 	"runtime/api/utils"
 	"testing"
 )
@@ -37,7 +39,7 @@ func TestReturn404MethodReturnsAsExpected(t *testing.T) {
 	req, _ := http.NewRequest("GET", "/", nil)
 
 	rec := httptest.NewRecorder()
-	handler := http.HandlerFunc(handle404)
+	handler := http.HandlerFunc(ts.handle404)
 	handler.ServeHTTP(rec, req)
 
 	expectedBody := ResourceNotFoundMessage
@@ -48,10 +50,33 @@ func TestReturn404MethodReturnsAsExpected(t *testing.T) {
 		t.Errorf("Received wrong status code: wanted %v, got %v", http.StatusNotFound, status)
 	}
 
-	if contentType := rec.Header().Get("Content-Type"); contentType != "application/json" {
+	if contentType := rec.Header().Get("Content-Type"); contentType != constants.ApiContentType {
 		t.Errorf(
 			"Received wrong content type: wanted %v but got %v",
-			"application/json", contentType,
+			constants.ApiContentType, contentType,
+		)
+	}
+}
+
+func TestBadRequestIsHandled(t *testing.T) {
+	req, _ := http.NewRequest("GET", "/", nil)
+
+	rec := httptest.NewRecorder()
+	handler := http.HandlerFunc(ts.handleBadRequest)
+	handler.ServeHTTP(rec, req)
+
+	expectedBody := BadRequestMessage
+
+	utils.AssertStringsMatch(t, expectedBody, rec.Body.String())
+
+	if status := rec.Code; status != http.StatusBadRequest {
+		t.Errorf("Received wrong status code: wanted %v, got %v", http.StatusNotFound, status)
+	}
+
+	if contentType := rec.Header().Get("Content-Type"); contentType != constants.ApiContentType {
+		t.Errorf(
+			"Received wrong content type: wanted %v but got %v",
+			constants.ApiContentType, contentType,
 		)
 	}
 }
@@ -60,7 +85,7 @@ func TestUnauthorizedRequestIsHandledCorrectly(t *testing.T) {
 	req, _ := http.NewRequest("GET", "/", nil)
 
 	rec := httptest.NewRecorder()
-	handler := http.HandlerFunc(handleUnauthorizedRequest)
+	handler := http.HandlerFunc(ts.handleUnauthorizedRequest)
 	handler.ServeHTTP(rec, req)
 
 	expectedBody := UserNotAuthorizedMessage
@@ -104,5 +129,17 @@ func TestErrorShouldBeThrownIfJWTIsEmpty(t *testing.T) {
 
 	if err == nil {
 		t.Errorf("Expected empty bearer token to throw err, but got %v", jwt)
+	}
+}
+
+func TestJWTShouldBeGenerated(t *testing.T) {
+	token, err := generateJWT(models.User{Email: "mgscott@dundermifflin.com"})
+
+	if token == "" {
+		t.Error("Token should not be empty")
+	}
+
+	if err != nil {
+		t.Errorf("Got error when generating token: %v", err)
 	}
 }

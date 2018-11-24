@@ -1,14 +1,11 @@
 package models
 
 import (
-	"os"
+	"runtime/api/constants"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
 )
-
-var JWT_ALG = jwt.SigningMethodHS256
-var JWT_SECRET = []byte(os.Getenv("RUNTIME_JWT_SECRET"))
 
 type Claims struct {
 	Email string
@@ -22,12 +19,12 @@ func createNewJWT(email string) (string, error) {
 			ExpiresAt: time.Now().Add(time.Hour * 24 * 7).Unix(),
 		},
 	}
-	token := jwt.NewWithClaims(JWT_ALG, claims)
-	signedToken, err := token.SignedString(JWT_SECRET)
+	token := jwt.NewWithClaims(constants.JWTAlg, claims)
+	signedToken, err := token.SignedString(constants.HMACSecret)
 
 	return signedToken, err
 }
 
 func JWTKeyFunc(*jwt.Token) (interface{}, error) {
-	return JWT_SECRET, nil
+	return constants.HMACSecret, nil
 }

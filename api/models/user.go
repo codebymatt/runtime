@@ -5,7 +5,6 @@ import (
 	"runtime/api/constants"
 	"strconv"
 	"strings"
-	"time"
 	"unicode/utf8"
 
 	"golang.org/x/crypto/bcrypt"
@@ -18,8 +17,8 @@ type User struct {
 	Email      string `json:"email"`
 	FirstName  string `json:"first_name"`
 	LastName   string `json:"last_name"`
-	Password   string
-	DateJoined time.Time `json:"date_joined"`
+	Password   string `json:"password,omitempty"`
+	DateJoined string `json:"-"`
 }
 
 type Users []User

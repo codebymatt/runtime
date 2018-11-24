@@ -1,6 +1,7 @@
 package authorization
 
 import (
+	"runtime/api/models"
 	"runtime/api/utils"
 	"testing"
 	"time"
@@ -39,5 +40,19 @@ func TestJWTClaimsAreDecodedCorrectly(t *testing.T) {
 	utils.AssertStringsMatch(t, expectedEmail, claims.Email)
 	if expectedExpiry != claims.ExpiresAt {
 		t.Errorf("Expected expiry date to be %v, got %v", expectedExpiry, claims.ExpiresAt)
+	}
+}
+
+func TestJWTShouldBeGeneratedProperly(t *testing.T) {
+	u := models.User{Email: "mgscott@dundermifflin.com"}
+	expiryTime := time.Date(2100, 7, 4, 9, 41, 0, 0, time.UTC).Unix()
+	token, err := GenerateJWT(u.Email, expiryTime)
+
+	if err != nil {
+		t.Errorf("Expected token to be generated without error")
+	}
+
+	if token != utils.ValidTestToken {
+		t.Errorf("Expected token to be %s, got %s instead", utils.ValidTestToken, token)
 	}
 }

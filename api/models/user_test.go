@@ -1,6 +1,7 @@
 package models
 
 import (
+	"runtime/api/constants"
 	"testing"
 	"time"
 )
@@ -9,7 +10,7 @@ var testUser = User{
 	FirstName:  "Michael",
 	LastName:   "Scott",
 	Password:   "letspretendthispasswordisverysafeandlong",
-	DateJoined: time.Now(),
+	DateJoined: time.Now().Format(constants.TimeFormat),
 }
 
 func TestShouldNotCreateUserWithoutValidEmail(t *testing.T) {

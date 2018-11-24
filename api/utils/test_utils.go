@@ -3,6 +3,7 @@ package utils
 import (
 	"net/http"
 	"net/http/httptest"
+	"runtime/api/constants"
 	"testing"
 )
 
@@ -15,6 +16,15 @@ func CheckStatusAndContentTypeOk(t *testing.T, rec *httptest.ResponseRecorder) {
 		t.Errorf(
 			"Received wrong content type: wanted %v but got %v",
 			"application/json", contentType,
+		)
+	}
+}
+
+func CheckContentTypeOk(t *testing.T, rec *httptest.ResponseRecorder) {
+	if contentType := rec.Header().Get("Content-Type"); contentType != constants.ApiContentType {
+		t.Errorf(
+			"Received wrong content type: wanted %v but got %v",
+			constants.ApiContentType, contentType,
 		)
 	}
 }

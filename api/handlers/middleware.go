@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 	"runtime/api/authorization"
+	"runtime/api/constants"
 )
 
 func (s *srv) AuthorizeRequest(next http.HandlerFunc) http.HandlerFunc {
@@ -11,14 +12,14 @@ func (s *srv) AuthorizeRequest(next http.HandlerFunc) http.HandlerFunc {
 		jwt, err := getJWTFromRequestHeader(r)
 		if err != nil {
 			// TODO: Log `Missing JWT on authorized endpoint`
-			handleUnauthorizedRequest(w, r)
+			ts.handleUnauthorizedRequest(w, r)
 			return
 		}
 		// Decode JWT
 		valid, claims := authorization.GetClaimsIfTokenIsValid(jwt)
 		if !valid {
 			// TODO: Log `invalid JWT`
-			handleUnauthorizedRequest(w, r)
+			ts.handleUnauthorizedRequest(w, r)
 			return
 		}
 		ctx := context.WithValue(r.Context(), "userEmail", claims.Email)
@@ -29,8 +30,8 @@ func (s *srv) AuthorizeRequest(next http.HandlerFunc) http.HandlerFunc {
 func (s *srv) CheckContentType(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		contentType := r.Header.Get("Content-Type")
-		if contentType != API_CONTENT_TYPE {
-			handleInvalidContentType(w, r)
+		if contentType != constants.ApiContentType {
+			ts.handleInvalidContentType(w, r)
 			return
 		}
 		next.ServeHTTP(w, r)

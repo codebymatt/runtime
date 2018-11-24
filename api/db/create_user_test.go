@@ -1,6 +1,7 @@
 package db
 
 import (
+	"runtime/api/constants"
 	"runtime/api/models"
 	"testing"
 	"time"
@@ -30,7 +31,7 @@ func TestShouldCreateUser(t *testing.T) {
 		FirstName:  "Michael",
 		LastName:   "Scott",
 		Password:   "letspretendthispasswordisverysafeandlong",
-		DateJoined: time.Now(),
+		DateJoined: time.Now().Format(constants.TimeFormat),
 	}
 
 	err = store.CreateUser(&user)

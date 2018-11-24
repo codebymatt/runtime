@@ -3,6 +3,7 @@ package handlers
 import (
 	"net/http"
 	"net/http/httptest"
+	"runtime/api/constants"
 	"runtime/api/utils"
 	"testing"
 )
@@ -55,7 +56,7 @@ func TestRequestWithValidContentTypeShouldBeAllowed(t *testing.T) {
 
 	bearer := "Bearer " + utils.ValidTestToken
 
-	req.Header.Set("Content-Type", API_CONTENT_TYPE)
+	req.Header.Set("Content-Type", constants.ApiContentType)
 	req.Header.Set("Authorization", bearer)
 	rec := httptest.NewRecorder()
 

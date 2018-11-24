@@ -3,27 +3,12 @@ package handlers
 import (
 	"net/http"
 	"net/http/httptest"
+	"runtime/api/constants"
 	"runtime/api/utils"
 	"strings"
 	"testing"
 )
 
-var testUserData = `{
-	"first_name":"Dwight",
-	"last_name":"Schrute",
-	"email":"manager@schrutefarms.org",
-	"password":"youllneverguessthismose"
-}`
-
-var testUserDataWithID = `{
-	"id": 100000,
-	"first_name":"Dwight",
-	"last_name":"Schrute",
-	"email":"manager@schrutefarms.org",
-	"password":"youllneverguessthismose"
-}`
-
-// TODO: is this an integration/acceptance test?
 func TestShouldCreateUser(t *testing.T) {
 	data := testUserData
 
@@ -34,15 +19,74 @@ func TestShouldCreateUser(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	req.Header.Set("Content-Type", API_CONTENT_TYPE)
+	req.Header.Set("Content-Type", constants.ApiContentType)
+	rec := httptest.NewRecorder()
+	handler := http.HandlerFunc(ts.CreateUserHandler)
+
+	handler.ServeHTTP(rec, req)
+	expectedBody := `{"Status":200,"User":{"email":"manager@schrutefarms.org",` +
+		`"first_name":"Dwight","last_name":"Schrute"}}`
+
+	authHeader := rec.Header().Get("Authentication")
+	if strings.TrimPrefix(authHeader, "Bearer ") == "" {
+		t.Error("Expected JWT to be present")
+	}
+
+	utils.CheckStatusAndContentTypeOk(t, rec)
+	utils.AssertStringsMatch(t, expectedBody, rec.Body.String())
+}
+
+func TestShouldNotCreateUserWithoutEmail(t *testing.T) {
+	data := testUserDataWithoutPassword
+
+	formattedData := strings.NewReader(data)
+
+	req, err := http.NewRequest("POST", "/users", formattedData)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	req.Header.Set("Content-Type", constants.ApiContentType)
 	rec := httptest.NewRecorder()
 	handler := http.HandlerFunc(ts.CreateUserHandler)
 
 	handler.ServeHTTP(rec, req)
 
-	expectedBody := `{"Status":200,"Message":"User successfully created!"}`
+	expectedBody := `{"Status":400,"Message":"invalid_data"}`
 
-	utils.CheckStatusAndContentTypeOk(t, rec)
+	if rec.Code != http.StatusBadRequest {
+		t.Errorf("Expected code to be %d, got %d instead", http.StatusBadRequest, rec.Code)
+	}
+
+	utils.CheckContentTypeOk(t, rec)
+	utils.AssertStringsMatch(t, expectedBody, rec.Body.String())
+}
+
+func TestShouldNotCreateUserWithoutPassword(t *testing.T) {
+	data := testUserDataWithoutPassword
+
+	formattedData := strings.NewReader(data)
+
+	req, err := http.NewRequest("POST", "/users", formattedData)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	req.Header.Set("Content-Type", constants.ApiContentType)
+	rec := httptest.NewRecorder()
+	handler := http.HandlerFunc(ts.CreateUserHandler)
+
+	handler.ServeHTTP(rec, req)
+
+	expectedBody := `{"Status":400,"Message":"invalid_data"}`
+
+	if rec.Code != http.StatusBadRequest {
+		t.Errorf("Expected code to be %d, got %d instead", http.StatusBadRequest, rec.Code)
+	}
+
+	utils.CheckContentTypeOk(t, rec)
 	utils.AssertStringsMatch(t, expectedBody, rec.Body.String())
 }
 

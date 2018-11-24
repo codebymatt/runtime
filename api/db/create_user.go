@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"runtime/api/constants"
 	"runtime/api/models"
+	"time"
 )
 
 var createUserStatement = `
@@ -15,7 +16,7 @@ var createUserStatement = `
 
 func (store Datastore) CreateUser(u *models.User) error {
 	db := store.Db
-	formattedTime := u.DateJoined.Format(constants.TimeFormat)
+	formattedTime := time.Now().Format(constants.TimeFormat)
 	err := u.ValidateUserData()
 	if err != nil {
 		return fmt.Errorf("User data was invalid")
@@ -54,5 +55,6 @@ func (store Datastore) CreateUser(u *models.User) error {
 		fmt.Println(err)
 		// TODO: Log error
 	}
+
 	return err
 }

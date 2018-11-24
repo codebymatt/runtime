@@ -1,14 +1,12 @@
 package authorization
 
 import (
-	"os"
+	"runtime/api/constants"
 	"runtime/api/models"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
 )
-
-var HMAC_SECRET = os.Getenv("RUNTIME_JWT_SECRET")
 
 func GetClaimsIfTokenIsValid(token string) (bool, models.Claims) {
 	parsedToken, err := jwt.ParseWithClaims(token, &models.Claims{}, models.JWTKeyFunc)
@@ -26,4 +24,19 @@ func GetClaimsIfTokenIsValid(token string) (bool, models.Claims) {
 	}
 
 	return ok, *claims
+}
+
+func GenerateJWT(email string, expiry int64) (string, error) {
+	jwtSecret := []byte(constants.HMACSecret)
+
+	claims := models.Claims{
+		Email: email,
+		StandardClaims: jwt.StandardClaims{
+			ExpiresAt: expiry,
+		},
+	}
+
+	token := jwt.NewWithClaims(constants.JWTAlg, claims)
+	tokenString, err := token.SignedString(jwtSecret)
+	return tokenString, err
 }

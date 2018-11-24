@@ -13,6 +13,10 @@ var BCRYPT_SECRET = os.Getenv("RUNTIME_BCRYPT_SECRET")
 var BCRYPT_COST = os.Getenv("RUNTIME_BCRYPT_COST")
 var connectionStringTemplate = "host=%s port=%s user=%s password=%s dbname=%s sslmode=disable"
 
+type Datastore struct {
+	Db *sql.DB
+}
+
 type Config struct {
 	HOST     string
 	PORT     string

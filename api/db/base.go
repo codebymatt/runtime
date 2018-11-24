@@ -3,47 +3,36 @@ package db
 import (
 	"database/sql"
 	"fmt"
-	"os"
+	"log"
+	"runtime/api/constants"
 
 	_ "github.com/lib/pq"
 )
 
-var DB *sql.DB
-var BCRYPT_SECRET = os.Getenv("RUNTIME_BCRYPT_SECRET")
-var BCRYPT_COST = os.Getenv("RUNTIME_BCRYPT_COST")
 var connectionStringTemplate = "host=%s port=%s user=%s password=%s dbname=%s sslmode=disable"
 
 type Datastore struct {
 	Db *sql.DB
 }
 
-type Config struct {
-	HOST     string
-	PORT     string
-	USER     string
-	PASSWORD string
-	DBNAME   string
-}
+func InitDb() *sql.DB {
+	connectionString := createConnectionString()
+	db, err := sql.Open("postgres", connectionString)
 
-func createConfigFromEnvironment() Config {
-	return Config{
-		HOST:     os.Getenv("RUNTIME_DB_HOST"),
-		PORT:     os.Getenv("RUNTIME_DB_PORT"),
-		USER:     os.Getenv("RUNTIME_DB_USER"),
-		PASSWORD: os.Getenv("RUNTIME_DB_PASSWORD"),
-		DBNAME:   os.Getenv("RUNTIME_DB_NAME"),
+	if err != nil {
+		log.Panic(err)
 	}
+	return db
 }
 
-func CreateConnectionString() string {
-	cfg := createConfigFromEnvironment()
+func createConnectionString() string {
 	connString := fmt.Sprintf(
 		connectionStringTemplate,
-		cfg.HOST,
-		cfg.PORT,
-		cfg.USER,
-		cfg.PASSWORD,
-		cfg.DBNAME,
+		constants.DbHost,
+		constants.DbPort,
+		constants.DbUser,
+		constants.DbPassword,
+		constants.DbName,
 	)
 	return connString
 }

@@ -1,34 +1,34 @@
 package main
 
 import (
-	"database/sql"
 	"log"
 	"net/http"
 	"runtime/api/db"
-	"runtime/api/routing"
+	"runtime/api/handlers"
+	"runtime/api/server"
 )
 
 func main() {
 
-	DB := initDb()
-	defer DB.Close()
+	Db := db.InitDb()
+	defer Db.Close()
 
-	if err := DB.Ping(); err != nil {
+	if err := Db.Ping(); err != nil {
 		log.Panic(err)
 	}
 
-	r := routing.NewRouter()
-
-	log.Fatal(http.ListenAndServe(":8080", r))
-}
-
-func initDb() *sql.DB {
-	connectionString := db.CreateConnectionString()
-	DB := db.DB
-	DB, err := sql.Open("postgres", connectionString)
-
-	if err != nil {
-		log.Panic(err)
+	datastore := db.Datastore{
+		Db: Db,
 	}
-	return DB
+
+	router := initRouter()
+
+	server := server.Server{
+		Store:  datastore,
+		Router: router,
+	}
+
+	handlers.InitRoutes(&server)
+
+	log.Fatal(http.ListenAndServe(":8080", server.Router))
 }

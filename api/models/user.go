@@ -2,7 +2,7 @@ package models
 
 import (
 	"fmt"
-	"runtime/api/db"
+	"runtime/api/constants"
 	"strconv"
 	"strings"
 	"time"
@@ -11,10 +11,10 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-var BCRYPT_COST, _ = strconv.Atoi(db.BCRYPT_COST)
+var bcryptCost, _ = strconv.Atoi(constants.BcryptCost)
 
 type User struct {
-	Id         int    `json:"id"`
+	Id         int    `json:"-"`
 	Email      string `json:"email"`
 	FirstName  string `json:"first_name"`
 	LastName   string `json:"last_name"`
@@ -36,7 +36,7 @@ func (u *User) ValidateUserData() error {
 }
 
 func (u *User) EncryptPassword() error {
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), BCRYPT_COST)
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcryptCost)
 	if err != nil {
 		return err
 	}

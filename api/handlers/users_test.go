@@ -9,21 +9,21 @@ import (
 )
 
 var testUserData = `{
-	"first_name":"Dwight,
-	"last_name":"Schrute"
+	"first_name":"Dwight",
+	"last_name":"Schrute",
 	"email":"manager@schrutefarms.org",
 	"password":"youllneverguessthismose"
 }`
 
 var testUserDataWithID = `{
 	"id": 100000,
-	"first_name":"Dwight,
-	"last_name":"Schrute"
+	"first_name":"Dwight",
+	"last_name":"Schrute",
 	"email":"manager@schrutefarms.org",
 	"password":"youllneverguessthismose"
 }`
 
-// ITODO: is this an integration/acceptance test?
+// TODO: is this an integration/acceptance test?
 func TestShouldCreateUser(t *testing.T) {
 	data := testUserData
 
@@ -36,14 +36,11 @@ func TestShouldCreateUser(t *testing.T) {
 
 	req.Header.Set("Content-Type", API_CONTENT_TYPE)
 	rec := httptest.NewRecorder()
-	handler := http.HandlerFunc(CreateUserHandler)
+	handler := http.HandlerFunc(ts.CreateUserHandler)
 
 	handler.ServeHTTP(rec, req)
 
-	expectedBody := `{
-		"Status":200,
-		"Message":"User successfully created!"
-	}`
+	expectedBody := `{"Status":200,"Message":"User successfully created!"}`
 
 	utils.CheckStatusAndContentTypeOk(t, rec)
 	utils.AssertStringsMatch(t, expectedBody, rec.Body.String())

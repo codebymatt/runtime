@@ -2,10 +2,9 @@
 package db
 
 import (
-	"database/sql"
 	"fmt"
+	"runtime/api/constants"
 	"runtime/api/models"
-	"time"
 )
 
 var createUserStatement = `
@@ -13,10 +12,10 @@ var createUserStatement = `
 	VALUES ($1, $2, $3, $4, $5)
 	RETURNING id
 `
-var TIME_FORMAT = time.RFC3339
 
-func CreateUser(db *sql.DB, u *models.User) error {
-	formattedTime := u.DateJoined.Format(TIME_FORMAT)
+func (store Datastore) CreateUser(u *models.User) error {
+	db := store.Db
+	formattedTime := u.DateJoined.Format(constants.TimeFormat)
 	err := u.ValidateUserData()
 	if err != nil {
 		return fmt.Errorf("User data was invalid")

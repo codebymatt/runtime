@@ -10,6 +10,10 @@ import (
 
 func TestShouldCreateUser(t *testing.T) {
 	db, mock, err := sqlmock.New()
+	store := Datastore{
+		Db: db,
+	}
+
 	if err != nil {
 		t.Fatalf("An error '%s' was not expected when opening a stub database connection", err)
 	}
@@ -29,7 +33,7 @@ func TestShouldCreateUser(t *testing.T) {
 		DateJoined: time.Now(),
 	}
 
-	err = CreateUser(db, &user)
+	err = store.CreateUser(&user)
 	if err != nil {
 		t.Errorf("User could not be created: %v", err)
 	}

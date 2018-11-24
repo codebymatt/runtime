@@ -8,13 +8,14 @@ import (
 )
 
 func TestIndexHandler(t *testing.T) {
+	ts := srv{}
 	req, err := http.NewRequest("GET", "/", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	rec := httptest.NewRecorder()
-	handler := http.HandlerFunc(IndexHandler)
+	handler := http.HandlerFunc(ts.IndexHandler)
 	handler.ServeHTTP(rec, req)
 
 	expectedBody := IndexOkMessage

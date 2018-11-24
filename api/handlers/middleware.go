@@ -6,7 +6,7 @@ import (
 	"runtime/api/authorization"
 )
 
-func AuthorizeRequest(next http.HandlerFunc) http.HandlerFunc {
+func (s *srv) AuthorizeRequest(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		jwt, err := getJWTFromRequestHeader(r)
 		if err != nil {
@@ -26,7 +26,7 @@ func AuthorizeRequest(next http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
-func CheckContentType(next http.HandlerFunc) http.HandlerFunc {
+func (s *srv) CheckContentType(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		contentType := r.Header.Get("Content-Type")
 		if contentType != API_CONTENT_TYPE {

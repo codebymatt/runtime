@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func IndexHandler(w http.ResponseWriter, r *http.Request) {
+func (s *srv) IndexHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", API_CONTENT_TYPE)
 
 	message := "Everything's fine!"

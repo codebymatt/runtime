@@ -1,3 +1,4 @@
+// TODO: Move this to mocks package
 package handlers
 
 import (
@@ -7,10 +8,10 @@ import (
 type testDataStore struct {
 }
 
-func (store testDataStore) CreateUser(*models.User) error {
-	return nil
-}
-
 var ts = srv{
 	Store: testDataStore{},
+}
+
+func (store testDataStore) CreateUser(*models.User) error {
+	return nil
 }

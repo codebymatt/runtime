@@ -61,9 +61,10 @@ func TestJWTIsEncodedProperly(t *testing.T) {
 	}
 }
 
-func TestJWTExpiresAfterADay(t *testing.T) {
+func TestJWTExpiresAfterAWeek(t *testing.T) {
 	token, _ := createNewJWT("mgscott@dundermifflin.com")
-	expectedExpiry := time.Now().Add(time.Hour * 24).Unix()
+	week := time.Hour * 7 * 24
+	expectedExpiry := time.Now().Add(week).Unix()
 
 	parsedToken, _ := jwt.ParseWithClaims(token, &Claims{}, JWTKeyFunc)
 	claims, _ := parsedToken.Claims.(*Claims)

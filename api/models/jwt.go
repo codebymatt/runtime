@@ -19,7 +19,7 @@ func createNewJWT(email string) (string, error) {
 	claims := Claims{
 		Email: email,
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(time.Hour * 24).Unix(),
+			ExpiresAt: time.Now().Add(time.Hour * 24 * 7).Unix(),
 		},
 	}
 	token := jwt.NewWithClaims(JWT_ALG, claims)

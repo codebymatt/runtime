@@ -13,6 +13,8 @@ CHECK_IF_TABLE_EXISTS = "SELECT EXISTS (
     WHERE  table_name = '#{DBNAME}'
 );".freeze
 
+GET_LAST_MIGRATION = 'SELECT index FROM migrations ORDER BY date_applied LIMIT 1;'.freeze
+
 MIGRATIONS_FOLDER = File.join(__dir__, 'migrations')
 
 connection_string = "dbname=#{DBNAME} user=#{USER} password=#{PASSWORD}"
@@ -30,8 +32,8 @@ end
 begin
     connection = PG.connect(connection_string)
     if connection.exec(CHECK_IF_TABLE_EXISTS).fields[0] == 'exists'
-        # Get most recent migration num
-        run_migrations(0, migrations)
+        migration_num = connection.exec(GET_LAST_MIGRATION)
+        run_migrations(migration_num + 1, migrations)
     else
         run_migrations(0)
     end

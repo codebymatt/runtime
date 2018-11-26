@@ -63,7 +63,16 @@ func (s *srv) CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *srv) RetrieveUserHandler(w http.ResponseWriter, r *http.Request) {
-
+	w.Header().Set("ContentType", constants.ApiContentType)
+	// email := r.Context().Value("userEmail")
+	// Handle error if email blank
+	// Retrieve user
+	// Handle error
+	// Marshal to JSON
+	// Handle error
+	// Setup response
+	// Handle errors
+	// Send response
 }
 
 func deserializeUser(b []byte) (models.User, error) {

@@ -28,15 +28,19 @@ func (s *srv) CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 		s.handleBadRequest(w, r)
 		return
 	} else {
-		// Very important that password remains blank, as password should not be passed
-		// back in HTTP response. I don't like that this happens, but as long as it's
-		// blank it's secure. There's a test that will catch if it's not blank, along
-		// with the added bonus that it's also not the same hash that's stored in the DB
-		u.Password = ""
+		// Using the UserInfo model is very important here so we don't have to worry
+		// about returning password info in the response, while being able to
+		// marshal JSON nicely from a struct
+		userInfo := models.UserInfo{
+			Email:     u.Email,
+			FirstName: u.FirstName,
+			LastName:  u.LastName,
+		}
 		responseStruct := models.UserResponse{
 			Status: http.StatusOK,
-			User:   u,
+			User:   userInfo,
 		}
+
 		responseBody, err := json.Marshal(responseStruct)
 		if err != nil {
 			s.handleBadRequest(w, r)
@@ -56,6 +60,10 @@ func (s *srv) CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, string(responseBody))
 		return
 	}
+}
+
+func (s *srv) RetrieveUserHandler(w http.ResponseWriter, r *http.Request) {
+
 }
 
 func deserializeUser(b []byte) (models.User, error) {

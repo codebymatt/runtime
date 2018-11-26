@@ -21,6 +21,12 @@ type User struct {
 	DateJoined string `json:"-"`
 }
 
+type UserInfo struct {
+	Email     string `json:"email"`
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+}
+
 type Users []User
 
 func (u *User) ValidateUserData() error {

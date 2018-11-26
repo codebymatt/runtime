@@ -1,6 +1,7 @@
 package authorization
 
 import (
+	"runtime/api/constants"
 	"runtime/api/models"
 	"runtime/api/utils"
 	"testing"
@@ -8,7 +9,7 @@ import (
 )
 
 func TestValidJWTsAreAuthorized(t *testing.T) {
-	valid, _ := GetClaimsIfTokenIsValid(utils.ValidTestToken)
+	valid, _ := GetClaimsIfTokenIsValid(constants.ValidTestToken)
 
 	if !valid {
 		t.Errorf("Token should be valid, but isn't")
@@ -16,7 +17,7 @@ func TestValidJWTsAreAuthorized(t *testing.T) {
 }
 
 func TestInvalidJWTsAreNotAuthorized(t *testing.T) {
-	valid, _ := GetClaimsIfTokenIsValid(utils.InvalidSignedToken)
+	valid, _ := GetClaimsIfTokenIsValid(constants.InvalidSignedToken)
 
 	if valid {
 		t.Errorf("Token shouldn't be valid, but is")
@@ -24,7 +25,7 @@ func TestInvalidJWTsAreNotAuthorized(t *testing.T) {
 }
 
 func TestExpiredJWTsAreNotAuthorized(t *testing.T) {
-	valid, _ := GetClaimsIfTokenIsValid(utils.InvalidExpiredToken)
+	valid, _ := GetClaimsIfTokenIsValid(constants.InvalidExpiredToken)
 
 	if valid {
 		t.Errorf("Token shouldn't be valid, but is")
@@ -32,7 +33,7 @@ func TestExpiredJWTsAreNotAuthorized(t *testing.T) {
 }
 
 func TestJWTClaimsAreDecodedCorrectly(t *testing.T) {
-	_, claims := GetClaimsIfTokenIsValid(utils.ValidTestToken)
+	_, claims := GetClaimsIfTokenIsValid(constants.ValidTestToken)
 
 	expectedEmail := "mgscott@dundermifflin.com"
 	expectedExpiry := time.Date(2100, 7, 4, 9, 41, 0, 0, time.UTC).Unix()
@@ -52,7 +53,7 @@ func TestJWTShouldBeGeneratedProperly(t *testing.T) {
 		t.Errorf("Expected token to be generated without error")
 	}
 
-	if token != utils.ValidTestToken {
-		t.Errorf("Expected token to be %s, got %s instead", utils.ValidTestToken, token)
+	if token != constants.ValidTestToken {
+		t.Errorf("Expected token to be %s, got %s instead", constants.ValidTestToken, token)
 	}
 }

@@ -106,15 +106,15 @@ func TestUnauthorizedRequestIsHandledCorrectly(t *testing.T) {
 
 func TestJWTIsRetrievedFromHeader(t *testing.T) {
 	req, _ := http.NewRequest("GET", "/", nil)
-	bearer := "Bearer " + utils.ValidTestToken
+	bearer := "Bearer " + constants.ValidTestToken
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", bearer)
+	req.Header.Set("Authentication", bearer)
 
 	jwt, _ := getJWTFromRequestHeader(req)
 
-	if jwt != utils.ValidTestToken {
-		t.Errorf("Expected JWT to be %v, got %v instead", utils.ValidTestToken, jwt)
+	if jwt != constants.ValidTestToken {
+		t.Errorf("Expected JWT to be %v, got %v instead", constants.ValidTestToken, jwt)
 	}
 }
 
@@ -123,7 +123,7 @@ func TestErrorShouldBeThrownIfJWTIsEmpty(t *testing.T) {
 	bearer := "Bearer "
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", bearer)
+	req.Header.Set("Authentication", bearer)
 
 	jwt, err := getJWTFromRequestHeader(req)
 

@@ -12,10 +12,10 @@ func TestRequestWithValidJWTIsAuthorized(t *testing.T) {
 	ts := srv{}
 	req, _ := http.NewRequest("GET", "/", nil)
 
-	bearer := "Bearer " + utils.ValidTestToken
+	bearer := "Bearer " + constants.ValidTestToken
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", bearer)
+	req.Header.Set("Authentication", bearer)
 	rec := httptest.NewRecorder()
 
 	handler := http.HandlerFunc(ts.AuthorizeRequest(ts.IndexHandler))
@@ -32,7 +32,7 @@ func TestRequestWithInvalidJWTIsUnauthorized(t *testing.T) {
 	ts := srv{}
 	req, _ := http.NewRequest("GET", "/", nil)
 
-	bearer := "Bearer " + utils.InvalidExpiredToken
+	bearer := "Bearer " + constants.InvalidExpiredToken
 
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", bearer)
@@ -54,13 +54,13 @@ func TestRequestWithValidContentTypeShouldBeAllowed(t *testing.T) {
 	ts := srv{}
 	req, _ := http.NewRequest("GET", "/", nil)
 
-	bearer := "Bearer " + utils.ValidTestToken
+	bearer := "Bearer " + constants.ValidTestToken
 
 	req.Header.Set("Content-Type", constants.ApiContentType)
 	req.Header.Set("Authorization", bearer)
 	rec := httptest.NewRecorder()
 
-	handler := http.HandlerFunc(ts.CheckContentType(ts.AuthorizeRequest(ts.IndexHandler)))
+	handler := http.HandlerFunc(ts.CheckContentType(ts.IndexHandler))
 
 	handler.ServeHTTP(rec, req)
 
@@ -81,7 +81,7 @@ func TestRequestWithInvalidContentTypeShouldBeRejected(t *testing.T) {
 	ts := srv{}
 	req, _ := http.NewRequest("GET", "/", nil)
 
-	bearer := "Bearer " + utils.ValidTestToken
+	bearer := "Bearer " + constants.ValidTestToken
 
 	req.Header.Set("Content-Type", "text/html")
 	req.Header.Set("Authorization", bearer)

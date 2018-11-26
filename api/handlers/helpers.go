@@ -91,7 +91,7 @@ func createJSONResponse(status int, message string) (string, error) {
 }
 
 func getJWTFromRequestHeader(req *http.Request) (string, error) {
-	authHeader := req.Header.Get("Authorization")
+	authHeader := req.Header.Get("Authentication")
 	token := strings.TrimPrefix(authHeader, "Bearer ")
 	if token == "" {
 		return token, errors.New("No token present in header")

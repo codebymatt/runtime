@@ -7,5 +7,5 @@ type JSONResponse struct {
 
 type UserResponse struct {
 	Status int
-	User   User
+	User   UserInfo
 }

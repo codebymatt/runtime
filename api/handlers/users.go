@@ -74,7 +74,7 @@ func (s *srv) RetrieveUserHandler(w http.ResponseWriter, r *http.Request) {
 
 	user, err := s.Store.RetrieveUser(email)
 	if err != nil {
-		s.handleBadRequest(w, r)
+		s.handle404(w, r)
 		return
 	}
 

@@ -13,3 +13,6 @@
 
 # Go binary created by compiling 'api' project
 /api/api
+
+# Database config files
+/api/scripts/db/*.yaml

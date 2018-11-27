@@ -36,6 +36,7 @@ func (s *srv) CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 			FirstName: u.FirstName,
 			LastName:  u.LastName,
 		}
+
 		responseStruct := models.UserResponse{
 			Status: http.StatusOK,
 			User:   userInfo,
@@ -63,16 +64,49 @@ func (s *srv) CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *srv) RetrieveUserHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("ContentType", constants.ApiContentType)
-	// email := r.Context().Value("userEmail")
-	// Handle error if email blank
-	// Retrieve user
-	// Handle error
-	// Marshal to JSON
-	// Handle error
-	// Setup response
-	// Handle errors
-	// Send response
+	w.Header().Set("Content-Type", constants.ApiContentType)
+
+	email := r.Context().Value("userEmail").(string)
+	if email == "" {
+		s.handleBadRequest(w, r)
+		return
+	}
+
+	user, err := s.Store.RetrieveUser(email)
+	if err != nil {
+		s.handleBadRequest(w, r)
+		return
+	}
+
+	userInfo := models.UserInfo{
+		Email:     user.Email,
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+	}
+
+	responseStruct := models.UserResponse{
+		Status: 200,
+		User:   userInfo,
+	}
+
+	responseBody, err := json.Marshal(responseStruct)
+	if err != nil {
+		s.handleBadRequest(w, r)
+		return
+	}
+
+	token, err := generateJWT(user)
+	if err != nil {
+		s.handleBadRequest(w, r)
+		return
+	}
+
+	authHeader := fmt.Sprintf("Bearer %s", token)
+	w.Header().Set("Authentication", authHeader)
+
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, string(responseBody))
+	return
 }
 
 func deserializeUser(b []byte) (models.User, error) {

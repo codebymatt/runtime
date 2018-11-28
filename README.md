@@ -23,7 +23,7 @@ The primary target of the web frontend is desktop, however it's very important t
 mobile responsive. This will mainly be addressed in the design phase.
 
 Full, complete testing is paramount as continuous integration and deployment is a
-reasonably early target. **TEST ALL THE THINGS. UNIT, INTEGRATION, ~~ACCEPTANCE~~<sup>maybe later</sup>, YOU NAME IT.
+reasonably early target. **TEST ~~ALL THE THINGS~~ AS MUCH AS YOU CAN. UNIT, INTEGRATION, ~~ACCEPTANCE~~<sup>maybe later</sup>, YOU NAME IT.
 USE TDD WHERE IT MAKES SENSE. ALL CAPS COS THIS IS VERY IMPORTANT.**
 
 All code will live in the same repository.

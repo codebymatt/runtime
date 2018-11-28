@@ -3,9 +3,7 @@ package handlers
 import (
 	"errors"
 	"fmt"
-	"runtime/api/constants"
 	"runtime/api/models"
-	"time"
 )
 
 type testDataStore struct {
@@ -28,18 +26,16 @@ func (store testDataStore) CreateUser(u *models.User) error {
 	return nil
 }
 
-func (store testDataStore) RetrieveUser(email string) (models.User, error) {
+func (store testDataStore) RetrieveUser(email string) (models.UserInfo, error) {
 	if email == "" {
 		err := errors.New("Could not retrieve user")
-		return models.User{}, err
+		return models.UserInfo{}, err
 	}
 
-	user := models.User{
-		Email:      email,
-		FirstName:  "Michael",
-		LastName:   "Scott",
-		Password:   "",
-		DateJoined: time.Now().Format(constants.TimeFormat),
+	user := models.UserInfo{
+		Email:     email,
+		FirstName: "Michael",
+		LastName:  "Scott",
 	}
 
 	return user, nil

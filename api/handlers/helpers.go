@@ -37,7 +37,6 @@ func (s *srv) handle404(w http.ResponseWriter, r *http.Request) {
 
 func (s *srv) handleBadRequest(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", constants.ApiContentType)
-
 	message := "invalid_data"
 	responseBody, err := createJSONResponse(http.StatusBadRequest, message)
 
@@ -91,7 +90,7 @@ func createJSONResponse(status int, message string) (string, error) {
 }
 
 func getJWTFromRequestHeader(req *http.Request) (string, error) {
-	authHeader := req.Header.Get("Authentication")
+	authHeader := req.Header.Get("Authorization")
 	token := strings.TrimPrefix(authHeader, "Bearer ")
 	if token == "" {
 		return token, errors.New("No token present in header")
@@ -99,7 +98,7 @@ func getJWTFromRequestHeader(req *http.Request) (string, error) {
 	return token, nil
 }
 
-func generateJWT(user models.User) (string, error) {
+func generateJWT(email string) (string, error) {
 	expiryTime := time.Now().Add(time.Hour * 24 * 7).Unix()
-	return authorization.GenerateJWT(user.Email, expiryTime)
+	return authorization.GenerateJWT(email, expiryTime)
 }

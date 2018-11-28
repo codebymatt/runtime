@@ -48,14 +48,14 @@ func (s *srv) CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		token, err := generateJWT(u)
+		token, err := generateJWT(u.Email)
 		if err != nil {
 			s.handleBadRequest(w, r)
 			return
 		}
 
 		authHeader := fmt.Sprintf("Bearer %s", token)
-		w.Header().Set("Authentication", authHeader)
+		w.Header().Set("Authorization", authHeader)
 
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, string(responseBody))
@@ -95,14 +95,14 @@ func (s *srv) RetrieveUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	token, err := generateJWT(user)
+	token, err := generateJWT(user.Email)
 	if err != nil {
 		s.handleBadRequest(w, r)
 		return
 	}
 
 	authHeader := fmt.Sprintf("Bearer %s", token)
-	w.Header().Set("Authentication", authHeader)
+	w.Header().Set("Authorization", authHeader)
 
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, string(responseBody))

@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"runtime/api/constants"
-	"runtime/api/models"
 	"runtime/api/utils"
 	"testing"
 )
@@ -109,9 +108,12 @@ func TestJWTIsRetrievedFromHeader(t *testing.T) {
 	bearer := "Bearer " + constants.ValidTestToken
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authentication", bearer)
+	req.Header.Set("Authorization", bearer)
 
-	jwt, _ := getJWTFromRequestHeader(req)
+	jwt, err := getJWTFromRequestHeader(req)
+	if err != nil {
+		t.Errorf("Error getting JWT from request header")
+	}
 
 	if jwt != constants.ValidTestToken {
 		t.Errorf("Expected JWT to be %v, got %v instead", constants.ValidTestToken, jwt)
@@ -123,7 +125,7 @@ func TestErrorShouldBeThrownIfJWTIsEmpty(t *testing.T) {
 	bearer := "Bearer "
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authentication", bearer)
+	req.Header.Set("Authorization", bearer)
 
 	jwt, err := getJWTFromRequestHeader(req)
 
@@ -133,7 +135,7 @@ func TestErrorShouldBeThrownIfJWTIsEmpty(t *testing.T) {
 }
 
 func TestJWTShouldBeGenerated(t *testing.T) {
-	token, err := generateJWT(models.User{Email: "mgscott@dundermifflin.com"})
+	token, err := generateJWT("mgscott@dundermifflin.com")
 
 	if token == "" {
 		t.Error("Token should not be empty")

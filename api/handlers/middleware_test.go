@@ -15,7 +15,7 @@ func TestRequestWithValidJWTIsAuthorized(t *testing.T) {
 	bearer := "Bearer " + constants.ValidTestToken
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authentication", bearer)
+	req.Header.Set("Authorization", bearer)
 	rec := httptest.NewRecorder()
 
 	handler := http.HandlerFunc(ts.AuthorizeRequest(ts.IndexHandler))

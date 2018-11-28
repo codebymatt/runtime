@@ -5,7 +5,7 @@ import (
 	"runtime/api/models"
 )
 
-var retrieveUserStatement = `SELECT email, first_name, last_name FROM users WHERE email='$1';`
+var retrieveUserStatement = `SELECT email, first_name, last_name FROM users WHERE email=$1;`
 
 func (store Datastore) RetrieveUser(email string) (models.UserInfo, error) {
 	db := store.Db

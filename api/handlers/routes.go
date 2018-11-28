@@ -5,5 +5,6 @@ func initBaseRoutes(s *srv) {
 }
 
 func initUserRoutes(s *srv) {
+	s.Router.HandleFunc("/users", s.CheckContentType(s.AuthorizeRequest(s.RetrieveUserHandler))).Methods("GET")
 	s.Router.HandleFunc("/users", s.CheckContentType(s.CreateUserHandler)).Methods("POST")
 }

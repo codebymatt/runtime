@@ -14,7 +14,7 @@ func TestShouldRetrieveUser(t *testing.T) {
 	bearerToken := "Bearer " + constants.ValidTestToken
 
 	req.Header.Set("Content-Type", constants.ApiContentType)
-	req.Header.Set("Authentication", bearerToken)
+	req.Header.Set("Authorization", bearerToken)
 
 	rec := httptest.NewRecorder()
 	handler := http.HandlerFunc(ts.CheckContentType(ts.AuthorizeRequest(ts.RetrieveUserHandler)))
@@ -23,7 +23,7 @@ func TestShouldRetrieveUser(t *testing.T) {
 	expectedBody := `{"Status":200,"User":{"email":"mgscott@dundermifflin.com",` +
 		`"first_name":"Michael","last_name":"Scott"}}`
 
-	authHeader := rec.Header().Get("Authentication")
+	authHeader := rec.Header().Get("Authorization")
 	if strings.TrimPrefix(authHeader, "Bearer ") == "" {
 		t.Error("Expected JWT to be present")
 	}
@@ -37,7 +37,7 @@ func TestShouldNotRetrieveUserWithExpiredJWT(t *testing.T) {
 	bearerToken := "Bearer " + constants.InvalidExpiredToken
 
 	req.Header.Set("Content-Type", constants.ApiContentType)
-	req.Header.Set("Authentication", bearerToken)
+	req.Header.Set("Authorization", bearerToken)
 
 	rec := httptest.NewRecorder()
 	handler := http.HandlerFunc(ts.CheckContentType(ts.AuthorizeRequest(ts.RetrieveUserHandler)))
@@ -45,7 +45,7 @@ func TestShouldNotRetrieveUserWithExpiredJWT(t *testing.T) {
 	handler.ServeHTTP(rec, req)
 	expectedBody := `{"Status":401,"Message":"invalid_session"}`
 
-	authHeader := rec.Header().Get("Authentication")
+	authHeader := rec.Header().Get("Authorization")
 	if strings.TrimPrefix(authHeader, "Bearer ") != "" {
 		t.Error("Did not expect JWT to be present")
 	}
@@ -59,7 +59,7 @@ func TestShouldNotRetrieveUserWithInvalidJWT(t *testing.T) {
 	bearerToken := "Bearer " + constants.InvalidSignedToken
 
 	req.Header.Set("Content-Type", constants.ApiContentType)
-	req.Header.Set("Authentication", bearerToken)
+	req.Header.Set("Authorization", bearerToken)
 
 	rec := httptest.NewRecorder()
 	handler := http.HandlerFunc(ts.CheckContentType(ts.AuthorizeRequest(ts.RetrieveUserHandler)))
@@ -67,7 +67,7 @@ func TestShouldNotRetrieveUserWithInvalidJWT(t *testing.T) {
 	handler.ServeHTTP(rec, req)
 	expectedBody := `{"Status":401,"Message":"invalid_session"}`
 
-	authHeader := rec.Header().Get("Authentication")
+	authHeader := rec.Header().Get("Authorization")
 	if strings.TrimPrefix(authHeader, "Bearer ") != "" {
 		t.Error("Did not expect JWT to be present")
 	}

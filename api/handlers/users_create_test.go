@@ -27,7 +27,7 @@ func TestShouldCreateUser(t *testing.T) {
 	expectedBody := `{"Status":200,"User":{"email":"manager@schrutefarms.org",` +
 		`"first_name":"Dwight","last_name":"Schrute"}}`
 
-	authHeader := rec.Header().Get("Authentication")
+	authHeader := rec.Header().Get("Authorization")
 	if strings.TrimPrefix(authHeader, "Bearer ") == "" {
 		t.Error("Expected JWT to be present")
 	}

@@ -31,12 +31,7 @@ func (s *srv) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	valid, err := authentication.Authenticate(s.Store, user.Email, user.Password)
-	if err != nil {
-		s.handleBadRequest(w, r)
-		return
-	}
-
-	if !valid {
+	if err != nil || !valid {
 		s.handleInvalidLogin(w, r)
 		return
 	}

@@ -1,30 +1,40 @@
 package handlers
 
 var testUserData = `{
-	"first_name":"Dwight",
-	"last_name":"Schrute",
-	"email":"manager@schrutefarms.org",
-	"password":"youllneverguessthismose"
+	"first_name":"Michael",
+	"last_name":"Scott",
+	"email":"mgscott@dundermifflin.com",
+	"password":"worldsbestboss"
+}`
+
+var testLoginData = `{
+	"email":"mgscott@dundermifflin.com",
+	"password":"worldsbestboss"
+}`
+
+var badLoginData = `{
+	"email":"mgscott@dundermifflin.com",
+	"password":"idoneguesseditMichael"
 }`
 
 var testUserDataWithID = `{
 	"id": 100000,
-	"first_name":"Dwight",
-	"last_name":"Schrute",
-	"email":"manager@schrutefarms.org",
-	"password":"youllneverguessthismose"
+	"first_name":"Michael",
+	"last_name":"Scott",
+	"email":"mgscott@dundermifflin.com",
+	"password":"worldsbestboss"
 }`
 
 var testUserDataWithoutPassword = `{
 	"id": 100000,
-	"first_name":"Dwight",
-	"last_name":"Schrute",
-	"email":"manager@schrutefarms.org"
+	"first_name":"Michael",
+	"last_name":"Scott",
+	"email":"mgscott@dundermifflin.com"
 }`
 
 var testUserDataWithoutEmail = `{
 	"id": 100000,
-	"first_name":"Dwight",
-	"last_name":"Schrute",
-	"password":"youllneverguessthismose"
+	"first_name":"Michael",
+	"last_name":"Scott",
+	"password":"worldsbestboss"
 }`

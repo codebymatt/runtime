@@ -3,7 +3,11 @@ package handlers
 import (
 	"errors"
 	"fmt"
+	"runtime/api/constants"
 	"runtime/api/models"
+	"strconv"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 type testDataStore struct {
@@ -36,6 +40,21 @@ func (store testDataStore) RetrieveUser(email string) (models.UserInfo, error) {
 		Email:     email,
 		FirstName: "Michael",
 		LastName:  "Scott",
+	}
+
+	return user, nil
+}
+
+func (store testDataStore) RetrieveUserCredentials(string) (models.User, error) {
+	bcryptCost, _ := strconv.Atoi(constants.BcryptCost)
+	fakePassword := "worldsbestboss"
+
+	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(fakePassword), bcryptCost)
+	hashedString := string(hashedPassword)
+
+	user := models.User{
+		Email:    "mgscott@dundermifflin.com",
+		Password: hashedString,
 	}
 
 	return user, nil

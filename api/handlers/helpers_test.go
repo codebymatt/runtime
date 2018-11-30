@@ -103,6 +103,29 @@ func TestUnauthorizedRequestIsHandledCorrectly(t *testing.T) {
 	}
 }
 
+func TestHandleInvalidLoginIsHandledCorrectly(t *testing.T) {
+	req, _ := http.NewRequest("GET", "/", nil)
+
+	rec := httptest.NewRecorder()
+	handler := http.HandlerFunc(ts.handleInvalidLogin)
+	handler.ServeHTTP(rec, req)
+
+	expectedBody := InvalidLoginMessage
+
+	utils.AssertStringsMatch(t, expectedBody, rec.Body.String())
+
+	if status := rec.Code; status != http.StatusNotFound {
+		t.Errorf("Received wrong status code: wanted %v, got %v", http.StatusNotFound, status)
+	}
+
+	if contentType := rec.Header().Get("Content-Type"); contentType != "application/json" {
+		t.Errorf(
+			"Received wrong content type: wanted %v but got %v",
+			"application/json", contentType,
+		)
+	}
+}
+
 func TestJWTIsRetrievedFromHeader(t *testing.T) {
 	req, _ := http.NewRequest("GET", "/", nil)
 	bearer := "Bearer " + constants.ValidTestToken

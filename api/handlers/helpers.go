@@ -18,6 +18,7 @@ var ResourceNotFoundMessage = `{"Status":404,"Message":"resource_not_found"}`
 var UserNotAuthorizedMessage = `{"Status":401,"Message":"invalid_session"}`
 var UnacceptedMediaTypeMessage = `{"Status":415,"Message":"invalid_content_type"}`
 var BadRequestMessage = `{"Status":400,"Message":"invalid_data"}`
+var InvalidLoginMessage = `{"Status":404,"Message":"invalid_login"}`
 
 func (s *srv) handle404(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", constants.ApiContentType)
@@ -63,6 +64,22 @@ func (s *srv) handleUnauthorizedRequest(w http.ResponseWriter, r *http.Request) 
 	}
 
 	w.WriteHeader(http.StatusUnauthorized)
+	fmt.Fprintf(w, responseBody)
+}
+
+func (s *srv) handleInvalidLogin(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", constants.ApiContentType)
+
+	message := "invalid_login"
+	responseBody, err := createJSONResponse(http.StatusNotFound, message)
+
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		fmt.Fprintf(w, InvalidLoginMessage)
+		return
+	}
+
+	w.WriteHeader(http.StatusNotFound)
 	fmt.Fprintf(w, responseBody)
 }
 

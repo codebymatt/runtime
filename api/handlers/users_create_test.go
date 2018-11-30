@@ -24,8 +24,8 @@ func TestShouldCreateUser(t *testing.T) {
 	handler := http.HandlerFunc(ts.CreateUserHandler)
 
 	handler.ServeHTTP(rec, req)
-	expectedBody := `{"Status":200,"User":{"email":"manager@schrutefarms.org",` +
-		`"first_name":"Dwight","last_name":"Schrute"}}`
+	expectedBody := `{"Status":200,"User":{"email":"mgscott@dundermifflin.com",` +
+		`"first_name":"Michael","last_name":"Scott"}}`
 
 	authHeader := rec.Header().Get("Authorization")
 	if strings.TrimPrefix(authHeader, "Bearer ") == "" {
@@ -98,7 +98,7 @@ func TestUserJSONDataShouldBeDeserializedSuccessfully(t *testing.T) {
 		t.Errorf("Unmarshalling of user failed: %v", err)
 	}
 
-	if user.Email != "manager@schrutefarms.org" {
+	if user.Email != "mgscott@dundermifflin.com" {
 		t.Errorf("Unmarshalling of user failed, email field is incorrect")
 	}
 }

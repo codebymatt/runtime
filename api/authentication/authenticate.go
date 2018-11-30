@@ -14,7 +14,8 @@ func Authenticate(store models.DataAccessLayer, email, inputPassword string) (bo
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(inputPassword))
 	if err != nil {
-		return false, err
+		// TODO: Figure out how to return false, but not handle err if password doesn't match?
+		return false, nil
 	}
 
 	return true, nil

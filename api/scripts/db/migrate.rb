@@ -32,9 +32,20 @@ migrations = Dir.entries($migrations_dir) - ['.', '..']
 
 connection_string = "dbname=#{db_name} user=#{db_user} password=#{db_password}"
 
+def create_migrations_table(conn, initial_migration)
+    puts 'Creating migrations table...'
+    sql = File.open($migrations_dir + '/' + initial_migration, 'rb', &:read)
+    begin
+        conn.exec(sql)
+        puts 'Created migrations table'
+    rescue PG::Error => e
+        puts e
+    end
+end
+
 def execute_migration(conn, index, migration_name)
     puts "Running #{migration_name}"
-    sql = File.open($migrations_dir + '/' + migration_name, 'rb') { |file| file.read }
+    sql = File.open($migrations_dir + '/' + migration_name, 'rb', &:read)
     begin
         conn.exec(sql)
         update_migrations = "INSERT INTO migrations (index, date_applied)\
@@ -64,6 +75,7 @@ end
 
 begin
     connection = PG.connect(connection_string)
+    create_migrations_table(connection, migrations[0])
     if connection.exec(CHECK_IF_TABLE_EXISTS).fields[0] == 'exists'
         res = connection.exec(GET_LAST_MIGRATION)
         if res.num_tuples == 0

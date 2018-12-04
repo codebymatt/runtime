@@ -11,6 +11,13 @@
 - Write integration tests for handler paths
 - Write integration tests for DB queries
 
+## Database Setup
+
+### Test DB
+- Test user should own the test db
+- Test user should have 'create database' permissions
+- Test user should have ALL privileges on test db
+- Teardown script should NEVER be run on any db except test
 
 ## Database Config
 

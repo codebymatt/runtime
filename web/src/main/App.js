@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
-import Landing from './components/Landing'
+import { Switch, Route } from 'react-router-dom';
 import './App.sass';
+
+import Landing from './components/Landing'
+import Login from './components/Login';
 
 class App extends Component {
   render() {
     return (
       <div className='app-container'>
-        <Landing />
+        <Switch>
+          <Route exact path='/' component={Landing} />
+          <Route exact path='/login' component={Login} />
+        </Switch>
       </div>
     );
   }

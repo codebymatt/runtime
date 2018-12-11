@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
+
+import SubmitButton from './SubmitButton.js';
 import './SignupCard.sass';
 
 class SignupCard extends Component {
+    signUp = () => {
+        console.log('Signing up...')
+    }
+
     render() {
         return(
             <div className='signup-wrapper'>
-                <form class='signup-form'>
+                <form className='signup-form'>
                     <div className='name-wrapper'>
                         <input name='firstName' placeholder='First Name'/>
                         <input name='lastName' placeholder='Last Name'/>
@@ -28,7 +34,11 @@ class SignupCard extends Component {
                         name='confirmPassword'
                         placeholder='Confirm Password'
                     />
-                    <button type='submit' className='signup-button'>Sign Up</button>
+                    <SubmitButton
+                        onPress={this.signUp}
+                        className='submit-button'
+                        text="Sign Up"
+                    />
                 </form>
             </div>
         );

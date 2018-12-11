@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
+
 import './LoginCard.sass';
+import SubmitButton from './SubmitButton';
 
 class LoginCard extends Component {
+    authenticateUser = () => {
+        this.props.history.push('/dashboard');
+    };
+
     render() {
         return(
             <div className='login-card-wrapper'>
-                <form class='login-form'>
+                <form className='login-form'>
                     <input
                         className='long-input'
                         type='email'
@@ -18,11 +25,15 @@ class LoginCard extends Component {
                         name='password'
                         placeholder='Password'
                     />
-                    <button type='submit' className='login-button'>Login</button>
+                    <SubmitButton
+                        onPress={this.authenticateUser}
+                        className='submit-button'
+                        text="Login"
+                    />
                 </form>
             </div>
         );
     }
 }
 
-export default LoginCard;
+export default withRouter(LoginCard);

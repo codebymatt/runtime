@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './App.sass';
 
+import Dashboard from './components/Dashboard';
 import Landing from './components/Landing'
 import Login from './components/Login';
 
@@ -12,6 +13,7 @@ class App extends Component {
         <Switch>
           <Route exact path='/' component={Landing} />
           <Route exact path='/login' component={Login} />
+          <Route exact path='/dashboard' component={Dashboard} />
         </Switch>
       </div>
     );

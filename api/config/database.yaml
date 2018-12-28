@@ -1,0 +1,9 @@
+dev:
+  db_name:      "runtime_dev_db"
+  db_password:  "runtime_dev"
+  db_user:      "runtime_dev"
+
+test:
+  db_name:      "runtime_test_db"
+  db_password:  "runtime_test"
+  db_user:      "runtime_test"

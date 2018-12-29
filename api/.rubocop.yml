@@ -6,3 +6,6 @@ Style/StringLiterals:
 
 Layout/IndentationWidth:
   Width: 2
+
+Layout/TrailingBlankLines:
+  Enabled: false

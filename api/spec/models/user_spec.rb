@@ -31,15 +31,8 @@ describe User, type: :model do
       end
     end
 
-    context "with a too short password" do
+    context "with too short a password" do
       before { user.password = "2short" }
-      it "does not succeed" do
-        expect(user.save).to be(false)
-      end
-    end
-
-    context "with a too long password" do
-      before { user.password = Faker::Lorem.characters(73) }
       it "does not succeed" do
         expect(user.save).to be(false)
       end

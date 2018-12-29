@@ -9,3 +9,9 @@ Layout/IndentationWidth:
 
 Layout/TrailingBlankLines:
   Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false

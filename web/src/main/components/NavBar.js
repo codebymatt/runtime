@@ -11,10 +11,10 @@ class NavBar extends Component {
         return (
             <div className="nav-wrapper">
                 <div className="header-link current-page">
-                    <img alt="Dashboard" src={lineGraph}/>
+                    <Link to="/dashboard"><img alt="" src={lineGraph}/></Link>
                 </div>
                 <div className="header-link">
-                    <img alt="Settings" src={gear}/>
+                    <Link to="/settings"><img alt="" src={gear}/></Link>
                 </div>
             </div>
         );

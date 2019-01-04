@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import './Header.sass'
 
@@ -9,7 +10,7 @@ class Header extends Component {
         return(
             <div>
                 <div className='header-wrapper'>
-                    <h2>runtime</h2>
+                    <Link className="title-link" to="/" ><h2>runtime</h2></Link>
                     <NavBar/>
                 </div>
             </div>

@@ -38,7 +38,7 @@ describe V1::UsersController, type: :request do
       end
 
       it "should fail" do
-        expect(response).to have_http_status(:error)
+        expect(response).to have_http_status(400)
       end
     end
 

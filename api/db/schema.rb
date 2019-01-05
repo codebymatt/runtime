@@ -15,12 +15,6 @@ ActiveRecord::Schema.define(version: 2018_12_29_100414) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "migrations", id: :serial, force: :cascade do |t|
-    t.integer "index"
-    t.datetime "date_applied"
-    t.index ["index"], name: "migrations_index_key", unique: true
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "first_name"

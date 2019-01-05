@@ -13,7 +13,7 @@ class Settings extends Component {
           <div className="notice-wrapper">
             <div className="notice">
               <p>
-                runtime is still in active development.<br/>
+                <b>runtime</b> is still in active development.<br/>
                 You can see your dashboard <Link to="/dashboard">here</Link>.
               </p>
             </div>

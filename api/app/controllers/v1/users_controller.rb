@@ -3,9 +3,9 @@ module V1
     def create
       @user = User.new(new_user_params)
       if @user.save
-        render(status: :ok, json: { user: @user.as_json(only: [:email, :first_name, :last_name]) })
+        render_success(200, user: @user.as_json(only: [:email, :first_name, :last_name]))
       else
-        render(status: 400, json: { message: "User could not be created" })
+        render_failure(400, "user_not_created")
       end
     end
 

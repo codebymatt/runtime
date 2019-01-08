@@ -17,14 +17,14 @@ Further, more specific documentation can be found in the relevant subfolders.
 
 ### Things to note
 
-The project currently consists of a Go API, a React frontend, and a Postgres DB.
+The project currently consists of a Ruby and Rails API, a React frontend, and a PostgreSQL DB.
 
 The primary target of the web frontend is desktop, however it's very important that it also be
 mobile responsive. This will mainly be addressed in the design phase.
 
-Full, complete testing is paramount as continuous integration and deployment is a
-reasonably early target. **TEST ~~ALL THE THINGS~~ AS MUCH AS YOU CAN. UNIT, INTEGRATION, ~~ACCEPTANCE~~<sup>maybe later</sup>, YOU NAME IT.
-USE TDD WHERE IT MAKES SENSE. ALL CAPS COS THIS IS VERY IMPORTANT.**
+I love having tests that cover every use case, but I also love the idea of actually shipping code,
+so I'm not looking for perfect test coverage. I do my best to use TDD where it makes sense, but also
+try not to get lost in the testing weeds. 
 
 All code will live in the same repository.
 
@@ -32,7 +32,8 @@ Features should be developed in short, well encapsulated bursts, and should idea
 between technical and user features (where it makes sense).
 
 A balance needs to be found between beautifully architected, elegant code, and code that is
-shipped (my eternal struggle. Not that I write elegant code. Or ship things for that matter).
+shipped (my eternal struggle). Not that I write elegant code, or ship things often for that matter,
+but these are things I'm continuously working on.
 It's my hope that working in smaller bursts will allow for this; sticking to YAGNI is
 encouraged.
 

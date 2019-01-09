@@ -20,8 +20,7 @@ module V1
       cookies[:_runtime_session] = {
         value: @user.session.token,
         httponly: true,
-        expires: Time.now + 7.days,
-        secure: true
+        expires: Time.now + 7.days
       }
     end
   end

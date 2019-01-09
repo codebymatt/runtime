@@ -23,6 +23,10 @@ describe V1::UsersController, type: :request do
       it "responds successfully" do
         expect(response).to have_http_status(:ok)
       end
+
+      it "has session cookie set" do
+        expect(cookies[:_runtime_session]).to be_present
+      end
     end
 
     context "without a unique email" do

@@ -2,7 +2,9 @@ require "rails_helper"
 
 describe Session, type: :model do
   let(:original_user) { create(:user) }
-  let(:valid_session) { Session.create(user: original_user) }
+  let(:valid_session) { create(:session, user: original_user) }
+
+  before(:each) { original_user.session.destroy }
 
   context "when creating a session" do
     let(:secondary_user) { create(:user) }
@@ -22,7 +24,7 @@ describe Session, type: :model do
     end
 
     context "with duplicate user id" do
-      let(:create_invalid_session) { Session.create!(user: original_user)}
+      let(:create_invalid_session) { Session.create!(user: original_user) }
       before { valid_session }
 
       it "fails" do

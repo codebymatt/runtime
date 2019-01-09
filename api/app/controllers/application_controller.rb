@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::API
+  include ActionController::Cookies
+
   def render_success(status = 204, opts = {})
     render(status: status, json: opts)
   end

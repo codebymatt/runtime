@@ -5,8 +5,17 @@ describe User, type: :model do
     let(:user) { build(:user) }
 
     context "with valid input" do
+      let(:created_user) do
+        user.save
+        user.reload
+      end
+
       it "is successful" do
         expect(user.save).to be(true)
+      end
+
+      it "creates a session after creation" do
+        expect(created_user.session).to be_present
       end
     end
 

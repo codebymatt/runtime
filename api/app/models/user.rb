@@ -6,4 +6,12 @@ class User < ApplicationRecord
   validates :password, length: { minimum: 8, maximum: 72 }
 
   validates_format_of :email, with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
+
+  after_create :create_session
+
+  private
+
+  def create_session
+    Session.create(user: self)
+  end
 end

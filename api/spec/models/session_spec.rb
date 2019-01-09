@@ -50,4 +50,21 @@ describe Session, type: :model do
       expect(Session.find_by_user_id(user_id)).not_to be_present
     end
   end
+
+  context "when checking a session's validity" do
+    let(:valid_session) { create(:session, user: original_user) }
+
+    it "accepts valid sesions" do
+      expect(valid_session.still_valid?).to be(true)
+    end
+
+    context "when session is invalid" do
+      let(:invalid_session) { create(:session, user: original_user) }
+      before { invalid_session.update(expiry_date: Time.now - 1.day) }
+
+      it "returns false" do
+        expect(invalid_session.still_valid?).to be(false)
+      end
+    end
+  end
 end

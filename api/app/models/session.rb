@@ -5,6 +5,10 @@ class Session < ApplicationRecord
   attr_readonly :token
   before_create :assign_expiry_date
 
+  def still_valid?
+    expiry_date > Time.now
+  end
+
   private
 
   def assign_expiry_date

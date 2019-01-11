@@ -1,1 +1,3 @@
 # Top level gitignore: see lower level folders for specific configs
+
+.DS_Store

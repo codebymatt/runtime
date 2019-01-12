@@ -44,23 +44,23 @@ describe V1::UsersController, type: :request do
   end
 
   context "with an invalid cookie" do
-    let(:expected_not_found_response) { { reason: "resource_not_found" }.to_json }
+    let(:expected_unauthorized_response) { { reason: "unauthorized_request" }.to_json }
     before do
       cookies[:_runtime_session] = "abcdefghijklmnop"
       get "/v1/user"
     end
 
     it "returns resource not found" do
-      expect(response).to have_http_status(:not_found)
+      expect(response).to have_http_status(:unauthorized)
     end
 
     it "returns correct response" do
-      expect(response.body).to eq(expected_not_found_response)
+      expect(response.body).to eq(expected_unauthorized_response)
     end
   end
 
   context "with an expired cookie" do
-    let(:expected_not_found_response) { { reason: "resource_not_found" }.to_json }
+    let(:expected_unauthorized_response) { { reason: "unauthorized_request" }.to_json }
 
     before do
       login(user)
@@ -69,11 +69,11 @@ describe V1::UsersController, type: :request do
     end
 
     it "returns resource not found" do
-      expect(response).to have_http_status(:not_found)
+      expect(response).to have_http_status(:unauthorized)
     end
 
     it "returns correct response" do
-      expect(response.body).to eq(expected_not_found_response)
+      expect(response.body).to eq(expected_unauthorized_response)
     end
   end
 end

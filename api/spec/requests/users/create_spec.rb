@@ -14,7 +14,7 @@ describe V1::UsersController, type: :request do
 
     context "with valid credentials" do
       let(:created_user_present) { User.find_by_email(data[:user][:email]).present? }
-      before { post "/v1/users", params: data }
+      before { post "/v1/user", params: data }
 
       it "should succeed" do
         expect(created_user_present).to be(true)
@@ -34,7 +34,7 @@ describe V1::UsersController, type: :request do
 
       before do
         create_original_user
-        post "/v1/users", params: data
+        post "/v1/user", params: data
       end
 
       it "should not create a duplicate user" do

@@ -9,6 +9,10 @@ class User < ApplicationRecord
 
   after_create :create_session
 
+  def self.with_session_token(token)
+    joins(:session).where("sessions.token = ? AND sessions.expiry_date > ? ", token, Time.now).first
+  end
+
   private
 
   def create_session

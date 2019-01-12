@@ -8,6 +8,6 @@ Rails.application.routes.draw do
     post "/login", to: "authentication#login", as: :login, only: [:post]
     post "/logout", to: "authentication#logout", as: :logout, only: [:post]
 
-    resources :users, only: [:show, :create, :update, :destroy]
+    resource :user, only: [:show, :create, :update, :destroy]
   end
 end

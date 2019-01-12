@@ -10,9 +10,17 @@ class ApplicationController < ActionController::API
     render(status: status, json: { reason: message })
   end
 
+  def render_json_404
+    render(status: 404, json: { reason: "resource_not_found"})
+  end
+
+  def check_authorization
+    render_failure(401, "unauthorized_request") unless cookies[:_runtime_session]
+  end
+
   def current_user
     return unless cookies[:_runtime_session]
-    @current_user ||= User.find_by(session[:token] == cookies[:_runtime_session])
+    @current_user ||= User.with_session_token(cookies[:_runtime_session])
   end
 
   private

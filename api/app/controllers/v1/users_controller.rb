@@ -21,9 +21,17 @@ module V1
     end
 
     def update
-      return render_failure(400, "Can't update password through API") if params_has_password_data?
+      return render_failure(400, "no_password_update_allowed") if params_has_password_data?
       current_user.update!(update_user_params)
       render_success(200, user: safely_serialized_user)
+    end
+
+    def destroy
+      if current_user.destroy
+        cookies.delete(:_runtime_session)
+        return render_success(200, message: "user_destroyed")
+      end
+      render_failure(400, "user_not_destroyed")
     end
 
     private

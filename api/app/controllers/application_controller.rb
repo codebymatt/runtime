@@ -10,6 +10,11 @@ class ApplicationController < ActionController::API
     render(status: status, json: { reason: message })
   end
 
+  def current_user
+    return unless cookies[:_runtime_session]
+    @current_user ||= User.find_by(session[:token] == cookies[:_runtime_session])
+  end
+
   private
 
   def ensure_json_request

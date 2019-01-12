@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     get "/healthcheck", to: "indexes#healthcheck", as: :healthcheck, only: [:get]
 
     post "/login", to: "authentication#login", as: :login, only: [:post]
+    post "/logout", to: "authentication#logout", as: :logout, only: [:post]
 
     resources :users, only: [:show, :create, :update, :destroy]
   end

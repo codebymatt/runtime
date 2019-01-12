@@ -8,17 +8,11 @@ describe V1::UsersController, type: :request do
       before { login(user) }
 
       context "when setting email to nil" do
-        let!(:original_email) { user.email }
         let(:update_data) { { user: { email: nil } } }
+        let(:nil_email_request) { put "/v1/user", params: update_data }
 
-        before { put "/v1/user", params: update_data }
-
-        it "returns bad request" do
-          expect(response).to have_http_status(:bad_request)
-        end
-
-        it "doesn't alter email" do
-          expect(user.reload.email).to eq(original_email)
+        it "throws an ActiveRecord error" do
+          expect { nil_email_request }.to raise_error(ActiveRecord::RecordInvalid)
         end
       end
 
@@ -66,6 +60,27 @@ describe V1::UsersController, type: :request do
 
         it "persists email data" do
           expect(user.reload.email).to eq(new_email)
+        end
+      end
+
+      context "with valid data without email" do
+        let(:new_first_name) { "Dwight K" }
+        let(:new_data) do
+          {
+            user: {
+              first_name: new_first_name
+            }
+          }
+        end
+
+        before { put "/v1/user", params: new_data }
+
+        it "returns successfully" do
+          expect(response).to have_http_status(:ok)
+        end
+
+        it "persists non-email data" do
+          expect(user.reload.first_name).to eq(new_first_name)
         end
       end
     end

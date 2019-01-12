@@ -22,7 +22,6 @@ module V1
 
     def update
       return render_failure(400, "Can't update password through API") if params_has_password_data?
-      return render_failure(400, "Email can't be nil") if update_user_params[:email].nil?
       current_user.update!(update_user_params)
       render_success(200, user: safely_serialized_user)
     end

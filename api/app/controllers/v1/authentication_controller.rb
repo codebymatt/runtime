@@ -31,9 +31,17 @@ module V1
     end
 
     def handle_successful_user_authentication
-      token = @user.session.present? ? @user.session.token : Session.create!(user: @user).token
-      cookies[:_runtime_session] = token
+      cookies[:_runtime_session] = session_token
       render_success(200, user: current_user.as_json(only: [:email, :first_name, :last_name]))
+    end
+
+    def session_token
+      if @user.session.present? && @user.session.still_valid?
+        @user.session.token
+      else
+        @user.session&.destroy!
+        Session.create!(user: @user).token
+      end
     end
   end
 end

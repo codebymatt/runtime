@@ -2,12 +2,13 @@ require "rails_helper"
 
 describe V1::AuthenticationController, type: :request do
   let!(:user) { create(:user, password: "elephant") }
+  # let!(:old_token) { user.session.token }
 
   context "when logging user in" do
+    let(:valid_creds) { { credentials: { email: user.email, password: "elephant" } } }
     before { Session.find_by_user_id(user.id).destroy }
 
     context "with valid credentials" do
-      let(:valid_creds) { { credentials: { email: user.email, password: "elephant" } } }
       let(:expected_user_data) do
         {
           user: {
@@ -17,6 +18,7 @@ describe V1::AuthenticationController, type: :request do
           }
         }.to_json
       end
+
       before do
         post "/v1/login", params: valid_creds
       end
@@ -26,11 +28,25 @@ describe V1::AuthenticationController, type: :request do
       end
 
       it "sets a cookie" do
-        expect(cookies["_runtime_session"]).to be_present
+        expect(cookies[:_runtime_session]).to be_present
       end
 
       it "returns user data" do
         expect(response.body).to eq(expected_user_data)
+      end
+
+    end
+
+    context "when the users old session isn't valid" do
+      let(:old_token) { user.session.token }
+      before do
+        Session.create(user: user).update!(expiry_date: Time.now - 2.weeks)
+        old_token
+        post "/v1/login", params: valid_creds
+      end
+
+      it "generates a new session cookie" do
+        expect(cookies[:_runtime_session]).not_to eq(old_token)
       end
     end
 

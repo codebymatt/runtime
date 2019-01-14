@@ -34,7 +34,6 @@ describe V1::AuthenticationController, type: :request do
       it "returns user data" do
         expect(response.body).to eq(expected_user_data)
       end
-
     end
 
     context "when the users old session isn't valid" do

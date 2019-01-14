@@ -35,7 +35,7 @@ module Api
     config.middleware.use ActionDispatch::Cookies
     # config.middleware.use(
     #   ActionDispatch::Session::CookieStore,
-    #   key: "_rntime_session",
+    #   key: "_runtime_session",
     #   expires: 7.days,
     #   httponly: true,
     #   secure: true

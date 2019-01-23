@@ -4,9 +4,9 @@ import './SubmitButton.sass';
 
 const SubmitButton = (props) => {
     return (
-        <div onClick={props.onPress} className='submit-button'>
+        <button type='submit' onClick={props.onPress} className='submit-button'>
             {props.text}
-        </div>
+        </button>
     );
 }
 

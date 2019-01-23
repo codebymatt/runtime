@@ -13,7 +13,9 @@ class LoginCard extends Component {
     this.state = { 'email': '', 'password': '' };
   }
 
-  authenticateUser = () => {
+  authenticateUser = (event) => {
+    console.log("HITTING");
+    event.preventDefault();
     const data = { 'credentials': { 'email': this.state.email, 'password': this.state.password } };
     axios.post('http://localhost:3000/v1/login.json', data, { withCredentials: true, origin: 'localhost:3000' }).then((response) => {
       console.log(response)

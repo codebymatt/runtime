@@ -6,6 +6,9 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.sass';
 import App from './main/App.js';
 import * as serviceWorker from './serviceWorker';
+import Axios from 'axios';
+
+Axios.defaults.withCredentials = true
 
 ReactDOM.render((
     <BrowserRouter>

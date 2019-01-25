@@ -23,7 +23,7 @@ class LoginCard extends Component {
     }).catch((error) => {
       console.log(error);
     })
-  };
+  }
 
   handleEmailChange = (event) => {
     this.setState({ 'email': event.target.value })

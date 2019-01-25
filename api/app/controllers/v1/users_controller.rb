@@ -3,8 +3,8 @@ module V1
     before_action :check_authorization, except: [:create]
 
     def create
-      @user = User.new(new_user_params)
-      if @user.save
+      @user = User.create(new_user_params)
+      if @user.valid?
         set_secure_session_cookie
         render_success(200, user: @user.as_json(only: [:email, :first_name, :last_name]))
       else
@@ -37,7 +37,8 @@ module V1
     private
 
     def new_user_params
-      params.require(:user).permit(:email, :password, :first_name, :last_name)
+      params.require(:user)
+            .permit(:email, :password, :password_confirmation, :first_name, :last_name)
     end
 
     def safely_serialized_user

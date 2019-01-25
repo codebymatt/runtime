@@ -9,6 +9,10 @@ import * as serviceWorker from './serviceWorker';
 import Axios from 'axios';
 
 Axios.defaults.withCredentials = true
+Axios.defaults.baseURL = 'http://localhost:3000'
+Axios.defaults.headers.post['Content-Type'] = 'application/json';
+Axios.defaults.headers.get['Content-Type'] = 'application/json';
+Axios.defaults.headers.put['Content-Type'] = 'application/json';
 
 ReactDOM.render((
     <BrowserRouter>

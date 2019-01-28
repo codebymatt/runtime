@@ -2,7 +2,7 @@
 lock "~> 3.11.0"
 
 # Change these
-server "46.101.36..219", port: 8080, roles: [:web, :app, :db], primary: true
+server "46.101.36.219", port: 22, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        "https://github.com/codebymatt/runtime.git"
 set :application,     "runtime_api"

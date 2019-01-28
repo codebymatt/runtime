@@ -21,3 +21,6 @@ Style/SymbolArray:
 
 Layout/EmptyLineAfterGuardClause:
   Enabled: false
+
+Style/BracesAroundHashParameters:
+  Enabled: true

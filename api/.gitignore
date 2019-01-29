@@ -38,7 +38,7 @@ pickle-email-*.html
 
 .byebug_history
 
-/config/database.yml
+# /config/database.yml
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key

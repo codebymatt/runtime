@@ -1,0 +1,28 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: runtime_dev_db
+  username: runtime_dev
+  password: runtime_dev
+  host: localhost
+  port: 5432
+
+test:
+  <<: *default
+  database: runtime_test_db
+  username: runtime_test
+  password: runtime_test
+  host: localhost
+  port: 5432
+
+production:
+  <<: *default
+  database: <%= ENV["RUNTIME_DB_NAME"] %>
+  username: <%= ENV["RUNTIME_DB_USER"] %>
+  password: <%= ENV["RUNTIME_DB_PASSWORD"] %>
+  host: <%= ENV["RUNTIME_DB_HOST"] %>
+  port: <%= ENV["RUNTIME_DB_PORT"] %>

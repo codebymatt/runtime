@@ -5,6 +5,7 @@ lock "~> 3.11.0"
 server "46.101.36.219", port: 22, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        "https://github.com/codebymatt/runtime.git"
+set :repo_tree,       "api"
 set :application,     "runtime_api"
 set :user,            "prod"
 set :puma_threads,    [4, 16]
@@ -24,7 +25,9 @@ set :puma_error_log,  "#{release_path}/log/puma.access.log"
 set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/id_rsa.pub) }
 set :puma_preload_app, true
 set :puma_worker_timeout, nil
-set :puma_init_active_record, true  # Change to false when not using ActiveRecord
+set :puma_init_active_record, true # Change to false when not using ActiveRecord
+
+set :assets_roles, []
 
 ## Defaults:
 # set :scm,           :git

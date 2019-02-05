@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 
 import './Login.sass';
 
@@ -7,15 +8,21 @@ import SignupPrompt from './SignupPrompt';
 import LoginCard from './LoginCard';
 
 class Login extends Component {
+    constructor(props) {
+      super(props);
+      if (this.props.loggedIn) {
+        this.props.history.push('/dashboard');
+      }
+    }
     render() {
         return(
             <div className='login-wrapper'>
                 <LandingInfo />
-                <LoginCard setUser={this.props.setUser} />
+                <LoginCard setUser={this.props.setUser} persistLogin={this.props.persistLogin} />
                 <SignupPrompt/>
             </div>
         );
     }
 }
 
-export default Login;
+export default withRouter(Login);

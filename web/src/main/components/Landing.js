@@ -7,13 +7,13 @@ import './Landing.sass';
 
 class Landing extends React.Component {
     render() {
-        return (
+      return (
         <div className='landing-wrapper'>
-            <LandingInfo />
-            <SignupCard setUser={ this.props.setUser }/>
-            <LoginPrompt/>
+          <LandingInfo />
+          <SignupCard setUser={ this.props.setUser } />
+          <LoginPrompt />
         </div>
-        );
+      );
     }
 }
 

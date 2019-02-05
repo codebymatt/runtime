@@ -6,6 +6,12 @@ import './Dashboard.sass';
 import Header from './Header';
 
 class Dashboard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { user: this.props.history.location.state.user };
+    console.log(this.state.user);
+  }
+
   render() {
     return(
       <div className='dashboard-wrapper'>

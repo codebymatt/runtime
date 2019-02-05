@@ -9,7 +9,6 @@ class LoginCard extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = { 'email': '', 'password': '' };
   }
 
@@ -18,8 +17,7 @@ class LoginCard extends Component {
     event.preventDefault();
     const data = { 'credentials': { 'email': this.state.email, 'password': this.state.password } };
     axios.post('http://localhost:3000/v1/login.json', data, { withCredentials: true, origin: 'localhost:3000' }).then((response) => {
-      console.log(response)
-      this.props.history.push('/dashboard');
+      this.props.history.push('/dashboard', { user: response.data.user });
     }).catch((error) => {
       console.log(error);
     })

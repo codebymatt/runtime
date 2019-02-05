@@ -8,14 +8,25 @@ import Login from './components/Login';
 import Settings from './components/Settings';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { user: JSON.parse(localStorage.getItem('user')) || {} }
+  }
+
+  setUser = (userObject) => {
+    this.setState(
+      { user: userObject }, () =>
+        localStorage.setItem('user', JSON.stringify(this.state.user))
+    );
+  }
   render() {
     return (
       <div className='app-container'>
         <Switch>
-          <Route exact path='/' component={Landing} />
-          <Route exact path='/login' component={Login} />
-          <Route exact path='/dashboard' component={Dashboard} />
-          <Route exact path='/settings' component={Settings} />
+          <Route exact path='/' render={( ) => <Landing setUser={this.setUser} /> } />
+          <Route exact path='/login' render={( ) => <Login setUser={this.setUser}/> } />
+          <Route exact path='/dashboard' render={( ) => <Dashboard user={this.state.user} /> } />
+          <Route exact path='/settings' render={( ) => <Settings user={this.state.user} /> } />
         </Switch>
       </div>
     );

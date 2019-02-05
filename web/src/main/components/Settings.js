@@ -12,6 +12,7 @@ class Settings extends Component {
         <div className="settings-body">
           <div className="notice-wrapper">
             <div className="notice">
+              <p>Hey { this.props.user.first_name || 'friend' }!</p>
               <p>
                 <b>runtime</b> is still in active development.<br/>
                 You can see your dashboard <Link to="/dashboard">here</Link>.

@@ -33,9 +33,8 @@ class SignupCard extends Component {
   signUp = (event) => {
     event.preventDefault();
     const data = this.composeUserData();
-    Axios.post('/v1/user.json', data).then((resp) => {
-      console.log(resp);
-      // Set global user info here
+    Axios.post('/v1/user.json', data).then((response) => {
+      this.props.setUser(response.data.user);
       this.props.history.push('/dashboard');
     }).catch((err) => {
       console.log(err);

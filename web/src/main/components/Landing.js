@@ -10,7 +10,7 @@ class Landing extends React.Component {
         return (
         <div className='landing-wrapper'>
             <LandingInfo />
-            <SignupCard/>
+            <SignupCard setUser={ this.props.setUser }/>
             <LoginPrompt/>
         </div>
         );

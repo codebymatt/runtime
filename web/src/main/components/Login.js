@@ -11,7 +11,7 @@ class Login extends Component {
         return(
             <div className='login-wrapper'>
                 <LandingInfo />
-                <LoginCard/>
+                <LoginCard setUser={this.props.setUser} />
                 <SignupPrompt/>
             </div>
         );

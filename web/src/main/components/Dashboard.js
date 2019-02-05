@@ -6,12 +6,6 @@ import './Dashboard.sass';
 import Header from './Header';
 
 class Dashboard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { user: this.props.history.location.state.user };
-    console.log(this.state.user);
-  }
-
   render() {
     return(
       <div className='dashboard-wrapper'>
@@ -19,6 +13,7 @@ class Dashboard extends Component {
         <div className='dashboard-body'>
           <div className='notice-wrapper'>
             <div className='notice'>
+              <p>Hey {this.props.user.first_name || 'friend'}!</p>
               <p>
                 <b>runtime</b> is still in active development.
                 <br />

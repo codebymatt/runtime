@@ -13,11 +13,11 @@ class LoginCard extends Component {
   }
 
   authenticateUser = (event) => {
-    console.log("HITTING");
     event.preventDefault();
     const data = { 'credentials': { 'email': this.state.email, 'password': this.state.password } };
     axios.post('http://localhost:3000/v1/login.json', data, { withCredentials: true, origin: 'localhost:3000' }).then((response) => {
-      this.props.history.push('/dashboard', { user: response.data.user });
+      this.props.setUser(response.data.user);
+      this.props.history.push('/dashboard');
     }).catch((error) => {
       console.log(error);
     })

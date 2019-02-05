@@ -34,6 +34,13 @@ class App extends Component {
   //   );
   // }
 
+  refreshState = () => {
+    this.setState({
+      user: JSON.parse(localStorage.getItem('user')) || {},
+      loggedIn: JSON.parse(localStorage.getItem('loggedIn')) || false
+    })
+  }
+
   persistLogin = () => {
     this.setPersistentState('loggedIn', true);
   }
@@ -51,7 +58,17 @@ class App extends Component {
       <div className='app-container'>
         <Switch>
           <Route exact path='/' render={( ) => <Landing setUser={this.setUser} /> } />
-          <Route exact path='/login' render={( ) => <Login loggedIn={this.state.loggedIn} persistLogin={this.persistLogin} setUser={this.setUser}/> } />
+          <Route
+            exact path='/login'
+            render={() => 
+              <Login
+                loggedIn={this.state.loggedIn}
+                persistLogin={this.persistLogin}
+                refreshState={this.refreshState}
+                setUser={this.setUser}
+              />
+            }
+          />
           <Route exact path='/dashboard' render={( ) => <Dashboard user={this.state.user} /> } />
           <Route exact path='/settings' render={( ) => <Settings user={this.state.user} /> } />
         </Switch>

@@ -10,15 +10,15 @@ class SignupCard extends Component {
     super(props);
 
     this.state = {
-        email: "",
-        firstName: "",
-        lastName: "",
-        password: "",
-        password_confirmation: ""
-      }
+      email: "",
+      firstName: "",
+      lastName: "",
+      password: "",
+      password_confirmation: ""
     }
+  }
 
-    composeUserData() {
+  composeUserData() {
     return {
       user: {
         email: this.state.email,
@@ -34,11 +34,19 @@ class SignupCard extends Component {
     event.preventDefault();
     const data = this.composeUserData();
     Axios.post('/v1/user.json', data).then((response) => {
-      this.props.setUser(response.data.user);
+      this.props.setUser(this.constructUserObject(response.data.user));
       this.props.history.push('/dashboard');
     }).catch((err) => {
       console.log(err);
     });
+  }
+
+  constructUserObject = (apiUser) => {
+    return {
+      firstName: apiUser.first_name,
+      lastName: apiUser.last_name,
+      email: apiUser.email
+    }
   }
 
 

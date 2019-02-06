@@ -16,23 +16,9 @@ class App extends Component {
     }
   }
 
-  // setUser = (userObject) => {
-  //   this.setState(
-  //     { user: userObject }, () =>
-  //       localStorage.setItem('user', JSON.stringify(this.state.user))
-  //   );
-  // }
-
   setUser = (userObject) => {
     this.setPersistentState('user', userObject)
   }
-
-  // persistLogin = () => {
-  //   this.setState(
-  //     { loggedIn: true }, () =>
-  //       localStorage.setItem('loggedIn', JSON.stringify(this.state.loggedIn))
-  //   );
-  // }
 
   refreshState = () => {
     this.setState({
@@ -70,7 +56,9 @@ class App extends Component {
             }
           />
           <Route exact path='/dashboard' render={( ) => <Dashboard user={this.state.user} /> } />
-          <Route exact path='/settings' render={( ) => <Settings user={this.state.user} /> } />
+          <Route
+            exact path='/settings'
+            render={( ) => <Settings user={this.state.user} persistUser={this.setUser}/> } />
         </Switch>
       </div>
     );

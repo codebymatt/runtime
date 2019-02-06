@@ -17,11 +17,19 @@ class LoginCard extends Component {
     const data = { 'credentials': { 'email': this.state.email, 'password': this.state.password } };
     axios.post('http://localhost:3000/v1/login.json', data, { withCredentials: true, origin: 'localhost:3000' }).then((response) => {
       this.props.persistLogin();
-      this.props.setUser(response.data.user);
+      this.props.setUser(this.constructUserObject(response.data.user));
       this.props.history.push('/dashboard');
     }).catch((error) => {
       console.log(error);
     })
+  }
+
+  constructUserObject = (apiUser) => {
+    return {
+      firstName: apiUser.first_name,
+      lastName: apiUser.last_name,
+      email: apiUser.email
+    }
   }
 
   handleEmailChange = (event) => {

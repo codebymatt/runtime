@@ -11,7 +11,10 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.props.refreshState();
-    if (this.props.loggedIn) {
+  }
+
+  componentDidMount() {
+    if (this.props.userLoggedIn) {
       this.props.history.push('/dashboard');
     }
   }

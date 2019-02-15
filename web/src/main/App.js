@@ -23,9 +23,11 @@ class App extends Component {
   refreshState = () => {
     this.setState({
       user: JSON.parse(localStorage.getItem('user')) || {},
-      loggedIn: JSON.parse(localStorage.getItem('loggedIn')) || false
+      loggedIn: this.userLoggedIn()
     })
   }
+
+  userLoggedIn = () => JSON.parse(localStorage.getItem('loggedIn')) || false
 
   persistLogin = () => {
     this.setPersistentState('loggedIn', true);
@@ -48,7 +50,7 @@ class App extends Component {
             exact path='/login'
             render={() => 
               <Login
-                loggedIn={this.state.loggedIn}
+                userloggedIn={this.state.userLoggedIn}
                 persistLogin={this.persistLogin}
                 refreshState={this.refreshState}
                 setUser={this.setUser}

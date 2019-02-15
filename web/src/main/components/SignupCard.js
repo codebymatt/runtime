@@ -85,7 +85,7 @@ class SignupCard extends Component {
           />
           <SubmitButton
             onPress={this.signUp}
-            className='submit-button'
+            // className='submit-button'
             text="Sign Up"
           />
         </form>

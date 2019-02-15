@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Header from './Header';
 
 import SubmitButton from './SubmitButton.js';
@@ -60,59 +60,66 @@ class Settings extends Component {
     });
   }
 
+  deleteAccount = () => {
+    Axios.delete('/v1/user.json').then((response) => {
+      localStorage.clear();
+      this.props.history.push('/');
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
   render() {
     return(
       <div className='settings-wrapper'>
         <Header />
         <div className='settings-body'>
-          <div className='notice-wrapper'>
-            <div className='notice'>
-              <p>Hey { this.props.user.firstName || 'friend' }!</p>
-              <p>
-                <b>runtime</b> is still in active development,<br/>
-                and is still a little rough around the edges.
-              </p>
-            </div>
-          </div>
           <h1>Your Settings</h1>
-          <form className='update-user-form'>
-            <div className='input-wrapper'>
-              <label>First Name</label>
-              <input
-                type='text'
-                name='firstName'
-                value={ this.state.firstName || '' }
-                onChange={ this.updateUserData }
-              />
-            </div>
-            <div className='input-wrapper'>
-            <label>Last Name</label>
-              <input
-                type='text'
-                name='lastName'
-                value={ this.state.lastName || '' }
-                onChange={ this.updateUserData }
-              />
-            </div>
-            <div className='input-wrapper'>
-              <label>Email</label>
-              <input
-                type='text'
-                name='email'
-                value={ this.state.email || '' }
-                onChange={ this.updateUserData }
-              />
-            </div>
-            <SubmitButton
-              onPress={this.updateUser}
-              className='submit-button'
-              text='Update'
-            />
-          </form>
+          <div className='update-user-card'>
+            <form className='update-user-form'>
+              <div className='input-wrapper'>
+                <label>First Name</label>
+                <input
+                  type='text'
+                  name='firstName'
+                  value={ this.state.firstName || '' }
+                  onChange={ this.updateUserData }
+                />
+              </div>
+              <div className='input-wrapper'>
+              <label>Last Name</label>
+                <input
+                  type='text'
+                  name='lastName'
+                  value={ this.state.lastName || '' }
+                  onChange={ this.updateUserData }
+                />
+              </div>
+              <div className='input-wrapper'>
+                <label>Email</label>
+                <input
+                  type='text'
+                  name='email'
+                  value={ this.state.email || '' }
+                  onChange={ this.updateUserData }
+                />
+              </div>
+              <div className='button-wrapper'>
+                <SubmitButton
+                  onPress={this.updateUser}
+                  className='submit-button'
+                  text='Update'
+                />
+                <div className="basic-button delete-button" onClick={ this.deleteAccount }>
+                  Delete
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     );
   }
 }
 
-export default Settings;
+export default withRouter(Settings);

@@ -60,11 +60,13 @@ class LoginCard extends Component {
             onChange={ this.handlePasswordChange }
             placeholder='Password'
           />
-          <SubmitButton
-            onPress={this.authenticateUser}
-            className='submit-button'
-            text='Login'
-          />
+          <div className='submit-wrapper'>
+            <SubmitButton
+              onPress={this.authenticateUser}
+              className='submit-button'
+              text='Login'
+            />
+          </div>
         </form>
       </div>
     );

@@ -50,7 +50,7 @@ class App extends Component {
             exact path='/login'
             render={() => 
               <Login
-                userloggedIn={this.state.userLoggedIn}
+                userLoggedIn={this.userLoggedIn}
                 persistLogin={this.persistLogin}
                 refreshState={this.refreshState}
                 setUser={this.setUser}

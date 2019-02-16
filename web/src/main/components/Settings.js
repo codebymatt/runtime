@@ -56,6 +56,7 @@ class Settings extends Component {
               {this.chooseButtonDisplay()}
             </form>
           </div>
+          { this.showDeleteConfirmationPrompt() }
         </div>
       </div>
     );
@@ -121,6 +122,19 @@ class Settings extends Component {
     }
   }
 
+  showDeleteConfirmationPrompt = () => {
+    if (this.state.confirmingDeletion) {
+      return(
+        <div className='deletion-check'>
+          Are you sure you want to delete your account?<br />
+          It'll be gone forever!
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
+
   chooseButtonDisplay = () => {
     if (this.state.confirmingDeletion) {
       return(
@@ -130,7 +144,7 @@ class Settings extends Component {
             className='basic-button confirm-deletion'
             text='Update'
           >
-            Delete
+            Confirm
           </div>
           <div
             className="basic-button delete-button"

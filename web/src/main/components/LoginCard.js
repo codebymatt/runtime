@@ -10,6 +10,9 @@ class LoginCard extends Component {
   constructor(props) {
     super(props);
     this.state = { 'email': '', 'password': '' };
+    if (this.props.userLoggedIn) {
+      this.props.history.push('/dashboard');
+    }
   }
 
   authenticateUser = (event) => {

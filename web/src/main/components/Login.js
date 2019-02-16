@@ -14,7 +14,7 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    if (this.props.userLoggedIn) {
+    if (this.props.userLoggedIn()) {
       this.props.history.push('/dashboard');
     }
   }

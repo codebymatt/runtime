@@ -1,7 +1,5 @@
 [context.production]
-  environment = {
-    RUNTIME_ENV = "production"
-  }
+  environment = { RUNTIME_ENV = "production" }
 
 [build]
   base    = "web"

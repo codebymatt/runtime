@@ -10,7 +10,7 @@ import logout from '../../icons/log-out.svg';
 
 class NavBar extends Component {
   logout = () => {
-    Axios.post("http://localhost:3000/v1/logout.json").then(() => {
+    Axios.post("/v1/logout.json").then(() => {
       localStorage.removeItem('user');
       localStorage.setItem('loggedIn', 'false');
       this.props.history.push('/login');

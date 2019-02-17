@@ -1,3 +1,8 @@
+[context.production]
+  environment = {
+    RUNTIME_ENV = "production"
+  }
+
 [build]
   base    = "web"
   command = "yarn run build"

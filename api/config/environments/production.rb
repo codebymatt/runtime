@@ -85,4 +85,7 @@ Rails.application.configure do
 
   # Read secret key from server environment
   config.secret_key_base = ENV["SECRET_KEY_BASE"]
+
+  # CORS
+  config.allowed_cors_origins = "https://runtime.mattcraig.me"
 end

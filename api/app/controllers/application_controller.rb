@@ -26,12 +26,14 @@ class ApplicationController < ActionController::API
     @current_user ||= User.with_session_token(cookies[:_runtime_session])
   end
 
-  def set_session_cookie(token)
+  def set_session_cookie(session_token)
+    domain = Rails.env.production? ? ".runtime.mattcraig.me" : ""
     cookies[:_runtime_session] = {
       value: session_token,
       expires: Time.now + 7.days,
       httponly: Rails.env.production?,
-      secure: Rails.env.production?
+      secure: Rails.env.production?,
+      domain: domain
     }
   end
 

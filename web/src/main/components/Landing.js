@@ -9,7 +9,7 @@ import './Landing.sass';
 class Landing extends React.Component {
     render() {
       console.log("Printing base URL");
-      console.log(Axios.defaults.base_url)
+      console.log(Axios.defaults.baseUrl)
       return (
         <div className='landing-wrapper'>
           <LandingInfo />

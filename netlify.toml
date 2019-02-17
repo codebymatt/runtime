@@ -1,5 +1,5 @@
-[context.production]
-  environment = { RUNTIME_ENV = "production" }
+[context.production.environment]
+  REACT_APP_ENV = "production"
 
 [build]
   base    = "web"

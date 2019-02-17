@@ -9,7 +9,7 @@ import * as serviceWorker from './serviceWorker';
 import Axios from 'axios';
 
 Axios.defaults.withCredentials = true
-if (process.env.RUNTIME_ENV === 'production') {
+if (process.env.REACT_APP_ENV === 'production') {
   Axios.defaults.baseURL = 'http://api.runtime.mattcraig.me'
 } else{
   Axios.defaults.baseURL = 'http://localhost:3000'

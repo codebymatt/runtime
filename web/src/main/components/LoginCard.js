@@ -18,7 +18,7 @@ class LoginCard extends Component {
   authenticateUser = (event) => {
     event.preventDefault();
     const data = { 'credentials': { 'email': this.state.email, 'password': this.state.password } };
-    axios.post('http://localhost:3000/v1/login.json', data, { withCredentials: true, origin: 'localhost:3000' }).then((response) => {
+    axios.post('/v1/login.json', data).then((response) => {
       this.props.persistLogin();
       this.props.setUser(this.constructUserObject(response.data.user));
       this.props.history.push('/dashboard');

@@ -31,7 +31,6 @@ class ApplicationController < ActionController::API
       value: session_token,
       expires: Time.now + 7.days,
       httponly: Rails.env.production?,
-      secure: Rails.env.production?,
       domain: "runtime-api.mattcraig.me",
       tld_length: 2
     }

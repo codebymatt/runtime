@@ -88,4 +88,7 @@ Rails.application.configure do
 
   # CORS
   config.allowed_cors_origins = "https://runtime.mattcraig.me"
+
+  # Force SSL application wide (production only)
+  config.force_ssl = true
 end

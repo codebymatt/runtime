@@ -32,7 +32,8 @@ class ApplicationController < ActionController::API
       expires: Time.now + 7.days,
       httponly: Rails.env.production?,
       secure: Rails.env.production?,
-      domain: :all
+      domain: :all,
+      tld_length: 3
     }
   end
 

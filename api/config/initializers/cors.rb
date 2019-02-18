@@ -10,7 +10,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     origins Rails.application.config.allowed_cors_origins
 
     resource "*",
-             headers: :any,
+             headers: ["Set-Cookie", :any],
              methods: [:get, :post, :put, :patch, :delete, :options, :head],
              credentials: true
   end

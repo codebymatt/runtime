@@ -5,6 +5,7 @@ import './App.sass';
 import Dashboard from './components/Dashboard';
 import Landing from './components/Landing'
 import Login from './components/Login';
+import Signup from './components/Signup';
 import Settings from './components/Settings';
 
 class App extends Component {
@@ -45,7 +46,7 @@ class App extends Component {
     return (
       <div className='app-container'>
         <Switch>
-          <Route exact path='/' render={( ) => <Landing setUser={this.setUser} /> } />
+          <Route exact path='/' render={() => <Landing setUser={this.setUser} /> } />
           <Route
             exact path='/login'
             render={() => 
@@ -57,10 +58,11 @@ class App extends Component {
               />
             }
           />
-          <Route exact path='/dashboard' render={( ) => <Dashboard user={this.state.user} /> } />
+          <Route exact path='/signup' render={() => <Signup /> } />
+          <Route exact path='/dashboard' render={() => <Dashboard user={this.state.user} /> } />
           <Route
             exact path='/settings'
-            render={( ) => <Settings user={this.state.user} persistUser={this.setUser}/> } />
+            render={() => <Settings user={this.state.user} persistUser={this.setUser}/> } />
         </Switch>
       </div>
     );

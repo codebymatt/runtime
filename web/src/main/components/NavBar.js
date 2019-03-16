@@ -10,26 +10,34 @@ import logout from '../../icons/log-out.svg';
 
 class NavBar extends Component {
   logout = () => {
-    Axios.post("/v1/logout.json").then(() => {
-      localStorage.removeItem('user');
-      localStorage.setItem('loggedIn', 'false');
-      this.props.history.push('/login');
-    }).catch((error) => {
-      console.log(error);
-    });
-  }
+    Axios.post('/v1/logout.json')
+      .then(() => {
+        localStorage.removeItem('user');
+        localStorage.setItem('loggedIn', 'false');
+        this.props.history.push('/login');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   render() {
     return (
       <div className="nav-wrapper">
         <div className="header-link">
-          <Link to="/dashboard"><img alt="" title="Dashboard" src={lineGraph}/></Link>
+          <Link to="/dashboard">
+            <img alt="" title="Dashboard" src={lineGraph} />
+          </Link>
         </div>
         <div className="header-link">
-          <Link to="/settings"><img alt="" title="Settings" src={gear}/></Link>
+          <Link to="/settings">
+            <img alt="" title="Settings" src={gear} />
+          </Link>
         </div>
         <div className="header-link">
-          <Link onClick={ this.logout } to="/"><img alt="" title="Logout" src={logout}/></Link>
+          <Link onClick={this.logout} to="/">
+            <img alt="" title="Logout" src={logout} />
+          </Link>
         </div>
       </div>
     );

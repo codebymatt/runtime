@@ -8,22 +8,23 @@ import App from './main/App.js';
 import * as serviceWorker from './serviceWorker';
 import Axios from 'axios';
 
-Axios.defaults.withCredentials = true
+Axios.defaults.withCredentials = true;
 if (process.env.REACT_APP_ENV === 'production') {
-  Axios.defaults.baseURL = 'https://runtime-api.mattcraig.me'
-} else{
-  Axios.defaults.baseURL = 'http://localhost:3000'
+  Axios.defaults.baseURL = 'https://runtime-api.mattcraig.me';
+} else {
+  Axios.defaults.baseURL = 'http://localhost:3000';
 }
 
 Axios.defaults.headers.post['Content-Type'] = 'application/json';
 Axios.defaults.headers.get['Content-Type'] = 'application/json';
 Axios.defaults.headers.put['Content-Type'] = 'application/json';
 
-ReactDOM.render((
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>
-), document.getElementById('root'));
+ReactDOM.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

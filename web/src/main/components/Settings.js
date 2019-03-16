@@ -14,164 +14,155 @@ class Settings extends Component {
       userReference: this.props.user,
       firstName: this.props.user.firstName,
       lastName: this.props.user.lastName,
-      email: this.props.user.email
-     }
+      email: this.props.user.email,
+    };
   }
 
   render() {
-    return(
-      <div className='settings-wrapper'>
+    return (
+      <div className="settings-wrapper">
         <Header />
-        <div className='settings-body'>
+        <div className="settings-body">
           <h1>Your Settings</h1>
-          <div className='update-user-card'>
-            <form className='update-user-form'>
-              <div className='input-wrapper'>
+          <div className="update-user-card">
+            <form className="update-user-form">
+              <div className="input-wrapper">
                 <label>First Name</label>
                 <input
-                  type='text'
-                  name='firstName'
-                  value={ this.state.firstName || '' }
-                  onChange={ this.updateUserData }
+                  type="text"
+                  name="firstName"
+                  value={this.state.firstName || ''}
+                  onChange={this.updateUserData}
                 />
               </div>
-              <div className='input-wrapper'>
-              <label>Last Name</label>
+              <div className="input-wrapper">
+                <label>Last Name</label>
                 <input
-                  type='text'
-                  name='lastName'
-                  value={ this.state.lastName || '' }
-                  onChange={ this.updateUserData }
+                  type="text"
+                  name="lastName"
+                  value={this.state.lastName || ''}
+                  onChange={this.updateUserData}
                 />
               </div>
-              <div className='input-wrapper'>
+              <div className="input-wrapper">
                 <label>Email</label>
                 <input
-                  type='text'
-                  name='email'
-                  value={ this.state.email || '' }
-                  onChange={ this.updateUserData }
+                  type="text"
+                  name="email"
+                  value={this.state.email || ''}
+                  onChange={this.updateUserData}
                 />
               </div>
               {this.chooseButtonDisplay()}
             </form>
           </div>
-          { this.showDeleteConfirmationPrompt() }
+          {this.showDeleteConfirmationPrompt()}
         </div>
       </div>
     );
   }
 
-  updateUserData = (event) => {
+  updateUserData = event => {
     this.setState({ [event.target.name]: event.target.value });
-  }
+  };
 
-  setUpdatedUser = (user) => {
+  setUpdatedUser = user => {
     this.props.persistUser(user);
     this.setState({
       userReference: user,
       firstName: user.firstName,
       lastName: user.lastName,
-      email: user.email
-    })
-  }
+      email: user.email,
+    });
+  };
 
   constructUserInApiFormat = () => {
     return {
       user: {
         email: this.state.email,
         first_name: this.state.firstName,
-        last_name: this.state.lastName
-      }
-    }
-  }
+        last_name: this.state.lastName,
+      },
+    };
+  };
 
-  constructUserInClientFormat = (apiUser) => {
+  constructUserInClientFormat = apiUser => {
     return {
       email: apiUser.email,
       firstName: apiUser.first_name,
-      lastName: apiUser.last_name
-    }
-  }
+      lastName: apiUser.last_name,
+    };
+  };
 
-  updateUser = (event) => {
+  updateUser = event => {
     event.preventDefault();
     const data = this.constructUserInApiFormat();
-    Axios.put('/v1/user.json', data).then((response) => {
-      this.setUpdatedUser(this.constructUserInClientFormat(response.data.user));
-    }).catch((error) => {
-      this.setUpdatedUser(this.state.userReference);
-      console.log(error);
-    });
-  }
+    Axios.put('/v1/user.json', data)
+      .then(response => {
+        this.setUpdatedUser(this.constructUserInClientFormat(response.data.user));
+      })
+      .catch(error => {
+        this.setUpdatedUser(this.state.userReference);
+        console.log(error);
+      });
+  };
 
   deleteAccount = () => {
-    Axios.delete('/v1/user.json').then((response) => {
-      localStorage.clear();
-      this.props.history.push('/');
-    }).catch((error) => {
-      console.log(error);
-    });
-  }
+    Axios.delete('/v1/user.json')
+      .then(response => {
+        localStorage.clear();
+        this.props.history.push('/');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   toggleDeletionConfirmation = () => {
     if (this.state.confirmingDeletion) {
-      this.setState({confirmingDeletion: false})
+      this.setState({ confirmingDeletion: false });
     } else {
-      this.setState({confirmingDeletion: true})
+      this.setState({ confirmingDeletion: true });
     }
-  }
+  };
 
   showDeleteConfirmationPrompt = () => {
     if (this.state.confirmingDeletion) {
-      return(
-        <div className='deletion-check'>
-          Are you sure you want to delete your account?<br />
+      return (
+        <div className="deletion-check">
+          Are you sure you want to delete your account?
+          <br />
           It'll be gone forever!
         </div>
       );
     } else {
       return null;
     }
-  }
+  };
 
   chooseButtonDisplay = () => {
     if (this.state.confirmingDeletion) {
-      return(
-        <div className='button-wrapper'>
-          <div
-            onClick={this.deleteAccount}
-            className='basic-button confirm-deletion'
-            text='Update'
-          >
+      return (
+        <div className="button-wrapper">
+          <div onClick={this.deleteAccount} className="basic-button confirm-deletion" text="Update">
             Confirm
           </div>
-          <div
-            className="basic-button delete-button"
-            onClick={ this.toggleDeletionConfirmation }
-          >
+          <div className="basic-button delete-button" onClick={this.toggleDeletionConfirmation}>
             Cancel
           </div>
         </div>
       );
     } else {
       return (
-        <div className='button-wrapper'>
-          <SubmitButton
-            onPress={this.updateUser}
-            className='submit-button'
-            text='Update'
-          />
-          <div
-            className="basic-button delete-button"
-            onClick={ this.toggleDeletionConfirmation }
-          >
+        <div className="button-wrapper">
+          <SubmitButton onPress={this.updateUser} className="submit-button" text="Update" />
+          <div className="basic-button delete-button" onClick={this.toggleDeletionConfirmation}>
             Delete
           </div>
         </div>
       );
     }
-  }
+  };
 }
 
 export default withRouter(Settings);

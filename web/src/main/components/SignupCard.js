@@ -10,12 +10,12 @@ class SignupCard extends Component {
     super(props);
 
     this.state = {
-      email: "",
-      firstName: "",
-      lastName: "",
-      password: "",
-      password_confirmation: ""
-    }
+      email: '',
+      firstName: '',
+      lastName: '',
+      password: '',
+      password_confirmation: '',
+    };
   }
 
   composeUserData() {
@@ -25,68 +25,66 @@ class SignupCard extends Component {
         first_name: this.state.firstName,
         last_name: this.state.lastName,
         password: this.state.password,
-        password_confirmation: this.state.passwordConfirmation
-      }
-    }
+        password_confirmation: this.state.passwordConfirmation,
+      },
+    };
   }
 
-  signUp = (event) => {
+  signUp = event => {
     event.preventDefault();
     const data = this.composeUserData();
-    Axios.post('/v1/user.json', data).then((response) => {
-      this.props.setUser(this.constructUserObject(response.data.user));
-      this.props.history.push('/dashboard');
-    }).catch((err) => {
-      console.log(err);
-    });
-  }
+    Axios.post('/v1/user.json', data)
+      .then(response => {
+        this.props.setUser(this.constructUserObject(response.data.user));
+        this.props.history.push('/dashboard');
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
-  constructUserObject = (apiUser) => {
+  constructUserObject = apiUser => {
     return {
       firstName: apiUser.first_name,
       lastName: apiUser.last_name,
-      email: apiUser.email
-    }
-  }
+      email: apiUser.email,
+    };
+  };
 
-
-  updateUserData = (event) => {
+  updateUserData = event => {
     this.setState({ [event.target.name]: event.target.value });
-  }
+  };
 
   render() {
-    return(
-      <div className='signup-wrapper'>
-        <form className='signup-form'>
-          <div className='name-wrapper'>
-            <input name='firstName' placeholder='First Name' onChange={ this.updateUserData }/>
-            <input name='lastName' placeholder='Last Name' onChange={ this.updateUserData }/>
+    return (
+      <div className="signup-wrapper">
+        <form className="signup-form">
+          <div className="name-wrapper">
+            <input name="firstName" placeholder="First Name" onChange={this.updateUserData} />
+            <input name="lastName" placeholder="Last Name" onChange={this.updateUserData} />
           </div>
           <input
-            className='long-input'
-            type='email'
-            name='email'
-            placeholder='Email'
-            onChange={ this.updateUserData }
+            className="long-input"
+            type="email"
+            name="email"
+            placeholder="Email"
+            onChange={this.updateUserData}
           />
           <input
-            className='long-input'
-            type='password'
-            name='password'
-            placeholder='Password'
-            onChange={ this.updateUserData }
+            className="long-input"
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={this.updateUserData}
           />
           <input
-            className='name-wrapper'
-            type='password'
-            name='passwordConfirmation'
-            placeholder='Confirm Password'
-            onChange={ this.updateUserData }
+            className="name-wrapper"
+            type="password"
+            name="passwordConfirmation"
+            placeholder="Confirm Password"
+            onChange={this.updateUserData}
           />
-          <SubmitButton
-            onPress={this.signUp}
-            text="Sign Up"
-          />
+          <SubmitButton onPress={this.signUp} text="Sign Up" />
         </form>
       </div>
     );

@@ -20,13 +20,13 @@ class Login extends Component {
   }
 
   render() {
-      return(
-          <div className='login-wrapper'>
-              <LandingInfo />
-              <LoginCard setUser={this.props.setUser} persistLogin={this.props.persistLogin} />
-              <SignupPrompt/>
-          </div>
-      );
+    return (
+      <div className="login-wrapper">
+        <LandingInfo />
+        <LoginCard setUser={this.props.setUser} persistLogin={this.props.persistLogin} />
+        <SignupPrompt />
+      </div>
+    );
   }
 }
 

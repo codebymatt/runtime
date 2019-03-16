@@ -1,0 +1,8 @@
+{
+  "extends": ["airbnb", "prettier"],
+  "plugins": ["react", "prettier", "import"],
+  "rules": {
+    "prettier/prettier": ["error"],
+    "react/jsx-one-expression-per-line": 0
+  }
+}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { withRouter } from 'react-router';
+import Axios from 'axios';
+import propTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 import './LoginCard.sass';
 import SubmitButton from './SubmitButton';
@@ -9,20 +10,22 @@ class LoginCard extends Component {
   constructor(props) {
     super(props);
     this.state = { email: '', password: '' };
-    if (this.props.userLoggedIn) {
-      this.props.history.push('/dashboard');
+    const { userLoggedIn, history } = this.props;
+    if (userLoggedIn()) {
+      history.push('/dashboard');
     }
   }
 
   authenticateUser = event => {
     event.preventDefault();
-    const data = { credentials: { email: this.state.email, password: this.state.password } };
-    axios
-      .post('/v1/login.json', data)
+    const { email, password } = this.state;
+    const { persistLogin, persistUser, history } = this.props;
+    const data = { credentials: { email, password } };
+    Axios.post('/v1/login.json', data)
       .then(response => {
-        this.props.persistLogin();
-        this.props.setUser(this.constructUserObject(response.data.user));
-        this.props.history.push('/dashboard');
+        persistLogin();
+        persistUser(this.constructUserObject(response.data.user));
+        history.push('/dashboard');
       })
       .catch(error => {
         console.log(error);
@@ -46,6 +49,7 @@ class LoginCard extends Component {
   };
 
   render() {
+    const { email, password } = this.state;
     return (
       <div className="login-card-wrapper">
         <form className="login-form">
@@ -53,7 +57,7 @@ class LoginCard extends Component {
             className="long-input"
             type="email"
             name="email"
-            value={this.state.email}
+            value={email}
             onChange={this.handleEmailChange}
             placeholder="Email"
           />
@@ -61,7 +65,7 @@ class LoginCard extends Component {
             className="long-input"
             type="password"
             name="password"
-            value={this.state.password}
+            value={password}
             onChange={this.handlePasswordChange}
             placeholder="Password"
           />
@@ -75,3 +79,10 @@ class LoginCard extends Component {
 }
 
 export default withRouter(LoginCard);
+
+LoginCard.propTypes = {
+  userLoggedIn: propTypes.func.isRequired,
+  persistLogin: propTypes.func.isRequired,
+  persistUser: propTypes.func.isRequired,
+  history: propTypes.object.isRequired,
+};

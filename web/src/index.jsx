@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import Axios from 'axios';
 import { BrowserRouter } from 'react-router-dom';
 
 import './index.sass';
-import App from './main/App.js';
+import App from './main/App';
 import * as serviceWorker from './serviceWorker';
-import Axios from 'axios';
 
 Axios.defaults.withCredentials = true;
 if (process.env.REACT_APP_ENV === 'production') {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import Axios from 'axios';
+import propTypes from 'prop-types';
 
 import './NavBar.sass';
 
@@ -10,11 +11,12 @@ import logout from '../../icons/log-out.svg';
 
 class NavBar extends Component {
   logout = () => {
+    const { history } = this.props;
     Axios.post('/v1/logout.json')
       .then(() => {
         localStorage.removeItem('user');
         localStorage.setItem('loggedIn', 'false');
-        this.props.history.push('/login');
+        history.push('/login');
       })
       .catch(error => {
         console.log(error);
@@ -45,3 +47,7 @@ class NavBar extends Component {
 }
 
 export default withRouter(NavBar);
+
+NavBar.propTypes = {
+  history: propTypes.object.isRequired,
+};

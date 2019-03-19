@@ -17,7 +17,7 @@ class App extends Component {
     };
   }
 
-  setUser = userObject => {
+  persistUser = userObject => {
     this.setPersistentState('user', userObject);
   };
 
@@ -28,7 +28,10 @@ class App extends Component {
     });
   };
 
-  userLoggedIn = () => JSON.parse(localStorage.getItem('loggedIn')) || false;
+  userLoggedIn = () => {
+    const { loggedIn } = this.state;
+    return JSON.parse(loggedIn) || false;
+  };
 
   persistLogin = () => {
     this.setPersistentState('loggedIn', true);
@@ -36,15 +39,27 @@ class App extends Component {
 
   setPersistentState = (key, val) => {
     this.setState({ [key]: val }, () => {
-      localStorage.setItem(key, JSON.stringify(this.state[key]));
+      localStorage.setItem(key, JSON.stringify(val));
     });
   };
 
+  // updateUser = user => {
+  //   this.setState({ user });
+  //   this.persistUser(user);
+  // };
+
+  // updateUserField = event => {
+  //   const { user } = this.state;
+  //   user[event.target.name] = event.target.value;
+  //   this.setState({ user });
+  // };
+
   render() {
+    const { user } = this.state;
     return (
       <div className="app-container">
         <Switch>
-          <Route exact path="/" render={() => <Landing setUser={this.setUser} />} />
+          <Route exact path="/" render={() => <Landing persistUser={this.persistUser} />} />
           <Route
             exact
             path="/login"
@@ -53,16 +68,22 @@ class App extends Component {
                 userLoggedIn={this.userLoggedIn}
                 persistLogin={this.persistLogin}
                 refreshState={this.refreshState}
-                setUser={this.setUser}
+                persistUser={this.persistUser}
               />
             )}
           />
           <Route exact path="/signup" render={() => <Signup />} />
-          <Route exact path="/dashboard" render={() => <Dashboard user={this.state.user} />} />
+          <Route exact path="/dashboard" render={() => <Dashboard user={user} />} />
           <Route
             exact
             path="/settings"
-            render={() => <Settings user={this.state.user} persistUser={this.setUser} />}
+            render={() => (
+              <Settings
+                originalUser={user}
+                persistUser={this.persistUser}
+                updateUser={this.updateUser}
+              />
+            )}
           />
         </Switch>
       </div>

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-
-import SubmitButton from './SubmitButton.js';
-import './SignupCard.sass';
 import Axios from 'axios';
+import { withRouter } from 'react-router-dom';
+import propTypes from 'prop-types';
+
+import SubmitButton from './SubmitButton';
+import './SignupCard.sass';
 
 class SignupCard extends Component {
   constructor(props) {
@@ -14,29 +15,31 @@ class SignupCard extends Component {
       firstName: '',
       lastName: '',
       password: '',
-      password_confirmation: '',
+      passwordConfirmation: '',
     };
   }
 
-  composeUserData() {
+  composeUserData = () => {
+    const { email, firstName, lastName, password, passwordConfirmation } = this.state;
     return {
       user: {
-        email: this.state.email,
-        first_name: this.state.firstName,
-        last_name: this.state.lastName,
-        password: this.state.password,
-        password_confirmation: this.state.passwordConfirmation,
+        email,
+        first_name: firstName,
+        last_name: lastName,
+        password,
+        password_confirmation: passwordConfirmation,
       },
     };
-  }
+  };
 
   signUp = event => {
     event.preventDefault();
     const data = this.composeUserData();
+    const { setUser, history } = this.props;
     Axios.post('/v1/user.json', data)
       .then(response => {
-        this.props.setUser(this.constructUserObject(response.data.user));
-        this.props.history.push('/dashboard');
+        setUser(this.constructUserObject(response.data.user));
+        history.push('/dashboard');
       })
       .catch(err => {
         console.log(err);
@@ -92,3 +95,8 @@ class SignupCard extends Component {
 }
 
 export default withRouter(SignupCard);
+
+SignupCard.propTypes = {
+  setUser: propTypes.func.isRequired,
+  history: propTypes.object.isRequired,
+};

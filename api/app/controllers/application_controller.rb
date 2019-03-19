@@ -26,12 +26,12 @@ class ApplicationController < ActionController::API
     @current_user ||= User.with_session_token(cookies[:_runtime_session])
   end
 
-  def set_session_cookie(session_token)
+  def configure_session_cookie(session_token)
     cookies[:_runtime_session] = {
       value: session_token,
       expires: Time.now + 7.days,
       httponly: Rails.env.production?,
-      domain: "runtime-api.mattcraig.me",
+      domain: determine_cookie_domain,
       tld_length: 2
     }
   end
@@ -45,5 +45,15 @@ class ApplicationController < ActionController::API
 
   def set_json_as_response_format
     request.format = :json
+  end
+
+  def determine_cookie_domain
+    if Rails.env.production?
+      "runtime-api.mattcraig.me"
+    elsif Rails.env.test?
+      "www.example.com"
+    else
+      "localhost"
+    end
   end
 end

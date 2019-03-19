@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter, Link } from 'react-router-dom';
 
 import './Landing.sass';
 import LandingGraphic from '../../images/runtime-landing.png';
@@ -13,7 +14,9 @@ const Landing = () => {
             <p>About</p>
           </div>
           <div className="nav-item">
-            <p>Login</p>
+            <Link to="/login">
+              <p>Login</p>
+            </Link>
           </div>
           <div className="nav-item rt-button nav-button sign-up-button">Sign Up</div>
         </div>
@@ -48,4 +51,4 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+export default withRouter(Landing);

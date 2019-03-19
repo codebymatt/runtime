@@ -29,7 +29,6 @@ class Settings extends Component {
   updateUserField = event => {
     const { user } = this.state;
     user[event.target.name] = event.target.value;
-    console.log(user);
     this.setState({ user });
   };
 
@@ -151,9 +150,10 @@ class Settings extends Component {
 
   render() {
     const { user } = this.state;
+    const { logUserOut } = this.props;
     return (
       <div className="settings-wrapper">
-        <Header />
+        <Header logUserOut={logUserOut} />
         <div className="settings-body">
           <h1>Your Settings</h1>
           <div className="update-user-card">
@@ -203,6 +203,7 @@ Settings.propTypes = {
     firstName: propTypes.string.isRequired,
     lastName: propTypes.string,
   }).isRequired,
+  logUserOut: propTypes.func.isRequired,
   persistUser: propTypes.func.isRequired,
   history: propTypes.object.isRequired,
 };

@@ -11,12 +11,11 @@ import logout from '../../icons/log-out.svg';
 
 class NavBar extends Component {
   logout = () => {
-    const { history } = this.props;
+    const { logUserOut, history } = this.props;
     Axios.post('/v1/logout.json')
       .then(() => {
-        localStorage.removeItem('user');
-        localStorage.setItem('loggedIn', 'false');
-        history.push('/login');
+        logUserOut();
+        history.push('/');
       })
       .catch(error => {
         console.log(error);
@@ -49,5 +48,6 @@ class NavBar extends Component {
 export default withRouter(NavBar);
 
 NavBar.propTypes = {
+  logUserOut: propTypes.func.isRequired,
   history: propTypes.object.isRequired,
 };

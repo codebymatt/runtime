@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import './Dashboard.sass';
@@ -7,10 +7,10 @@ import './Dashboard.sass';
 import Header from './Header';
 
 const Dashboard = props => {
-  const { user } = props;
+  const { user, logUserOut } = props;
   return (
     <div className="dashboard-wrapper">
-      <Header />
+      <Header logUserOut={logUserOut} />
       <div className="dashboard-body">
         <div className="notice-wrapper">
           <div className="notice">
@@ -30,9 +30,10 @@ const Dashboard = props => {
 export default Dashboard;
 
 Dashboard.propTypes = {
-  user: PropTypes.shape({
-    firstName: PropTypes.string,
-    lastName: PropTypes.string,
-    email: PropTypes.string,
+  user: propTypes.shape({
+    firstName: propTypes.string,
+    lastName: propTypes.string,
+    email: propTypes.string,
   }).isRequired,
+  logUserOut: propTypes.func.isRequired,
 };

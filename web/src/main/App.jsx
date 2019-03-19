@@ -33,6 +33,12 @@ class App extends Component {
     return JSON.parse(loggedIn) || false;
   };
 
+  logUserOut = () => {
+    localStorage.removeItem('user');
+    localStorage.setItem('loggedIn', 'false');
+    this.setState({ loggedIn: false });
+  };
+
   persistLogin = () => {
     this.setPersistentState('loggedIn', true);
   };
@@ -59,7 +65,11 @@ class App extends Component {
     return (
       <div className="app-container">
         <Switch>
-          <Route exact path="/" render={() => <Landing persistUser={this.persistUser} />} />
+          <Route
+            exact
+            path="/"
+            render={() => <Landing persistUser={this.persistUser} logUserOut={this.logUserOut} />}
+          />
           <Route
             exact
             path="/login"
@@ -73,7 +83,11 @@ class App extends Component {
             )}
           />
           <Route exact path="/signup" render={() => <Signup />} />
-          <Route exact path="/dashboard" render={() => <Dashboard user={user} />} />
+          <Route
+            exact
+            path="/dashboard"
+            render={() => <Dashboard user={user} logUserOut={this.logUserOut} />}
+          />
           <Route
             exact
             path="/settings"
@@ -82,6 +96,7 @@ class App extends Component {
                 originalUser={user}
                 persistUser={this.persistUser}
                 updateUser={this.updateUser}
+                logUserOut={this.logUserOut}
               />
             )}
           />

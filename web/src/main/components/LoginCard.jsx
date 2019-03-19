@@ -70,7 +70,7 @@ class LoginCard extends Component {
             placeholder="Password"
           />
           <div className="submit-wrapper">
-            <SubmitButton onPress={this.authenticateUser} className="submit-button" text="Login" />
+            <SubmitButton onPress={this.authenticateUser} text="Login" />
           </div>
         </form>
       </div>

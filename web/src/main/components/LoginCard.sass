@@ -1,40 +1,47 @@
 @import '../globals'
 
 .login-card-wrapper
-    max-width: 500px
-    min-height: 400px
-    margin: 0 auto
+  margin: 0 auto
+  display: flex
+  align-items: center
+  justify-content: center
+
+  .login-form
     display: flex
-    align-items: center
-    justify-content: center
-    background-color: $white
-    box-shadow: 0 2px 20px 4px rgba(0,0,0,0.20)
+    flex-direction: column
+    max-width: 400px
+    margin: 0 auto
+
+    input
+      height: 45px
+      font: $main-font
+      font-size: 22px
+      color: $placeholder-grey
+      padding-left: 10px
+      margin-top: 20px
+      border-style: none
+      box-shadow: 0 1px 3px 2px rgba(0,0,0,0.20)
+
+    .name-wrapper
+      display: flex
+      justify-content: space-between
+
+      input
+          width: 180px
+
+    .long-input
+      min-width: 400px
+
+    .submit-wrapper
+      margin-top: 20px
+
+@media screen and (min-width: 320px)
+  .login-card-wrapper
+    margin-top: -50px
+    width: 90%
 
     .login-form
-        display: flex
-        flex-direction: column
-        max-width: 400px
-        margin: 0 auto
+      width: 100%
 
-        input
-            height: 45px
-            font: $main-font
-            font-size: 22px
-            color: $placeholder-grey
-            padding-left: 10px
-            margin-top: 20px
-            border-style: none
-            box-shadow: 0 1px 3px 2px rgba(0,0,0,0.20)
-
-        .name-wrapper
-            display: flex
-            justify-content: space-between
-
-            input
-                width: 180px
-
-        .long-input
-            min-width: 400px
-
-        .submit-wrapper
-          margin-top: 30px
+      .long-input
+        min-width: 90%

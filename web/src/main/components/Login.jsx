@@ -1,11 +1,10 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import './Login.sass';
 
-import LandingInfo from './LandingInfo';
-import SignupPrompt from './SignupPrompt';
 import LoginCard from './LoginCard';
 
 class Login extends Component {
@@ -21,13 +20,17 @@ class Login extends Component {
     const { persistUser, persistLogin, userLoggedIn } = this.props;
     return (
       <div className="login-wrapper">
-        <LandingInfo />
         <LoginCard
           persistUser={persistUser}
           persistLogin={persistLogin}
           userLoggedIn={userLoggedIn}
         />
-        <SignupPrompt />
+        <div className="signup-prompt">
+          <p>Don't have an account yet?</p>
+          <p>
+            <Link to="/">Sign up here</Link>
+          </p>
+        </div>
       </div>
     );
   }

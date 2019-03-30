@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './App.sass';
 
-import Dashboard from './components/Dashboard';
+import Dashboard from './components/Dashboard/Dashboard';
 import Landing from './components/Landing';
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';

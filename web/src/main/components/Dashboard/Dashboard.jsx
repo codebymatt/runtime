@@ -1,27 +1,20 @@
 import React from 'react';
 import propTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
 import './Dashboard.sass';
 
-import Header from './Header';
+import Header from '../Header';
+import RunList from './RunList';
+import Metrics from './Metrics';
 
 const Dashboard = props => {
-  const { user, logUserOut } = props;
+  const { logUserOut } = props;
   return (
     <div className="dashboard-wrapper">
       <Header logUserOut={logUserOut} />
       <div className="dashboard-body">
-        <div className="notice-wrapper">
-          <div className="notice">
-            <p>Hey {user.firstName || 'friend'}!</p>
-            <p>
-              <b>runtime</b> is still in active development.
-              <br />
-              You can see your account info <Link to="/settings">here</Link>.
-            </p>
-          </div>
-        </div>
+        <RunList />
+        <Metrics />
       </div>
     </div>
   );

@@ -1,0 +1,32 @@
+@import '../../globals'
+
+.metrics-container
+  flex-basis: 60%
+  display: flex
+  flex-direction: column
+  align-items: center
+
+  h2
+    display: none
+    color: lighten($placeholder-grey, 20%)
+    margin-top: 20px
+    font-weight: 400
+    text-transform: uppercase
+
+.metrics-wrapper
+  margin-top: 20px
+
+.chart-wrapper
+  height: 400px
+  width: 600px
+  background-color: grey
+
+.chart-controls
+  height: 100px
+  width: 600px
+  margin-top: 20px
+  background-color: grey
+
+@media screen and (min-width: 320px) and (max-width: 1000px)
+  .metrics-container
+    display: none

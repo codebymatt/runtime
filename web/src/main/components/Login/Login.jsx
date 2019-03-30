@@ -1,16 +1,17 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { Component } from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import './Login.sass';
 
 import LoginCard from './LoginCard';
+import LoginPrompt from './LoginPrompt';
 
 class Login extends Component {
   componentDidMount() {
-    const { userLoggedIn, refreshState, history } = this.props;
-    refreshState();
+    const { userLoggedIn, refreshGlobalState, history } = this.props;
+    refreshGlobalState();
     if (userLoggedIn()) {
       history.push('/dashboard');
     }
@@ -25,12 +26,7 @@ class Login extends Component {
           persistLogin={persistLogin}
           userLoggedIn={userLoggedIn}
         />
-        <div className="signup-prompt">
-          <p>Don't have an account yet?</p>
-          <p>
-            <Link to="/">Sign up here</Link>
-          </p>
-        </div>
+        <LoginPrompt />
       </div>
     );
   }
@@ -39,7 +35,7 @@ class Login extends Component {
 export default withRouter(Login);
 
 Login.propTypes = {
-  refreshState: PropTypes.func.isRequired,
+  refreshGlobalState: PropTypes.func.isRequired,
   persistUser: PropTypes.func.isRequired,
   userLoggedIn: PropTypes.func.isRequired,
   persistLogin: PropTypes.func.isRequired,

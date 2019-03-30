@@ -4,8 +4,8 @@ import './App.sass';
 
 import Dashboard from './components/Dashboard';
 import Landing from './components/Landing';
-import Login from './components/Login';
-import Signup from './components/Signup';
+import Login from './components/Login/Login';
+import Signup from './components/Signup/Signup';
 import Settings from './components/Settings';
 
 class App extends Component {
@@ -21,7 +21,7 @@ class App extends Component {
     this.setPersistentState('user', userObject);
   };
 
-  refreshState = () => {
+  refreshGlobalState = () => {
     this.setState({
       user: JSON.parse(localStorage.getItem('user')) || {},
       loggedIn: this.userLoggedIn(),
@@ -49,17 +49,6 @@ class App extends Component {
     });
   };
 
-  // updateUser = user => {
-  //   this.setState({ user });
-  //   this.persistUser(user);
-  // };
-
-  // updateUserField = event => {
-  //   const { user } = this.state;
-  //   user[event.target.name] = event.target.value;
-  //   this.setState({ user });
-  // };
-
   render() {
     const { user } = this.state;
     return (
@@ -77,12 +66,23 @@ class App extends Component {
               <Login
                 userLoggedIn={this.userLoggedIn}
                 persistLogin={this.persistLogin}
-                refreshState={this.refreshState}
+                refreshGlobalState={this.refreshGlobalState}
                 persistUser={this.persistUser}
               />
             )}
           />
-          <Route exact path="/signup" render={() => <Signup />} />
+          <Route
+            exact
+            path="/signup"
+            render={() => (
+              <Signup
+                userLoggedIn={this.userLoggedIn}
+                persistLogin={this.persistLogin}
+                refreshGlobalState={this.refreshGlobalState}
+                persistUser={this.persistUser}
+              />
+            )}
+          />
           <Route
             exact
             path="/dashboard"

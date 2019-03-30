@@ -1,0 +1,52 @@
+@import '../../globals'
+
+.signup-wrapper
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+
+  .signup-form
+    display: flex
+    flex-direction: column
+    align-items: center
+    width: 95%
+    max-width: 400px
+    margin: 0 auto
+
+    .name-wrapper
+      display: flex
+      flex-direction: row
+      justify-content: space-between
+      width: 400px
+
+    input
+      width: 180px
+      height: 45px
+      font: $main-font
+      font-size: 20px
+      color: $placeholder-grey
+      padding-left: 10px
+      padding-right: 5px
+      margin: 20px 0px 0px
+      border-style: none
+      box-shadow: 0 1px 3px 2px rgba(0,0,0,0.20)
+
+    button
+      margin-top: 20px
+
+    .long-input
+      width: 385px
+
+@media screen and (min-width: 320px) and (max-width: 500px)
+  .signup-wrapper
+    .signup-form
+      width: 100%
+
+      .name-wrapper
+        width: 100%
+        flex-direction: column
+        align-items: center
+
+      input, .long-input
+        width: 100%

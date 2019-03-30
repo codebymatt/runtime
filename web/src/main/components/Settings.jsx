@@ -118,7 +118,7 @@ class Settings extends Component {
           <div
             role="button"
             tabIndex={0}
-            className="basic-button delete-button"
+            className="basic-button cancel-button"
             onClick={this.toggleDeletionConfirmation}
           >
             {' '}

@@ -4,7 +4,7 @@ import propTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 import './LoginCard.sass';
-import SubmitButton from './SubmitButton';
+import SubmitButton from '../SubmitButton';
 
 class LoginCard extends Component {
   constructor(props) {

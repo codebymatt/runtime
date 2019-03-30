@@ -3,7 +3,7 @@ import Axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import propTypes from 'prop-types';
 
-import SubmitButton from './SubmitButton';
+import SubmitButton from '../SubmitButton';
 import './SignupCard.sass';
 
 class SignupCard extends Component {
@@ -81,7 +81,7 @@ class SignupCard extends Component {
             onChange={this.updateUserData}
           />
           <input
-            className="name-wrapper"
+            className="long-input"
             type="password"
             name="passwordConfirmation"
             placeholder="Confirm Password"

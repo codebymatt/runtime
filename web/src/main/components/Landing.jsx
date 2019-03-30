@@ -18,7 +18,9 @@ const Landing = () => {
               <p>Login</p>
             </Link>
           </div>
-          <div className="nav-item rt-button nav-button sign-up-button">Sign Up</div>
+          <Link to="/signup">
+            <div className="nav-item rt-button nav-button sign-up-button">Sign Up</div>
+          </Link>
         </div>
       </div>
       <div className="landing-graphic">
@@ -30,7 +32,9 @@ const Landing = () => {
       </div>
       <div className="sign-up-wrapper">
         <p className="cta">Create an account for free!</p>
-        <div className="rt-button sign-up-button">Sign Up</div>
+        <Link to="/signup">
+          <div className="rt-button sign-up-button">Sign Up</div>
+        </Link>
       </div>
       <div className="landing-footer">
         <div className="inner-wrapper">

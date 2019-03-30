@@ -93,7 +93,7 @@ class Settings extends Component {
       return (
         <div className="deletion-check">
           Are you sure you want to delete your account?
-          <br />
+          <hr />
           It'll be gone forever!
         </div>
       );

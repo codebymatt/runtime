@@ -10,7 +10,9 @@ const Landing = () => {
       <Kicker>Log your runs and track your progress with ease.</Kicker>
       <Signup />
       <LoginPrompt>
-        Already have an account? <LoginLink>Login here.</LoginLink>
+        Already have an account?
+        <br />
+        <LoginLink>Login here.</LoginLink>
       </LoginPrompt>
     </LandingWrapper>
   );
@@ -30,11 +32,21 @@ const Header = styled.h1`
 const Kicker = styled.div`
   margin: 50px auto;
   font-size: 28px;
+
+  @media (max-width: 420px) {
+    font-size: 22px;
+    margin: 20px auto;
+  }
 `;
 
 const LoginPrompt = styled.div`
   margin-top: 60px;
   font-size: 20px;
+
+  @media (max-width: 420px) {
+    max-width: 90%;
+    margin: 60px auto 45px;
+  }
 `;
 
 const LoginLink = styled.span`

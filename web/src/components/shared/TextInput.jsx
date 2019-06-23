@@ -15,6 +15,7 @@ export default TextInput;
 
 const InputWrapper = styled.div`
   text-align: left;
+  width: 100%;
 `;
 
 const Title = styled.h5`
@@ -33,4 +34,10 @@ const InputCard = styled.input`
   font-size: 20px;
   box-shadow: ${styles.boxShadow};
   border-style: none;
+  -webkit-appearance: none;
+
+  @media (max-width: 420px) {
+    width: 100%;
+    font-size: 18px;
+  }
 `;

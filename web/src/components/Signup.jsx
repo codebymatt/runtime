@@ -28,6 +28,10 @@ const InputWrapper = styled.div`
   align-items: center;
   margin: 0px auto 30px;
   width: 450px;
+
+  @media (max-width: 420px) {
+    width: 90%;
+  }
 `;
 
 const PasswordWrapper = styled.div`
@@ -35,4 +39,9 @@ const PasswordWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 450px;
+
+  @media (max-width: 420px) {
+    flex-direction: column;
+    width: 100%;
+  }
 `;

@@ -2,8 +2,8 @@ import React from "react";
 import * as styles from "../../styles";
 import styled from "styled-components";
 
-const ActionButton = ({ text }) => {
-  return <Button>{text}</Button>;
+const ActionButton = ({ text, clickHandler }) => {
+  return <Button onClick={clickHandler}>{text}</Button>;
 };
 
 export default ActionButton;
@@ -21,5 +21,9 @@ const Button = styled.button`
   text-transform: uppercase;
   &:hover {
     box-shadow: ${styles.focusedBoxShadow};
+  }
+
+  @media (max-width: 420px) {
+    font-size: 20px;
   }
 `;

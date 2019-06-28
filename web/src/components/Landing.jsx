@@ -1,20 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import * as styles from "../styles";
 import Signup from "./Signup";
+import Login from "./Login";
 
 const Landing = () => {
+  const [formType, setFormType] = useState("signup");
+
+  let displayedForm =
+    formType === "signup" ? (
+      <SignupWrapper clickHandler={setFormType} />
+    ) : (
+      <LoginWrapper clickHandler={setFormType} />
+    );
   return (
     <LandingWrapper>
       <Header>runtime</Header>
       <Kicker>Log your runs and track your progress with ease.</Kicker>
+      {displayedForm}
+    </LandingWrapper>
+  );
+};
+
+const SignupWrapper = ({ clickHandler }) => {
+  return (
+    <>
       <Signup />
-      <LoginPrompt>
+      <SwitchDisplayPrompt>
         Already have an account?
         <br />
-        <LoginLink>Login here.</LoginLink>
-      </LoginPrompt>
-    </LandingWrapper>
+        <SwitchDisplayLink onClick={() => clickHandler("login")}>
+          Login here
+        </SwitchDisplayLink>
+      </SwitchDisplayPrompt>
+    </>
+  );
+};
+
+const LoginWrapper = ({ clickHandler }) => {
+  return (
+    <>
+      <Login />
+      <SwitchDisplayPrompt>
+        Don't have an account yet?
+        <br />
+        <SwitchDisplayLink onClick={() => clickHandler("signup")}>
+          Sign up here
+        </SwitchDisplayLink>
+      </SwitchDisplayPrompt>
+    </>
   );
 };
 
@@ -22,6 +56,7 @@ export default Landing;
 
 const LandingWrapper = styled.div`
   text-align: center;
+  margin-top: 30px;
 `;
 
 const Header = styled.h1`
@@ -39,9 +74,9 @@ const Kicker = styled.div`
   }
 `;
 
-const LoginPrompt = styled.div`
+const SwitchDisplayPrompt = styled.div`
   margin-top: 60px;
-  font-size: 20px;
+  font-size: 18px;
 
   @media (max-width: 420px) {
     max-width: 90%;
@@ -49,7 +84,7 @@ const LoginPrompt = styled.div`
   }
 `;
 
-const LoginLink = styled.span`
+const SwitchDisplayLink = styled.span`
   text-decoration: underline;
   cursor: pointer;
   font-weight: 500;

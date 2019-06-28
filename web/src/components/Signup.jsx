@@ -7,8 +7,8 @@ const Signup = () => {
   return (
     <>
       <InputWrapper>
-        <TextInput title="Name" placeholder="Dwight Schrute" />
-        <TextInput title="Email" placeholder="dwight@schrutebeetfarms.com" />
+        <TextInput title="Name" placeholder="Michael Scott" />
+        <TextInput title="Email" placeholder="mgscott@dundermifflin.com" />
         <PasswordWrapper>
           <TextInput size="small" title="Password" type="password" />
           <TextInput size="small" title="Confirm Password" type="password" />

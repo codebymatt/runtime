@@ -15,7 +15,6 @@ export default TextInput;
 
 const InputWrapper = styled.div`
   text-align: left;
-  // width: 100%;
 
   @media (max-width: 420px) {
     width: 100%;

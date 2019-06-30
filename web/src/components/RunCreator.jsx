@@ -3,20 +3,15 @@ import styled from "styled-components";
 
 import * as styles from "../styles";
 import ActionButton from "./shared/ActionButton";
+import TimeInputs from "./TimeInputs";
+import RunInputTitle from "./shared/RunInputTitle";
 
 const RunCreator = () => {
   return (
     <BackgroundCard>
       <InputContainer>
         <DistanceInputContainer />
-        <TimeWrapper>
-          <MinutesInput />
-          <TimeColon>
-            <i class="fas fa-circle" />
-            <i class="fas fa-circle" />
-          </TimeColon>
-          <SecondsInput />
-        </TimeWrapper>
+        <TimeInputs />
       </InputContainer>
       <ActionButton text="Add Run" clickHandler={() => {}} />
     </BackgroundCard>
@@ -30,12 +25,17 @@ const InputContainer = styled.div`
   flex-direction: row;
   padding-top: 15px;
   height: 100%;
+
+  @media (max-width: 420px) {
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
 `;
 
 const DistanceInputContainer = () => {
   return (
     <DistanceContainer>
-      <InputTitle>Distance</InputTitle>
+      <RunInputTitle>Distance</RunInputTitle>
       <InputWrapper>
         <DistanceInput placeholder="5.5" />
         <DistanceMetric>km</DistanceMetric>
@@ -44,51 +44,12 @@ const DistanceInputContainer = () => {
   );
 };
 
-const TimeWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: top;
-  margin-left: 50px;
-`;
-
-const MinutesInput = () => {
-  return (
-    <MinutesContainer>
-      <InputTitle>Minutes</InputTitle>
-      <InputWrapper>
-        <TimeInput placeholder="21" />
-      </InputWrapper>
-    </MinutesContainer>
-  );
-};
-
-const SecondsInput = () => {
-  return (
-    <MinutesContainer>
-      <InputTitle>Seconds</InputTitle>
-      <InputWrapper>
-        <TimeInput placeholder="57" />
-      </InputWrapper>
-    </MinutesContainer>
-  );
-};
-
-const DistanceContainer = styled.div`
-  // margin-left: 20px;
-`;
-
-const MinutesContainer = styled.div``;
-
-const InputTitle = styled.h5`
-  text-transform: uppercase;
-  font-size: 16px;
-  font-weight: bold;
-  margin: 0px auto 6px;
-  text-align: right;
-`;
+const DistanceContainer = styled.div``;
 
 const InputWrapper = styled.div`
   position: relative;
+  width: auto;
+  display: inline-block;
 `;
 
 const DistanceInput = styled.input`
@@ -97,29 +58,11 @@ const DistanceInput = styled.input`
   font-size: 18px;
   font-weight: bold;
   text-align: right;
-  padding-right: 35px;
+  padding-right: 40px;
   box-shadow: ${styles.boxShadow};
-`;
-
-const TimeInput = styled.input`
-  height: 45px;
-  width: 90px;
-  font-size: 18px;
-  font-weight: bold;
-  text-align: right;
-  padding-right: 20px;
-  box-shadow: ${styles.boxShadow};
-`;
-
-const TimeColon = styled.div`
-  font-size: 6px;
-  margin: 40px 7px 0px 7px;
-  font-weight: bold;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  max-height: 20px;
-  color: ${styles.lightenedTextColor};
+  border-style: none;
+  -webkit-appearance: none;
+  border-radius: 0px;
 `;
 
 const DistanceMetric = styled.p`
@@ -140,4 +83,12 @@ const BackgroundCard = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+
+  @media (max-width: 420px) {
+    flex-direction: column;
+    width: 90%;
+    height: auto;
+    align-items: flex-start;
+    padding: 10px 5px 30px 30px;
+  }
 `;

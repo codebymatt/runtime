@@ -56,5 +56,5 @@ const HeadingText = styled.p`
 const BackgroundCard = styled.div`
   box-shadow: ${styles.boxShadow};
   width: 900px;
-  min-height: 100px;
+  min-height: 80px;
 `;

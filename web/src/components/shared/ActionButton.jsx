@@ -15,7 +15,7 @@ const Button = styled.button`
   box-shadow: ${styles.boxShadow};
   border-style: none;
   color: ${styles.altTextColor};
-  font-size: 22px;
+  font-size: 18px;
   font-weight: bold;
   cursor: pointer;
   text-transform: uppercase;

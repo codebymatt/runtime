@@ -9,8 +9,8 @@ const TimeInputs = () => {
     <TimeWrapper>
       <MinutesInput />
       <TimeColon>
-        <i class="fas fa-circle" />
-        <i class="fas fa-circle" />
+        <i className="fas fa-circle" />
+        <i className="fas fa-circle" />
       </TimeColon>
       <SecondsInput />
     </TimeWrapper>

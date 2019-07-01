@@ -10,10 +10,10 @@ const Header = ({ history }) => {
       <Title>runtime</Title>
       <NavBar>
         <NavItem>
-          <i class="fas fa-user-circle" />
+          <i className="fas fa-user-circle" />
         </NavItem>
         <NavItem onClick={() => logout(history)}>
-          <i class="fas fa-sign-out-alt" />
+          <i className="fas fa-sign-out-alt" />
         </NavItem>
       </NavBar>
     </HeaderWrapper>

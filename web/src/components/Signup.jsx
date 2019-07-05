@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import TextInput from "./shared/TextInput";
-import { ActionButton } from "./shared/ActionButton";
+import { ActionButton } from "./shared/Buttons";
 
 const Signup = () => {
   return (

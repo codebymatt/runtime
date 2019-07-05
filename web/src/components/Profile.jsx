@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import Header from "./Header";
 import TextInput from "./shared/TextInput";
-import { ActionButton } from "./shared/ActionButton";
+import { ActionButton, DangerButton } from "./shared/Buttons";
 
 const Profile = () => {
   return (
@@ -21,7 +21,7 @@ const Profile = () => {
               />
               <ButtonsWrapper>
                 <ActionButton text="Edit" clickHandler={() => {}} />
-                <ActionButton text="Delete" clickHandler={() => {}} />
+                <DangerButton text="Delete" clickHandler={() => {}} />
               </ButtonsWrapper>
             </InputsWrapper>
           </InfoWrapper>

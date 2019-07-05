@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import * as styles from "../styles";
-import { ActionButton } from "./shared/ActionButton";
+import { ActionButton } from "./shared/Buttons";
 import TimeInputs from "./TimeInputs";
 import RunInputTitle from "./shared/RunInputTitle";
 

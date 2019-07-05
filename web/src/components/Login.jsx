@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 
 import TextInput from "./shared/TextInput";
-import ActionButton from "./shared/ActionButton";
+import { ActionButton } from "./shared/ActionButton";
 
 const Login = ({ history }) => {
   return (

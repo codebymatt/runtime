@@ -2,19 +2,35 @@ import React from "react";
 import * as styles from "../../styles";
 import styled from "styled-components";
 
-const ActionButton = ({ text, clickHandler }) => {
-  return <Button onClick={clickHandler}>{text}</Button>;
+const BaseButton = ({ text, clickHandler, backgroudColor, textColor }) => {
+  return (
+    <Button
+      onClick={clickHandler}
+      backgroudColor={backgroudColor}
+      textColor={textColor}
+    >
+      {text}
+    </Button>
+  );
 };
-
-export default ActionButton;
+export const ActionButton = ({ text, clickHandler }) => {
+  return (
+    <BaseButton
+      onClick={clickHandler}
+      backgroudColor={styles.primaryColor}
+      textColor={styles.altTextColor}
+      text={text}
+    />
+  );
+};
 
 const Button = styled.button`
   height: 45px;
   width: 150px;
-  background-color: ${styles.primaryColor};
+  background-color: ${props => props.backgroudColor};
   box-shadow: ${styles.boxShadow};
   border-style: none;
-  color: ${styles.altTextColor};
+  color: ${props => props.textColor};
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;

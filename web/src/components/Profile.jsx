@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import Header from "./Header";
 import TextInput from "./shared/TextInput";
-import ActionButton from "./shared/ActionButton";
+import { ActionButton } from "./shared/ActionButton";
 
 const Profile = () => {
   return (

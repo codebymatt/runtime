@@ -32,7 +32,6 @@ const Profile = () => {
           </InputsWrapper>
         </InfoWrapper>
       </ProfileWrapper>
-      ;
     </>
   );
 };
@@ -58,12 +57,17 @@ const InputsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+
+  @media (max-width: 320px) {
+    width: 90%;
+  }
 `;
 
 const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  min-width: 300px;
 `;
 
 const ButtonsWrapper = styled.div`
@@ -73,4 +77,12 @@ const ButtonsWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 330px;
+
+  @media (max-width: 320px) {
+    width: 150px;
+    height: 100px;
+    justify-content: space-between;
+    flex-direction: column;
+    margin-bottom: 30px;
+  }
 `;

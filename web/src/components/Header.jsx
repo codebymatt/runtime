@@ -4,14 +4,29 @@ import { withRouter } from "react-router-dom";
 
 import * as styles from "../styles";
 
-const Header = ({ history }) => {
+const Header = ({ history, currentPage }) => {
   return (
     <HeaderWrapper>
       <Title>runtime</Title>
       <NavBar>
-        <NavItem>
-          <i className="fas fa-user-circle" />
-        </NavItem>
+        {currentPage !== "dashboard" && (
+          <NavItem
+            onClick={() => {
+              history.push("/dashboard");
+            }}
+          >
+            <i className="fas fa-running" />
+          </NavItem>
+        )}
+        {currentPage !== "profile" && (
+          <NavItem
+            onClick={() => {
+              history.push("/profile");
+            }}
+          >
+            <i className="fas fa-user-circle" />
+          </NavItem>
+        )}
         <NavItem onClick={() => logout(history)}>
           <i className="fas fa-sign-out-alt" />
         </NavItem>

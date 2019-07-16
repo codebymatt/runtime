@@ -6,7 +6,7 @@ import RunList from "./RunList";
 const Dashboard = () => {
   return (
     <>
-      <Header />
+      <Header currentPage="dashboard" />
       <RunCreator />
       <RunList />
     </>

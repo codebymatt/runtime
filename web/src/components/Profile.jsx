@@ -8,24 +8,29 @@ import { ActionButton, DangerButton } from "./shared/Buttons";
 const Profile = () => {
   return (
     <>
-      <Header />
+      <Header currentPage="profile" />
       <ProfileWrapper>
         <ProfileImageWrapper>
-          <InfoWrapper>
-            <InputsWrapper>
-              <TextInput name="Name" placeholder="Michael Scott" />
-              <TextInput
-                name="Email"
-                type="email"
-                placeholder="mgscott@dundermifflin.com"
-              />
-              <ButtonsWrapper>
-                <ActionButton text="Edit" clickHandler={() => {}} />
-                <DangerButton text="Delete" clickHandler={() => {}} />
-              </ButtonsWrapper>
-            </InputsWrapper>
-          </InfoWrapper>
+          <ProfileImagePlaceholder className="fas fa-user-circle" />
         </ProfileImageWrapper>
+        <InfoWrapper>
+          <InputsWrapper>
+            <TextInput title="Name" placeholder="Michael Scott" />
+            <TextInput
+              title="Email"
+              type="email"
+              placeholder="mgscott@dundermifflin.com"
+            />
+            <ButtonsWrapper>
+              <ActionButton
+                text="Save"
+                inactive={true}
+                clickHandler={() => {}}
+              />
+              <DangerButton text="Delete" clickHandler={() => {}} />
+            </ButtonsWrapper>
+          </InputsWrapper>
+        </InfoWrapper>
       </ProfileWrapper>
       ;
     </>
@@ -40,7 +45,13 @@ const ProfileWrapper = styled.div`
 `;
 
 const ProfileImageWrapper = styled.div`
-  margin: 0 auto;
+  margin: 50px auto 0px;
+  height: 150px;
+  width: 150px;
+`;
+
+const ProfileImagePlaceholder = styled.i`
+  font-size: 128px;
 `;
 
 const InputsWrapper = styled.div`
@@ -50,14 +61,16 @@ const InputsWrapper = styled.div`
 `;
 
 const InfoWrapper = styled.div`
-  // display: flex;
-  // flex-direction: column;
-  // margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
 `;
 
 const ButtonsWrapper = styled.div`
+  margin: 30px auto 0px;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  width: 330px;
 `;

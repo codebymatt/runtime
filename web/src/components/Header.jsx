@@ -7,7 +7,13 @@ import * as styles from "../styles";
 const Header = ({ history, currentPage }) => {
   return (
     <HeaderWrapper>
-      <Title>runtime</Title>
+      <Title
+        onClick={() => {
+          history.push("/dashboard");
+        }}
+      >
+        runtime
+      </Title>
       <NavBar>
         {currentPage !== "dashboard" && (
           <NavItem
@@ -58,6 +64,7 @@ const Title = styled.div`
   font-weight: bold;
   font-size: 48px;
   margin-left: 20px;
+  cursor: pointer;
 
   @media (max-width: 420px) {
     font-size: 42px;

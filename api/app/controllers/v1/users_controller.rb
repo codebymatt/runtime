@@ -6,7 +6,7 @@ module V1
       @user = User.create(new_user_params)
       if @user.valid?
         set_secure_session_cookie
-        render_success(200, user: @user.as_json(only: [:email, :first_name, :last_name]))
+        render_success(200, user: @user.as_json(only: [:email, :name]))
       else
         render_failure(400, "user_not_created")
       end
@@ -38,15 +38,15 @@ module V1
 
     def new_user_params
       params.require(:user)
-            .permit(:email, :password, :password_confirmation, :first_name, :last_name)
+            .permit(:email, :password, :password_confirmation, :name)
     end
 
     def safely_serialized_user
-      current_user.as_json(only: [:email, :first_name, :last_name])
+      current_user.as_json(only: [:email, :name])
     end
 
     def update_user_params
-      params.require(:user).permit(:email, :password, :first_name, :last_name)
+      params.require(:user).permit(:email, :password, :name)
     end
 
     def params_has_password_data?

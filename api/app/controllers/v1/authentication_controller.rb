@@ -32,7 +32,7 @@ module V1
 
     def handle_successful_user_authentication
       cookies[:_runtime_session] = configure_session_cookie(session_token)
-      render_success(200, user: current_user.as_json(only: [:email, :first_name, :last_name]))
+      render_success(200, user: current_user.as_json(only: [:email, :name]))
     end
 
     def session_token

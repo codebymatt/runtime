@@ -27,7 +27,7 @@ describe User, type: :model do
     end
 
     context "without a unique email" do
-      before { User.create(first_name: "Dwight", email: user.email, password: "beetsbearsbattle") }
+      before { User.create(name: "Dwight", email: user.email, password: "beetsbearsbattle") }
       it "does not succeed" do
         expect(user.save).to be(false)
       end

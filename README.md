@@ -17,7 +17,7 @@ Further, more specific documentation can be found in the relevant subfolders.
 
 ### Things to note
 
-The project currently consists of a Ruby and Rails API, a React frontend, and a PostgreSQL DB.
+The project currently consists of a Ruby on Rails API, a React frontend, and a PostgreSQL DB.
 
 The primary target of the web frontend is desktop, however it's very important that it also be
 mobile responsive. This will mainly be addressed in the design phase.

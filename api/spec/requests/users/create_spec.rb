@@ -6,7 +6,7 @@ describe V1::UsersController, type: :request do
       {
         user: {
           email: "matt@example.com",
-          first_name: "Matt",
+          name: "Matt",
           password: "elementarydearwatson"
         }
       }

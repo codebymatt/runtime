@@ -32,14 +32,13 @@ describe V1::UsersController, type: :request do
       end
 
       context "with valid data" do
-        let(:new_first_name) { "Dwight K" }
+        let(:new_name) { "Dwight K" }
         let(:new_email) { "manager@schrutefarms.org" }
         let(:new_data) do
           {
             user: {
               email: new_email,
-              first_name: new_first_name,
-              last_name: user.last_name
+              name: new_name,
             }
           }
         end
@@ -55,7 +54,7 @@ describe V1::UsersController, type: :request do
         end
 
         it "persists non-email data" do
-          expect(user.reload.first_name).to eq(new_first_name)
+          expect(user.reload.name).to eq(new_name)
         end
 
         it "persists email data" do
@@ -64,11 +63,11 @@ describe V1::UsersController, type: :request do
       end
 
       context "with valid data without email" do
-        let(:new_first_name) { "Dwight K" }
+        let(:new_name) { "Dwight K" }
         let(:new_data) do
           {
             user: {
-              first_name: new_first_name
+              name: new_name
             }
           }
         end
@@ -80,20 +79,20 @@ describe V1::UsersController, type: :request do
         end
 
         it "persists non-email data" do
-          expect(user.reload.first_name).to eq(new_first_name)
+          expect(user.reload.name).to eq(new_name)
         end
       end
     end
 
     context "with invalid credentials" do
       context "when updating with valid data" do
-        let(:new_first_name) { "Dwight K" }
+        let(:new_name) { "Dwight K" }
         let(:new_email) { "manager@schrutefarms.org" }
         let(:new_data) do
           {
             user: {
               email: new_email,
-              first_name: new_first_name
+              name: new_name
             }
           }
         end

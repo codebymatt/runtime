@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_17_193612) do
+ActiveRecord::Schema.define(version: 2019_07_17_203350) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "runs", force: :cascade do |t|
+    t.integer "distance"
+    t.integer "time"
+    t.decimal "pace"
+    t.datetime "date"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_runs_on_user_id"
+  end
 
   create_table "sessions", force: :cascade do |t|
     t.string "token"
@@ -34,5 +45,6 @@ ActiveRecord::Schema.define(version: 2019_07_17_193612) do
     t.index ["email"], name: "index_users_on_email"
   end
 
+  add_foreign_key "runs", "users"
   add_foreign_key "sessions", "users"
 end

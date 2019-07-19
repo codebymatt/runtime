@@ -22,6 +22,10 @@ div {
   box-sizing: border-box;
 }
 
+.Toastify__toast-body {
+  color: white;
+}
+
 a {
   text-decoration: none;
 }

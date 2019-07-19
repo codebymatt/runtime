@@ -26,12 +26,12 @@ module V1
 
     def logout_current_user
       Session.find_by_token(cookies[:_runtime_session]).destroy!
-      cookies.delete(:_runtime_session, domain: "runtime-api.mattcraig.me")
+      cookies.delete(:_runtime_session, domain: determine_cookie_domain)
       render_success(200, { message: "successfully_logged_out" }.as_json)
     end
 
     def handle_successful_user_authentication
-      cookies[:_runtime_session] = configure_session_cookie(session_token)
+      configure_session_cookie(session_token)
       render_success(200, user: current_user.as_json(only: [:email, :name]))
     end
 

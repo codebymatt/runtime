@@ -1,11 +1,13 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
 import Header from "./Header";
 import TextInput from "./shared/TextInput";
 import { ActionButton, DangerButton } from "./shared/Buttons";
 
-const Profile = () => {
+const Profile = ({ history }) => {
+  redirectToLandingIfLoggedOut(history);
   return (
     <>
       <Header currentPage="profile" />
@@ -36,7 +38,14 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default withRouter(Profile);
+
+const redirectToLandingIfLoggedOut = history => {
+  const userInfo = JSON.parse(localStorage.getItem("userState"));
+  if (!userInfo.loggedIn) {
+    history.push("/");
+  }
+};
 
 const ProfileWrapper = styled.div`
   display: flex;

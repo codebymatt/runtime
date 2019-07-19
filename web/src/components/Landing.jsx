@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import * as styles from "../styles";
 import Signup from "./Signup";
 import Login from "./Login";
 
-const Landing = () => {
+const Landing = ({ history }) => {
+  redirectToDashBoardIfLoggedIn(history);
   const [formType, setFormType] = useState("signup");
 
   let displayedForm =
@@ -52,8 +54,15 @@ const LoginWrapper = ({ clickHandler }) => {
   );
 };
 
-export default Landing;
+export default withRouter(Landing);
 
+const redirectToDashBoardIfLoggedIn = history => {
+  const userInfo = JSON.parse(localStorage.getItem("userState"));
+  console.log(userInfo);
+  if (userInfo.loggedIn) {
+    history.push("/dashboard");
+  }
+};
 const LandingWrapper = styled.div`
   text-align: center;
   margin-top: 30px;

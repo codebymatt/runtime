@@ -53,7 +53,7 @@ const authenticateAndRedirect = (history, email, password) => {
         toast.error("Invalid username or password! Please try again.");
       } else {
         toast.error(
-          "There's something wrong on our side.. Please try again later!"
+          "Something went wrong on our side.. Please try again later!"
         );
       }
     });

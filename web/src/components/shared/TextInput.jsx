@@ -2,12 +2,13 @@ import React from "react";
 import * as styles from "../../styles";
 import styled from "styled-components";
 
-const TextInput = ({ title, placeholder, size, type, onChange }) => {
+const TextInput = ({ title, value, placeholder, size, type, onChange }) => {
   return (
     <InputWrapper>
       <Title>{title}</Title>
       <InputCard
         type={type || "text"}
+        value={value || ""}
         size={size}
         placeholder={placeholder}
         onChange={onChange}

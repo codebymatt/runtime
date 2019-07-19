@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
@@ -8,6 +8,18 @@ import { ActionButton, DangerButton } from "./shared/Buttons";
 
 const Profile = ({ history }) => {
   redirectToLandingIfLoggedOut(history);
+  const userInfo = JSON.parse(localStorage.getItem("userState")).user;
+  const [name, setName] = useState(userInfo.name);
+  const [email, setEmail] = useState(userInfo.email);
+  const [editing, setEditing] = useState(false);
+
+  useEffect(() => {
+    if (name === userInfo.name && email === userInfo.email) {
+      setEditing(false);
+    } else {
+      setEditing(true);
+    }
+  }, [name, email, userInfo]);
   return (
     <>
       <Header currentPage="profile" />
@@ -17,16 +29,23 @@ const Profile = ({ history }) => {
         </ProfileImageWrapper>
         <InfoWrapper>
           <InputsWrapper>
-            <TextInput title="Name" placeholder="Michael Scott" />
+            <TextInput
+              title="Name"
+              value={name}
+              placeholder="Michael Scott"
+              onChange={event => setName(event.target.value)}
+            />
             <TextInput
               title="Email"
+              value={email}
               type="email"
               placeholder="mgscott@dundermifflin.com"
+              onChange={event => setEmail(event.target.value)}
             />
             <ButtonsWrapper>
               <ActionButton
                 text="Save"
-                inactive={true}
+                inactive={!editing}
                 clickHandler={() => {}}
               />
               <DangerButton text="Delete" clickHandler={() => {}} />

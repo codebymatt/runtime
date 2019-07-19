@@ -58,7 +58,6 @@ export default withRouter(Landing);
 
 const redirectToDashBoardIfLoggedIn = history => {
   const userInfo = JSON.parse(localStorage.getItem("userState"));
-  console.log(userInfo);
   if (userInfo.loggedIn) {
     history.push("/dashboard");
   }

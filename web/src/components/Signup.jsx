@@ -65,7 +65,6 @@ const Signup = ({ history }) => {
 export default withRouter(Signup);
 
 const createUser = (history, name, email, password, passwordConfirmation) => {
-  console.log(name);
   axios
     .post("/v1/user.json", {
       user: {
@@ -85,7 +84,7 @@ const createUser = (history, name, email, password, passwordConfirmation) => {
         toast.error("Invalid input! Please try again.");
       } else {
         toast.error(
-          "There's something wrong on our side.. Please try again later!"
+          "Something went wrong on our side.. Please try again later!"
         );
       }
     });

@@ -7,14 +7,15 @@ import RunCreator from "./RunCreator";
 // import RunList from "./RunList";
 
 const Dashboard = ({ history }) => {
+  const name = JSON.parse(localStorage.getItem("userState")).user.name;
   redirectToLandingIfLoggedOut(history);
   return (
     <>
       <Header currentPage="dashboard" />
       <RunCreator />
       <RunPlaceholder>
-        You haven't logged any runs yet! Add one using the above form to get
-        started.
+        Hey {name}! You haven't logged any runs yet..
+        <br /> Use the above form to get started!
       </RunPlaceholder>
       {/* <RunList /> */}
     </>
@@ -35,4 +36,14 @@ const RunPlaceholder = styled.h1`
   margin: 50px auto 20px;
   text-align: center;
   font-size: 20px;
+
+  br {
+    margin-bottom: 5px;
+  }
+
+  @media (max-width: 420px) {
+    br {
+      display: none;
+    }
+  }
 `;

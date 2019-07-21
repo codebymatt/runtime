@@ -11,7 +11,7 @@ const Login = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   return (
-    <>
+    <InputForm>
       <InputWrapper>
         <TextInput
           title="Email"
@@ -27,9 +27,12 @@ const Login = ({ history }) => {
       </InputWrapper>
       <ActionButton
         text="Login"
-        clickHandler={() => authenticateAndRedirect(history, email, password)}
+        clickHandler={event => {
+          event.preventDefault();
+          authenticateAndRedirect(history, email, password);
+        }}
       />
-    </>
+    </InputForm>
   );
 };
 
@@ -68,6 +71,8 @@ const persistUserInfoToLocalStorage = user => {
     })
   );
 };
+
+const InputForm = styled.form``;
 
 const InputWrapper = styled.div`
   display: flex;

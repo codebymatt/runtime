@@ -13,7 +13,7 @@ const Signup = ({ history }) => {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   return (
-    <>
+    <InputForm>
       <InputWrapper>
         <TextInput
           title="Name"
@@ -54,11 +54,12 @@ const Signup = ({ history }) => {
       </InputWrapper>
       <ActionButton
         text="Sign Up"
-        clickHandler={() =>
-          createUser(history, name, email, password, passwordConfirmation)
-        }
+        clickHandler={event => {
+          event.preventDefault();
+          createUser(history, name, email, password, passwordConfirmation);
+        }}
       />
-    </>
+    </InputForm>
   );
 };
 
@@ -99,6 +100,8 @@ const persistUserInfoToLocalStorage = user => {
     })
   );
 };
+
+const InputForm = styled.form``;
 
 const InputWrapper = styled.div`
   display: flex;

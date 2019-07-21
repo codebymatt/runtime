@@ -3,8 +3,13 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 
 import * as styles from "../styles";
-import axios from "axios";
-import { toast } from "react-toastify";
+// import axios from "axios";
+// import { toast } from "react-toastify";
+
+import { ReactComponent as Runner } from "../images/running-solid.svg";
+import { ReactComponent as SignOut } from "../images/sign-out-alt-solid.svg";
+import { ReactComponent as UserIcon } from "../images/user-circle-solid.svg";
+import { logout } from "./shared/authentication";
 
 const Header = ({ history, currentPage }) => {
   return (
@@ -23,7 +28,9 @@ const Header = ({ history, currentPage }) => {
               history.push("/dashboard");
             }}
           >
-            <i className="fas fa-running" />
+            <ImageWrapper>
+              <Runner />
+            </ImageWrapper>
           </NavItem>
         )}
         {currentPage !== "profile" && (
@@ -32,11 +39,15 @@ const Header = ({ history, currentPage }) => {
               history.push("/profile");
             }}
           >
-            <i className="fas fa-user-circle" />
+            <ImageWrapper>
+              <UserIcon />
+            </ImageWrapper>
           </NavItem>
         )}
         <NavItem onClick={() => logout(history)}>
-          <i className="fas fa-sign-out-alt" />
+          <ImageWrapper>
+            <SignOut />
+          </ImageWrapper>
         </NavItem>
       </NavBar>
     </HeaderWrapper>
@@ -45,29 +56,29 @@ const Header = ({ history, currentPage }) => {
 
 export default withRouter(Header);
 
-const logout = history => {
-  axios
-    .post("/v1/logout.json")
-    .then(() => {
-      removeUserInfoFromLocalStorage();
-      history.push("/");
-    })
-    .catch(() => {
-      toast.error(
-        "Could not log you out! Something has gone wrong on our end.."
-      );
-    });
-};
+// const logout = history => {
+//   axios
+//     .post("/v1/logout.json")
+//     .then(() => {
+//       removeUserInfoFromLocalStorage();
+//       history.push("/");
+//     })
+//     .catch(() => {
+//       toast.error(
+//         "Could not log you out! Something has gone wrong on our end.."
+//       );
+//     });
+// };
 
-const removeUserInfoFromLocalStorage = () => {
-  localStorage.setItem(
-    "userState",
-    JSON.stringify({
-      user: null,
-      loggedIn: false
-    })
-  );
-};
+// const removeUserInfoFromLocalStorage = () => {
+//   localStorage.setItem(
+//     "userState",
+//     JSON.stringify({
+//       user: null,
+//       loggedIn: false
+//     })
+//   );
+// };
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -111,5 +122,13 @@ const NavItem = styled.div`
 
   @media (max-width: 420px) {
     margin-top: 5px;
+  }
+`;
+
+const ImageWrapper = styled.div`
+  height: 25px;
+
+  svg {
+    height: 100%;
   }
 `;

@@ -24,6 +24,8 @@ div {
 
 .Toastify__toast-body {
   color: white;
+  text-align: center;
+  font-weight: bold;
 }
 
 a {

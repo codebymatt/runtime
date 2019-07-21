@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 toast.configure({
   position: "bottom-center",
-  autoClose: 4000,
+  autoClose: 3000,
   hideProgressBar: true,
   transition: Flip,
   closeButton: false

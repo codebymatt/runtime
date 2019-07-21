@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
+
+import { ReactComponent as UserIcon } from "../images/user-circle-solid.svg";
 
 import Header from "./Header";
 import TextInput from "./shared/TextInput";
-import { ActionButton, DangerButton } from "./shared/Buttons";
+import { ActionButton, DangerButton, ConfirmButton } from "./shared/Buttons";
+import { toast } from "react-toastify";
+import { logout } from "./shared/authentication";
 
 const Profile = ({ history }) => {
   redirectToLandingIfLoggedOut(history);
   const userInfo = JSON.parse(localStorage.getItem("userState")).user;
-  const [name, setName] = useState(userInfo.name);
-  const [email, setEmail] = useState(userInfo.email);
+  let { name: originalName, email: originalEmail } = userInfo;
+  const [name, setName] = useState(originalName);
+  const [email, setEmail] = useState(originalEmail);
   const [editing, setEditing] = useState(false);
 
   useEffect(() => {
@@ -25,7 +31,7 @@ const Profile = ({ history }) => {
       <Header currentPage="profile" />
       <ProfileWrapper>
         <ProfileImageWrapper>
-          <ProfileImagePlaceholder className="fas fa-user-circle" />
+          <UserIcon />
         </ProfileImageWrapper>
         <InfoWrapper>
           <InputsWrapper>
@@ -43,12 +49,28 @@ const Profile = ({ history }) => {
               onChange={event => setEmail(event.target.value)}
             />
             <ButtonsWrapper>
-              <ActionButton
+              <ConfirmButton
                 text="Save"
                 inactive={!editing}
-                clickHandler={() => {}}
+                clickHandler={() => {
+                  updateUserInfo(name, email, setName, setEmail, setEditing);
+                }}
               />
-              <DangerButton text="Delete" clickHandler={() => {}} />
+              <ActionButton
+                text="Cancel"
+                visible={editing}
+                clickHandler={() => {
+                  setName(originalName);
+                  setEmail(originalEmail);
+                }}
+              />
+              <DangerButton
+                text="Delete"
+                visible={!editing}
+                clickHandler={() => {
+                  deleteUser(history);
+                }}
+              />
             </ButtonsWrapper>
           </InputsWrapper>
         </InfoWrapper>
@@ -66,6 +88,53 @@ const redirectToLandingIfLoggedOut = history => {
   }
 };
 
+const updateUserInfo = (name, email, setName, setEmail, setEditing) => {
+  if (name === "" || email === "") {
+    toast.error("You've left an important field blank!");
+  } else {
+    axios
+      .put("/v1/user.json", {
+        user: {
+          name: name,
+          email: email
+        }
+      })
+      .then(response => {
+        toast.success("Profile successfully updated.");
+        setUpdatedUserInfo(response.data.user, setName, setEmail, setEditing);
+      })
+      .catch(() => {
+        toast.error(
+          "Could not update your profile info! Please try again later."
+        );
+      });
+  }
+};
+
+const deleteUser = history => {
+  axios
+    .delete("/v1/user.json")
+    .then(() => {
+      logout(history);
+      toast.success("User successfully deleted");
+    })
+    .catch(() => {
+      toast.error(
+        "Could not delete user, either try again or contact support!"
+      );
+    });
+};
+
+const setUpdatedUserInfo = (user, setName, setEmail, setEditing) => {
+  localStorage.setItem(
+    "userState",
+    JSON.stringify({ user: user, loggedIn: true })
+  );
+  setName(user.name);
+  setEmail(user.email);
+  setEditing(false);
+};
+
 const ProfileWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -75,10 +144,10 @@ const ProfileImageWrapper = styled.div`
   margin: 50px auto 0px;
   height: 150px;
   width: 150px;
-`;
 
-const ProfileImagePlaceholder = styled.i`
-  font-size: 128px;
+  svg {
+    height: 100%;
+  }
 `;
 
 const InputsWrapper = styled.div`

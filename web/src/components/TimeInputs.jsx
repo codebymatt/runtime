@@ -35,7 +35,7 @@ const MinutesInput = () => {
     <MinutesContainer>
       <RunInputTitle>Minutes</RunInputTitle>
       <>
-        <TimeInput placeholder="21" />
+        <TimeInput placeholder="20" />
       </>
     </MinutesContainer>
   );

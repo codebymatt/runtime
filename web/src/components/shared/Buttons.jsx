@@ -76,6 +76,8 @@ const Button = styled.button`
   font-weight: bold;
   cursor: ${props => (props.inactive ? "auto" : "pointer")};
   text-transform: uppercase;
+  pointer-events: ${props => (props.inactive ? "none" : "auto")}
+
   &:hover {
     box-shadow: ${props => (props.inactive ? "none" : styles.focusedBoxShadow)};
   }

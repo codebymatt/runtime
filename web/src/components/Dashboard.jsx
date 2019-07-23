@@ -7,8 +7,8 @@ import RunCreator from "./RunCreator";
 // import RunList from "./RunList";
 
 const Dashboard = ({ history }) => {
-  const name = JSON.parse(localStorage.getItem("userState")).user.name;
   redirectToLandingIfLoggedOut(history);
+  const name = JSON.parse(localStorage.getItem("userState")).user.name;
   return (
     <>
       <Header currentPage="dashboard" />

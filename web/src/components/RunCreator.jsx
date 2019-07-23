@@ -37,7 +37,7 @@ const DistanceInputContainer = () => {
     <DistanceContainer>
       <RunInputTitle>Distance</RunInputTitle>
       <InputWrapper>
-        <DistanceInput placeholder="5.5" />
+        <DistanceInput placeholder="5" />
         <DistanceMetric>km</DistanceMetric>
       </InputWrapper>
     </DistanceContainer>
@@ -73,7 +73,7 @@ const DistanceMetric = styled.p`
   color: ${styles.lightenedTextColor};
 `;
 
-const BackgroundCard = styled.div`
+const BackgroundCard = styled.form`
   margin: 45px auto 0px;
   height: 120px;
   width: 900px;

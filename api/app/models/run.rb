@@ -8,6 +8,10 @@ class Run < ApplicationRecord
   validate :date_not_before_today
   validates_presence_of :user_id
 
+  def pace
+    (distance.to_f / time).round(2)
+  end
+
   private
 
   def set_date

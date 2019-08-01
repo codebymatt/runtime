@@ -11,7 +11,7 @@ describe Run, type: :model do
       end
     end
 
-    context "with invalid distance" do
+    context "with negative distance" do
       before { run.distance = -1000 }
 
       it "does not pass validation" do
@@ -19,8 +19,24 @@ describe Run, type: :model do
       end
     end
 
-    context "with invalid time" do
+    context "with non-integer distance" do
+      before { run.distance = 200.7 }
+
+      it "does not pass validation" do
+        expect { run.save! }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+
+    context "when time is negative" do
       before { run.time = -400 }
+
+      it "does not pass validation" do
+        expect { run.save! }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+
+    context "when time is non-integer" do
+      before { run.time = 122.6 }
 
       it "does not pass validation" do
         expect { run.save! }.to raise_error(ActiveRecord::RecordInvalid)
@@ -49,7 +65,10 @@ describe Run, type: :model do
   end
 
   context "when calculating pace" do
+    let(:expected_pace) { run.distance / run.time }
+
     it "calculates it accurately" do
+      expect(run.pace).to eq(expected_pace)
     end
   end
 end

@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   has_secure_password
   has_one :session, dependent: :destroy
-  has_many :run, dependent: :destroy
+  has_many :runs, dependent: :destroy
 
   validates :email, presence: true, uniqueness: true
   validates :password, length: { minimum: 8 }, on: :create

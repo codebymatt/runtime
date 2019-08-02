@@ -65,7 +65,7 @@ describe Run, type: :model do
   end
 
   context "when calculating pace" do
-    let(:expected_pace) { run.distance / run.time }
+    let(:expected_pace) { (run.distance.to_f / run.time).round(2) }
 
     it "calculates it accurately" do
       expect(run.pace).to eq(expected_pace)

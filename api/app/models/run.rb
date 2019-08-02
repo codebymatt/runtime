@@ -12,6 +12,16 @@ class Run < ApplicationRecord
     (distance.to_f / time).round(2)
   end
 
+  def serialized_data
+    {
+      id: id,
+      distance: distance,
+      seconds: time,
+      pace: pace,
+      date: date.to_date
+    }
+  end
+
   private
 
   def set_date

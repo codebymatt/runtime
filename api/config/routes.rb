@@ -9,6 +9,6 @@ Rails.application.routes.draw do
     post "/logout", to: "authentication#logout", as: :logout, only: [:post]
 
     resource :user, only: [:show, :create, :update, :destroy]
-    resource :runs, only: [:create]
+    resources :runs, only: [:index, :show, :create, :destroy]
   end
 end

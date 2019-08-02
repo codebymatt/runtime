@@ -9,6 +9,7 @@ require 'rspec/rails'
 
 require "support/default_format"
 require "support/auth_helper"
+require "support/api_helper"
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -67,6 +68,9 @@ RSpec.configure do |config|
 
   # Default all spec requests to use JSON content-type
   config.include DefaultFormat, type: :request
+
+  # Add helper API methods
+  config.include ApiHelper, type: :request
 
   # Add helper authentication methods
   config.include AuthHelper

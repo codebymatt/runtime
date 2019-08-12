@@ -1,23 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 import styled from "styled-components";
 
 import Header from "./Header";
 import RunCreator from "./RunCreator";
-// import RunList from "./RunList";
+import RunList from "./RunList";
 
 const Dashboard = ({ history }) => {
   redirectToLandingIfLoggedOut(history);
-  const name = JSON.parse(localStorage.getItem("userState")).user.name;
+  const [runs, updateRunList] = useState([]);
+  useEffect(() => {
+    getRunData(updateRunList);
+  }, []);
+  const displayedComponent = chooseComponent(runs, () => {
+    getRunData(updateRunList);
+  });
   return (
     <>
       <Header currentPage="dashboard" />
-      <RunCreator />
-      <RunPlaceholder>
-        Hey {name}! You haven't logged any runs yet..
-        <br /> Use the above form to get started!
-      </RunPlaceholder>
-      {/* <RunList /> */}
+      <RunCreator
+        refreshRuns={() => {
+          getRunData(updateRunList);
+        }}
+      />
+      {displayedComponent}
     </>
   );
 };
@@ -28,6 +36,32 @@ const redirectToLandingIfLoggedOut = history => {
   const userInfo = JSON.parse(localStorage.getItem("userState"));
   if (!userInfo.loggedIn) {
     history.push("/");
+  }
+};
+
+const getRunData = updateRunList => {
+  axios
+    .get("/v1/runs.json")
+    .then(resp => {
+      updateRunList(resp.data.runs);
+    })
+    .catch(err => {
+      console.log(err);
+      toast.error("Couldn't fetch run data at this time.");
+    });
+};
+
+const chooseComponent = (runs, refreshRuns) => {
+  if (runs.length === 0) {
+    const name = JSON.parse(localStorage.getItem("userState")).user.name;
+    return (
+      <RunPlaceholder>
+        Hey {name}! You haven't logged any runs yet..
+        <br /> Use the above form to get started!
+      </RunPlaceholder>
+    );
+  } else {
+    return <RunList runList={runs} refreshRuns={refreshRuns} />;
   }
 };
 

@@ -21,7 +21,8 @@ describe V1::RunsController, type: :request do
       end
 
       it "returns run objects" do
-        expect(json_body["runs"].first).to eq(expected_first_run_data)
+        # Test 'last' since run order is reversed in controller
+        expect(json_body["runs"].last).to eq(expected_first_run_data)
       end
     end
 

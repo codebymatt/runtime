@@ -12,7 +12,9 @@ module V1
     end
 
     def create
-      @run = current_user.runs.new(new_run_params)
+      return render_failure(400, "invalid params") unless run_data_is_valid?
+
+      @run = current_user.runs.new(@new_run_data)
       if @run.save
         render_success(200, run: @run.serialized_data)
       else
@@ -37,7 +39,7 @@ module V1
     end
 
     def new_run_params
-      run_details = params.require(:run_data).permit(:distance, :minutes, :seconds)
+      run_details = params.require("run_data").permit("distance", "minutes", "seconds")
       distance = run_details["distance"].to_i
 
       minutes = run_details["minutes"].to_i
@@ -47,8 +49,13 @@ module V1
       { distance: distance, time: time_in_seconds }
     end
 
+    def run_data_is_valid?
+      @new_run_data = new_run_params
+      @new_run_data[:distance].positive? && @new_run_data[:time].positive?
+    end
+
     def serialized_runs
-      current_user.runs.map(&:serialized_data)
+      current_user.runs.map(&:serialized_data).reverse
     end
   end
 end

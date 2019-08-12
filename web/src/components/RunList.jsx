@@ -2,19 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import RunInstance from "./RunInstance";
 
-const RunList = () => {
+const RunList = ({ runList, refreshRuns }) => {
   return (
     <ComponentWrapper>
       <HeadingsWrapper>
         <Heading name="Distance" width={"20%"} />
         <Heading name="Time" width={"20%"} />
-        <Heading name="Pace per km" width={"20%"} />
-        <Heading name="Date" width={"40%"} textAlign="right" />
+        <Heading name="Minutes per km" width={"25%"} />
+        <Heading name="Date" width={"25%"} />
       </HeadingsWrapper>
       <MobileTitle>Your Runs</MobileTitle>
       <RunWrapper>
-        {runData.map(run => {
-          return <RunInstance data={run} key={run.id} />;
+        {runList.map(run => {
+          return <RunInstance data={run} key={run.id} onDelete={refreshRuns} />;
         })}
       </RunWrapper>
     </ComponentWrapper>
@@ -88,11 +88,3 @@ const RunWrapper = styled.div`
     width: 100%;
   }
 `;
-
-const runData = [
-  { id: 0, distance: 5.5, seconds: 1317, date: new Date("June 30, 2019") },
-  { id: 1, distance: 3.6, seconds: 870, date: new Date("June 28, 2019") },
-  { id: 2, distance: 5.5, seconds: 1357, date: new Date("June 21, 2019") },
-  { id: 3, distance: 5.5, seconds: 1344, date: new Date("June 17, 2019") },
-  { id: 4, distance: 7.5, seconds: 2110, date: new Date("June 11, 2019") }
-];

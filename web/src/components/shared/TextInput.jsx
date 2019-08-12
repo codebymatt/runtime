@@ -43,7 +43,7 @@ const InputCard = styled.input`
   font-size: 20px;
   box-shadow: ${styles.boxShadow};
   border-style: none;
-  -webkit-appearance: none;
+  -webkit-appearance: textfield;
   border-radius: 0px;
 
   @media (max-width: 420px) {

@@ -4,15 +4,15 @@ import styled from "styled-components";
 import * as styles from "../styles";
 import RunInputTitle from "./shared/RunInputTitle";
 
-const TimeInputs = () => {
+const TimeInputs = ({ minutes, setMinutes, seconds, setSeconds }) => {
   return (
     <TimeWrapper>
-      <MinutesInput />
+      <MinutesInput minutes={minutes} setMinutes={setMinutes} />
       <TimeColon>
         <i className="fas fa-circle" />
         <i className="fas fa-circle" />
       </TimeColon>
-      <SecondsInput />
+      <SecondsInput seconds={seconds} setSeconds={setSeconds} />
     </TimeWrapper>
   );
 };
@@ -30,23 +30,31 @@ const TimeWrapper = styled.div`
   }
 `;
 
-const MinutesInput = () => {
+const MinutesInput = ({ minutes, setMinutes }) => {
   return (
     <MinutesContainer>
       <RunInputTitle>Minutes</RunInputTitle>
       <>
-        <TimeInput placeholder="20" />
+        <TimeInput
+          placeholder={minutes}
+          onChange={event => setMinutes(event.target.value)}
+          type="number"
+        />
       </>
     </MinutesContainer>
   );
 };
 
-const SecondsInput = () => {
+const SecondsInput = ({ seconds, setSeconds }) => {
   return (
     <MinutesContainer>
       <RunInputTitle>Seconds</RunInputTitle>
       <>
-        <TimeInput placeholder="57" />
+        <TimeInput
+          placeholder={seconds}
+          onChange={event => setSeconds(event.target.value)}
+          type="number"
+        />
       </>
     </MinutesContainer>
   );
@@ -74,6 +82,6 @@ const TimeInput = styled.input`
   padding-right: 20px;
   box-shadow: ${styles.boxShadow};
   border-style: none;
-  -webkit-appearance: none;
+  -webkit-appearance: textfield;
   border-radius: 0px;
 `;

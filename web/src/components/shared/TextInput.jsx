@@ -49,5 +49,6 @@ const InputCard = styled.input`
   @media (max-width: 420px) {
     width: 100%;
     font-size: 18px;
+    -webkit-appearance: none;
   }
 `;

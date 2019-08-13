@@ -84,4 +84,8 @@ const TimeInput = styled.input`
   border-style: none;
   -webkit-appearance: textfield;
   border-radius: 0px;
+
+  @media (max-width: 420px) {
+    -webkit-appearance: none;
+  }
 `;

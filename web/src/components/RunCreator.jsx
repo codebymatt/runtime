@@ -103,6 +103,10 @@ const DistanceInput = styled.input`
   border-style: none;
   -webkit-appearance: textfield;
   border-radius: 0px;
+
+  @media (max-width: 420px) {
+    -webkit-appearance: none;
+  }
 `;
 
 const DistanceMetric = styled.p`

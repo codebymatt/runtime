@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
-import { ReactComponent as UserIcon } from "../images/user-circle-solid.svg";
+import UserIcon from "@material-ui/icons/AccountCircle";
 
 import Header from "./Header";
 import TextInput from "./shared/TextInput";
@@ -12,20 +12,36 @@ import { toast } from "react-toastify";
 import { logout } from "./shared/authentication";
 
 const Profile = ({ history }) => {
-  redirectToLandingIfLoggedOut(history);
-  const userInfo = JSON.parse(localStorage.getItem("userState")).user;
-  let { name: originalName, email: originalEmail } = userInfo;
+  let originalName = "";
+  let originalEmail = "";
+
   const [name, setName] = useState(originalName);
   const [email, setEmail] = useState(originalEmail);
+
+  const userInfo = JSON.parse(localStorage.getItem("userState")).user;
+
+  if (userInfo === null || !userInfo.loggedIn) {
+    history.push("/");
+  } else {
+    let { name: originalName, email: originalEmail } = userInfo;
+    setName(originalName);
+    setEmail(originalEmail);
+  }
+
   const [editing, setEditing] = useState(false);
 
   useEffect(() => {
-    if (name === userInfo.name && email === userInfo.email) {
+    if (
+      userInfo !== null &&
+      name === userInfo.name &&
+      email === userInfo.email
+    ) {
       setEditing(false);
     } else {
       setEditing(true);
     }
   }, [name, email, userInfo]);
+
   return (
     <>
       <Header currentPage="profile" />
@@ -81,12 +97,13 @@ const Profile = ({ history }) => {
 
 export default withRouter(Profile);
 
-const redirectToLandingIfLoggedOut = history => {
-  const userInfo = JSON.parse(localStorage.getItem("userState"));
-  if (!userInfo.loggedIn) {
-    history.push("/");
-  }
-};
+// const redirectToLandingIfLoggedOut = history => {
+//   const userInfo = JSON.parse(localStorage.getItem("userState"));
+//   if (userInfo === null || !userInfo.loggedIn) {
+//     window.location.href = "/";
+//     // history.push("/");
+//   }
+// };
 
 const updateUserInfo = (name, email, setName, setEmail, setEditing) => {
   if (name === "" || email === "") {
@@ -147,6 +164,7 @@ const ProfileImageWrapper = styled.div`
 
   svg {
     height: 100%;
+    width: 100%;
   }
 `;
 

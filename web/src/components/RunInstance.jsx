@@ -3,10 +3,10 @@ import styled from "styled-components";
 import axios from "axios";
 import { toast } from "react-toastify";
 
+import DeleteOutlined from "@material-ui/icons/DeleteOutlined";
+
 import * as moment from "moment";
 import * as styles from "../styles";
-
-import { ReactComponent as TrashIcon } from "../images/trash-solid.svg";
 
 const RunInstance = ({ data, onDelete }) => {
   const [hovering, setHovering] = useState(false);
@@ -31,8 +31,10 @@ const RunInstance = ({ data, onDelete }) => {
         </Pace>
         <MobileHeadings>Date</MobileHeadings>
         <RunDate>{formattedDate.format("DD MMM YYYY")}</RunDate>
-        <ActionsWrapper hovering={hovering}>
-          <TrashIcon onClick={() => deleteRun(data.id, onDelete)} />
+        <ActionsWrapper>
+          <DeleteWrapper hovering={hovering}>
+            <DeleteOutlined onClick={() => deleteRun(data.id, onDelete)} />
+          </DeleteWrapper>
         </ActionsWrapper>
       </DataWrapper>
     </BackgroundCard>
@@ -89,18 +91,24 @@ const BackgroundCard = styled.div`
 `;
 
 const ActionsWrapper = styled.div`
-  visibility: ${props => (props.hovering ? "visible" : "hidden")}
-  cursor: pointer;
+  width: auto;
   width: 10%;
   display: flex;
   justify-content: right;
+`;
+
+const DeleteWrapper = styled.div`
+  visibility: ${props => (props.hovering ? "visible" : "hidden")}
+  cursor: pointer;
+
 
   svg {
-    height: 20px;
+    height: 25px;
+    width: 25px;
     color: ${styles.textColor};
 
     &:hover {
-      color: ${styles.dangerColor}
+      color: ${styles.dangerColor};
     }
   }
 `;

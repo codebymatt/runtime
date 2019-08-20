@@ -20,6 +20,23 @@ axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.withCredentials = true;
 
+axios.interceptors.response.use(
+  response => {
+    return response;
+  },
+  error => {
+    if (error.response.data.reason === "unauthorized_request") {
+      setEmptyUserState();
+      window.location.pathname = "/";
+    }
+    return Promise.reject(error);
+  }
+);
+
+const setEmptyUserState = () => {
+  localStorage.setItem("userState", JSON.stringify(initialUserState));
+};
+
 const initialUserState = {
   user: null,
   loggedIn: false
@@ -27,7 +44,7 @@ const initialUserState = {
 
 function App() {
   if (!localStorage.getItem("userState")) {
-    localStorage.setItem("userState", JSON.stringify(initialUserState));
+    setEmptyUserState();
   }
 
   return (

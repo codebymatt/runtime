@@ -3,12 +3,9 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 
 import * as styles from "../styles";
-// import axios from "axios";
-// import { toast } from "react-toastify";
-
-import { ReactComponent as Runner } from "../images/running-solid.svg";
-import { ReactComponent as SignOut } from "../images/sign-out-alt-solid.svg";
-import { ReactComponent as UserIcon } from "../images/user-circle-solid.svg";
+import WatchLater from "@material-ui/icons/WatchLaterOutlined";
+import SignOut from "@material-ui/icons/ExitToApp";
+import UserIcon from "@material-ui/icons/AccountCircleOutlined";
 import { logout } from "./shared/authentication";
 
 const Header = ({ history, currentPage }) => {
@@ -29,7 +26,7 @@ const Header = ({ history, currentPage }) => {
             }}
           >
             <ImageWrapper>
-              <Runner />
+              <WatchLater />
             </ImageWrapper>
           </NavItem>
         )}
@@ -126,9 +123,13 @@ const NavItem = styled.div`
 `;
 
 const ImageWrapper = styled.div`
-  height: 25px;
+  height: 30px;
 
   svg {
     height: 100%;
-  }
+    width: 100%;
+
+    &:hover {
+      color: ${styles.primaryColor}
+    }
 `;

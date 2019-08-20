@@ -9,7 +9,7 @@ import RunCreator from "./RunCreator";
 import RunList from "./RunList";
 
 const Dashboard = ({ history }) => {
-  redirectToLandingIfLoggedOut(history);
+  // redirectToLandingIfLoggedOut(history);
   const [runs, updateRunList] = useState([]);
   useEffect(() => {
     getRunData(updateRunList);
@@ -17,6 +17,13 @@ const Dashboard = ({ history }) => {
   const displayedComponent = chooseComponent(runs, () => {
     getRunData(updateRunList);
   });
+
+  const userInfo = JSON.parse(localStorage.getItem("userState"));
+  if (userInfo === null || !userInfo.loggedIn) {
+    history.push("/");
+    return null;
+  }
+
   return (
     <>
       <Header currentPage="dashboard" />
@@ -32,13 +39,6 @@ const Dashboard = ({ history }) => {
 
 export default withRouter(Dashboard);
 
-const redirectToLandingIfLoggedOut = history => {
-  const userInfo = JSON.parse(localStorage.getItem("userState"));
-  if (!userInfo.loggedIn) {
-    history.push("/");
-  }
-};
-
 const getRunData = updateRunList => {
   axios
     .get("/v1/runs.json")
@@ -53,7 +53,8 @@ const getRunData = updateRunList => {
 
 const chooseComponent = (runs, refreshRuns) => {
   if (runs.length === 0) {
-    const name = JSON.parse(localStorage.getItem("userState")).user.name;
+    const userInfo = JSON.parse(localStorage.getItem("userState"));
+    const name = userInfo.user === null ? "user" : userInfo.user.name;
     return (
       <RunPlaceholder>
         Hey {name}! You haven't logged any runs yet..

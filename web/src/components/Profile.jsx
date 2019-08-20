@@ -11,22 +11,25 @@ import { ActionButton, DangerButton, ConfirmButton } from "./shared/Buttons";
 import { toast } from "react-toastify";
 import { logout } from "./shared/authentication";
 
+const ProfileContainer = ({ history }) => {
+  const userState = JSON.parse(localStorage.getItem("userState"));
+  const userInfo = userState.user;
+  if (userInfo === null || !userState.loggedIn) {
+    history.push("/");
+    return null;
+  } else {
+    return <Profile history={history} />;
+  }
+};
+
 const Profile = ({ history }) => {
-  let originalName = "";
-  let originalEmail = "";
+  const userState = JSON.parse(localStorage.getItem("userState"));
+  const userInfo = userState.user;
+
+  let { name: originalName, email: originalEmail } = userInfo;
 
   const [name, setName] = useState(originalName);
   const [email, setEmail] = useState(originalEmail);
-
-  const userInfo = JSON.parse(localStorage.getItem("userState")).user;
-
-  if (userInfo === null || !userInfo.loggedIn) {
-    history.push("/");
-  } else {
-    let { name: originalName, email: originalEmail } = userInfo;
-    setName(originalName);
-    setEmail(originalEmail);
-  }
 
   const [editing, setEditing] = useState(false);
 
@@ -95,15 +98,7 @@ const Profile = ({ history }) => {
   );
 };
 
-export default withRouter(Profile);
-
-// const redirectToLandingIfLoggedOut = history => {
-//   const userInfo = JSON.parse(localStorage.getItem("userState"));
-//   if (userInfo === null || !userInfo.loggedIn) {
-//     window.location.href = "/";
-//     // history.push("/");
-//   }
-// };
+export default withRouter(ProfileContainer);
 
 const updateUserInfo = (name, email, setName, setEmail, setEditing) => {
   if (name === "" || email === "") {

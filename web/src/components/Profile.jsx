@@ -70,8 +70,10 @@ const Profile = ({ history }) => {
             <ButtonsWrapper>
               <ConfirmButton
                 text="Save"
+                submit={true}
                 inactive={!editing}
-                clickHandler={() => {
+                clickHandler={event => {
+                  event.preventDefault();
                   updateUserInfo(name, email, setName, setEmail, setEditing);
                 }}
                 fullWidthMobile={true}
@@ -176,7 +178,7 @@ const InputsWrapper = styled.div`
   }
 `;
 
-const InfoWrapper = styled.div`
+const InfoWrapper = styled.form`
   display: flex;
   flex-direction: column;
   margin: 0 auto;

@@ -9,11 +9,13 @@ const BaseButton = ({
   textColor,
   inactive,
   visible,
-  fullWidthMobile
+  fullWidthMobile,
+  submit
 }) => {
   visible = visible === undefined ? true : visible;
   return (
     <Button
+      submit={submit}
       onClick={clickHandler}
       backgroudColor={backgroudColor}
       textColor={textColor}
@@ -31,10 +33,12 @@ export const DangerButton = ({
   clickHandler,
   inactive,
   visible,
-  fullWidthMobile
+  fullWidthMobile,
+  submit
 }) => {
   return (
     <BaseButton
+      submit={submit}
       clickHandler={clickHandler}
       backgroudColor={styles.dangerColor}
       textColor={styles.altTextColor}
@@ -51,10 +55,12 @@ export const ConfirmButton = ({
   clickHandler,
   inactive,
   visible,
-  fullWidthMobile
+  fullWidthMobile,
+  submit
 }) => {
   return (
     <BaseButton
+      submit={submit}
       clickHandler={clickHandler}
       backgroudColor={styles.confirmColor}
       textColor={styles.altTextColor}
@@ -71,10 +77,12 @@ export const ActionButton = ({
   clickHandler,
   inactive,
   visible,
-  fullWidthMobile
+  fullWidthMobile,
+  submit
 }) => {
   return (
     <BaseButton
+      submit={submit}
       clickHandler={clickHandler}
       backgroudColor={styles.primaryColor}
       textColor={styles.altTextColor}

@@ -74,6 +74,7 @@ const Profile = ({ history }) => {
                 clickHandler={() => {
                   updateUserInfo(name, email, setName, setEmail, setEditing);
                 }}
+                fullWidthMobile={true}
               />
               <ActionButton
                 text="Cancel"
@@ -82,6 +83,7 @@ const Profile = ({ history }) => {
                   setName(originalName);
                   setEmail(originalEmail);
                 }}
+                fullWidthMobile={true}
               />
               <DangerButton
                 text="Delete"
@@ -89,6 +91,7 @@ const Profile = ({ history }) => {
                 clickHandler={() => {
                   deleteUser(history);
                 }}
+                fullWidthMobile={true}
               />
             </ButtonsWrapper>
           </InputsWrapper>
@@ -189,7 +192,7 @@ const ButtonsWrapper = styled.div`
   width: 330px;
 
   @media (max-width: 320px) {
-    width: 150px;
+    width: 100%;
     height: 100px;
     justify-content: space-between;
     flex-direction: column;

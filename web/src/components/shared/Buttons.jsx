@@ -8,7 +8,8 @@ const BaseButton = ({
   backgroudColor,
   textColor,
   inactive,
-  visible
+  visible,
+  fullWidthMobile
 }) => {
   visible = visible === undefined ? true : visible;
   return (
@@ -18,13 +19,20 @@ const BaseButton = ({
       textColor={textColor}
       inactive={inactive}
       visible={visible}
+      fullWidthMobile={fullWidthMobile}
     >
       {text}
     </Button>
   );
 };
 
-export const DangerButton = ({ text, clickHandler, inactive, visible }) => {
+export const DangerButton = ({
+  text,
+  clickHandler,
+  inactive,
+  visible,
+  fullWidthMobile
+}) => {
   return (
     <BaseButton
       clickHandler={clickHandler}
@@ -33,11 +41,18 @@ export const DangerButton = ({ text, clickHandler, inactive, visible }) => {
       text={text}
       inactive={inactive}
       visible={visible}
+      fullWidthMobile={fullWidthMobile}
     />
   );
 };
 
-export const ConfirmButton = ({ text, clickHandler, inactive, visible }) => {
+export const ConfirmButton = ({
+  text,
+  clickHandler,
+  inactive,
+  visible,
+  fullWidthMobile
+}) => {
   return (
     <BaseButton
       clickHandler={clickHandler}
@@ -46,11 +61,18 @@ export const ConfirmButton = ({ text, clickHandler, inactive, visible }) => {
       text={text}
       inactive={inactive}
       visible={visible}
+      fullWidthMobile={fullWidthMobile}
     />
   );
 };
 
-export const ActionButton = ({ text, clickHandler, inactive, visible }) => {
+export const ActionButton = ({
+  text,
+  clickHandler,
+  inactive,
+  visible,
+  fullWidthMobile
+}) => {
   return (
     <BaseButton
       clickHandler={clickHandler}
@@ -59,6 +81,7 @@ export const ActionButton = ({ text, clickHandler, inactive, visible }) => {
       text={text}
       inactive={inactive}
       visible={visible}
+      fullWidthMobile={fullWidthMobile}
     />
   );
 };
@@ -66,7 +89,7 @@ export const ActionButton = ({ text, clickHandler, inactive, visible }) => {
 const Button = styled.button`
   display: ${props => (props.visible ? "inline-block" : "none")}
   height: 45px;
-  width: 150px;
+  width: ${props => (props.fullWidthMobile ? "100%" : "150px")}
   background-color: ${props =>
     props.inactive ? styles.inactiveGrey : props.backgroudColor};
   box-shadow: ${props => (props.inactive ? "none" : styles.boxShadow)};

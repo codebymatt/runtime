@@ -81,7 +81,8 @@ const Profile = ({ history }) => {
               <ActionButton
                 text="Cancel"
                 visible={editing}
-                clickHandler={() => {
+                clickHandler={event => {
+                  event.preventDefault();
                   setName(originalName);
                   setEmail(originalEmail);
                 }}

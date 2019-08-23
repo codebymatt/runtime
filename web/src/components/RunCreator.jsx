@@ -9,9 +9,15 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const RunCreator = ({ refreshRuns }) => {
-  const [distance, setDistance] = useState(5);
-  const [minutes, setMinutes] = useState(20);
-  const [seconds, setSeconds] = useState(57);
+  const [distance, setDistance] = useState("");
+  const [minutes, setMinutes] = useState("");
+  const [seconds, setSeconds] = useState("");
+
+  const clearInputs = () => {
+    setDistance("");
+    setMinutes("");
+    setSeconds("");
+  };
 
   return (
     <BackgroundCard>
@@ -28,7 +34,7 @@ const RunCreator = ({ refreshRuns }) => {
         text="Add Run"
         clickHandler={event => {
           event.preventDefault();
-          createRun(distance, minutes, seconds, refreshRuns);
+          createRun(distance, minutes, seconds, refreshRuns, clearInputs);
         }}
       />
     </BackgroundCard>
@@ -37,7 +43,7 @@ const RunCreator = ({ refreshRuns }) => {
 
 export default RunCreator;
 
-const createRun = (distance, minutes, seconds, refreshRuns) => {
+const createRun = (distance, minutes, seconds, refreshRuns, clearInputs) => {
   if (distance <= 0) {
     toast.warn("Distance field must be filled out!");
     return;
@@ -47,11 +53,12 @@ const createRun = (distance, minutes, seconds, refreshRuns) => {
     .post("/v1/runs.json", {
       run_data: { distance: distance, minutes: minutes, seconds: seconds }
     })
-    .then(response => {
+    .then(() => {
       refreshRuns();
+      clearInputs();
       toast.success("Run has been logged.");
     })
-    .catch(err => {
+    .catch(() => {
       toast.error("Couldn't log run, make sure all your inputs are valid.");
     });
 };
@@ -77,6 +84,7 @@ const DistanceInputContainer = ({ distance, setDistance }) => {
           placeholder={distance}
           onChange={event => setDistance(event.target.value)}
           type="number"
+          value={distance}
         />
         <DistanceMetric>km</DistanceMetric>
       </InputWrapper>

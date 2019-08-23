@@ -97,7 +97,7 @@ export const ActionButton = ({
 const Button = styled.button`
   display: ${props => (props.visible ? "inline-block" : "none")}
   height: 45px;
-  width: ${props => (props.fullWidthMobile ? "100%" : "150px")}
+  width: 150px;
   background-color: ${props =>
     props.inactive ? styles.inactiveGrey : props.backgroudColor};
   box-shadow: ${props => (props.inactive ? "none" : styles.boxShadow)};
@@ -115,5 +115,6 @@ const Button = styled.button`
 
   @media (max-width: 420px) {
     font-size: 20px;
+    width: ${props => (props.fullWidthMobile ? "100%" : "150px")}
   }
 `;

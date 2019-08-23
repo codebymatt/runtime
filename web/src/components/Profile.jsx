@@ -193,6 +193,12 @@ const ButtonsWrapper = styled.div`
   align-items: center;
   width: 330px;
 
+  @media (max-width: 420px) {
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100px;
+  }
+
   @media (max-width: 320px) {
     width: 100%;
     height: 100px;

@@ -12,8 +12,6 @@ const TimeInputs = ({ minutes, setMinutes, seconds, setSeconds }) => {
       <TimeColon>
         <Disc />
         <Disc />
-        {/* <i className="fas fa-circle" />
-        <i className="fas fa-circle" /> */}
       </TimeColon>
       <SecondsInput seconds={seconds} setSeconds={setSeconds} />
     </TimeWrapper>
@@ -42,6 +40,7 @@ const MinutesInput = ({ minutes, setMinutes }) => {
           placeholder={minutes}
           onChange={event => setMinutes(event.target.value)}
           type="number"
+          value={minutes}
         />
       </>
     </MinutesContainer>
@@ -57,6 +56,7 @@ const SecondsInput = ({ seconds, setSeconds }) => {
           placeholder={seconds}
           onChange={event => setSeconds(event.target.value)}
           type="number"
+          value={seconds}
         />
       </>
     </MinutesContainer>

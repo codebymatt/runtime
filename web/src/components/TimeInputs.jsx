@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import * as styles from "../styles";
+import Disc from "@material-ui/icons/FiberManualRecord";
 import RunInputTitle from "./shared/RunInputTitle";
 
 const TimeInputs = ({ minutes, setMinutes, seconds, setSeconds }) => {
@@ -9,8 +10,10 @@ const TimeInputs = ({ minutes, setMinutes, seconds, setSeconds }) => {
     <TimeWrapper>
       <MinutesInput minutes={minutes} setMinutes={setMinutes} />
       <TimeColon>
-        <i className="fas fa-circle" />
-        <i className="fas fa-circle" />
+        <Disc />
+        <Disc />
+        {/* <i className="fas fa-circle" />
+        <i className="fas fa-circle" /> */}
       </TimeColon>
       <SecondsInput seconds={seconds} setSeconds={setSeconds} />
     </TimeWrapper>
@@ -68,9 +71,16 @@ const TimeColon = styled.div`
   font-weight: bold;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   max-height: 20px;
   color: ${styles.lightenedTextColor};
+
+  svg {
+    height: 10px;
+    width: 10px;
+    margin-bottom: 2px;
+    margin-top: 2px;
+  }
 `;
 
 const TimeInput = styled.input`

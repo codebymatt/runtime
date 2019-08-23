@@ -98,9 +98,7 @@ const ActionsWrapper = styled.div`
 `;
 
 const DeleteWrapper = styled.div`
-  visibility: ${props => (props.hovering ? "visible" : "hidden")}
   cursor: pointer;
-
 
   svg {
     height: 25px;
@@ -108,6 +106,23 @@ const DeleteWrapper = styled.div`
     color: ${styles.textColor};
 
     &:hover {
+      color: ${styles.dangerColor};
+    }
+  }
+
+  @media (min-width: 420px) {
+    visibility: ${props => (props.hovering ? "visible" : "hidden")};
+  }
+
+  @media (max-width: 420px) {
+    visibility: "visible";
+    position: absolute;
+    top: 15px;
+    right: 15px;
+
+    svg {
+      height: 30px;
+      width: 30px;
       color: ${styles.dangerColor};
     }
   }

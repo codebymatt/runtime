@@ -112,6 +112,7 @@ const NavItem = styled.div`
   margin-left: 15px;
   cursor: pointer;
   color: ${styles.textColor};
+  max-width: 30px;
 
   &:hover {
     color: ${styles.primaryColor};

@@ -9,12 +9,13 @@ import RunCreator from "./RunCreator";
 import RunList from "./RunList";
 
 const Dashboard = ({ history }) => {
-  // redirectToLandingIfLoggedOut(history);
-  const [runs, updateRunList] = useState([]);
+  const [runs, updateRunList] = useState();
+
   useEffect(() => {
     getRunData(updateRunList);
   }, []);
-  const displayedComponent = chooseComponent(runs, () => {
+
+  const componentToDisplay = chooseComponent(runs, () => {
     getRunData(updateRunList);
   });
 
@@ -32,7 +33,7 @@ const Dashboard = ({ history }) => {
           getRunData(updateRunList);
         }}
       />
-      {displayedComponent}
+      {componentToDisplay}
     </>
   );
 };
@@ -45,25 +46,30 @@ const getRunData = updateRunList => {
     .then(resp => {
       updateRunList(resp.data.runs);
     })
-    .catch(err => {
-      console.log(err);
+    .catch(() => {
       toast.error("Couldn't fetch run data at this time.");
     });
 };
 
 const chooseComponent = (runs, refreshRuns) => {
-  if (runs.length === 0) {
-    const userInfo = JSON.parse(localStorage.getItem("userState"));
-    const name = userInfo.user === null ? "user" : userInfo.user.name;
-    return (
-      <RunPlaceholder>
-        Hey {name}! You haven't logged any runs yet..
-        <br /> Use the above form to get started!
-      </RunPlaceholder>
-    );
+  if (runs === null || runs === undefined) {
+    return null;
+  } else if (runs.length === 0) {
+    return <PlaceHolder />;
   } else {
     return <RunList runList={runs} refreshRuns={refreshRuns} />;
   }
+};
+
+const PlaceHolder = () => {
+  const userInfo = JSON.parse(localStorage.getItem("userState"));
+  const name = userInfo.user === null ? "user" : userInfo.user.name;
+  return (
+    <RunPlaceholder>
+      Hey {name}! You haven't logged any runs yet..
+      <br /> Use the above form to get started!
+    </RunPlaceholder>
+  );
 };
 
 const RunPlaceholder = styled.h1`

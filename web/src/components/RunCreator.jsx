@@ -4,14 +4,17 @@ import styled from "styled-components";
 import * as styles from "../styles";
 import { ActionButton } from "./shared/Buttons";
 import TimeInputs from "./TimeInputs";
+import DateInputs from "./DateInputs";
 import RunInputTitle from "./shared/RunInputTitle";
 import axios from "axios";
 import { toast } from "react-toastify";
+import moment from "moment";
 
 const RunCreator = ({ refreshRuns }) => {
   const [distance, setDistance] = useState("");
   const [minutes, setMinutes] = useState("");
   const [seconds, setSeconds] = useState("");
+  const [selectedDate, setSelectedDate] = useState(moment());
 
   const clearInputs = () => {
     setDistance("");
@@ -29,29 +32,54 @@ const RunCreator = ({ refreshRuns }) => {
           seconds={seconds}
           setSeconds={setSeconds}
         />
+        <DateInputs dateSetter={setSelectedDate} />
       </InputContainer>
-      <ActionButton
-        text="Add Run"
-        clickHandler={event => {
-          event.preventDefault();
-          createRun(distance, minutes, seconds, refreshRuns, clearInputs);
-        }}
-      />
+      <AddRunWrapper>
+        <ActionButton
+          text="Add Run"
+          clickHandler={event => {
+            event.preventDefault();
+            createRun(
+              distance,
+              minutes,
+              seconds,
+              selectedDate,
+              refreshRuns,
+              clearInputs
+            );
+          }}
+        />
+      </AddRunWrapper>
     </BackgroundCard>
   );
 };
 
 export default RunCreator;
 
-const createRun = (distance, minutes, seconds, refreshRuns, clearInputs) => {
+const createRun = (
+  distance,
+  minutes,
+  seconds,
+  date,
+  refreshRuns,
+  clearInputs
+) => {
   if (distance <= 0) {
     toast.warn("Distance field must be filled out!");
+    return;
+  } else if (minutes <= 0 || seconds <= 0) {
+    toast.warn("TIme fields must be fully filled out!");
     return;
   }
   distance = distance * 1000;
   axios
     .post("/v1/runs.json", {
-      run_data: { distance: distance, minutes: minutes, seconds: seconds }
+      run_data: {
+        distance: distance,
+        minutes: minutes,
+        seconds: seconds,
+        date: date
+      }
     })
     .then(() => {
       refreshRuns();
@@ -62,18 +90,6 @@ const createRun = (distance, minutes, seconds, refreshRuns, clearInputs) => {
       toast.error("Couldn't log run, make sure all your inputs are valid.");
     });
 };
-
-const InputContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  padding-top: 15px;
-  height: 100%;
-
-  @media (max-width: 420px) {
-    flex-direction: column;
-    margin-bottom: 20px;
-  }
-`;
 
 const DistanceInputContainer = ({ distance, setDistance }) => {
   return (
@@ -91,6 +107,22 @@ const DistanceInputContainer = ({ distance, setDistance }) => {
     </DistanceContainer>
   );
 };
+
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding-top: 15px;
+  height: 100%;
+
+  @media (max-width: 420px) {
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+`;
+
+const AddRunWrapper = styled.div`
+  margin-top: 10px;
+`;
 
 const DistanceContainer = styled.div``;
 

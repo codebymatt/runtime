@@ -5,7 +5,7 @@ class Run < ApplicationRecord
 
   validates :distance, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :time, presence: true, numericality: { only_integer: true, greater_than: 0 }
-  validate :date_not_before_today
+  validate :date_is_not_in_the_future
   validates_presence_of :user_id
 
   def pace
@@ -25,10 +25,10 @@ class Run < ApplicationRecord
   private
 
   def set_date
-    self.date = Time.now.utc
+    self.date = Time.now.utc unless date.present?
   end
 
-  def date_not_before_today
-    errors.add(:date, "can't be in the past") if date.nil? || date.to_date < Date.today
+  def date_is_not_in_the_future
+    errors.add(:date, "can't be in the future") if date.nil? || date.to_date > Date.today
   end
 end

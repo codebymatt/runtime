@@ -50,9 +50,30 @@ describe Run, type: :model do
         expect { run.save! }.to raise_error(ActiveRecord::RecordInvalid)
       end
     end
+
+    context "with a date in the future" do
+      before { run.date = 10.days.from_now }
+
+      it "does not pass validations" do
+        expect { run.save! }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+
+    context "with a date in the past" do
+      before { run.date = 10.days.ago }
+
+      it "succeeds" do
+        expect(run.save!).to be(true)
+      end
+
+      it "sets the correct date" do
+        run.save!
+        expect(run.reload.date).to be_within(1.second).of(10.days.ago)
+      end
+    end
   end
 
-  context "when a run has been saved" do
+  context "when a run has been saved without being given a date" do
     before { run.save! }
 
     it "adds a date attribute" do

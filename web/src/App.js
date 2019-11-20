@@ -7,6 +7,8 @@ import Landing from "./components/Landing";
 import Dashboard from "./components/Dashboard";
 import Profile from "./components/Profile";
 import "react-toastify/dist/ReactToastify.css";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import MomentUtils from "@date-io/moment";
 
 toast.configure({
   position: "bottom-center",
@@ -49,11 +51,13 @@ function App() {
 
   return (
     <AppContainer>
-      <Router>
-        <Route exact path="/" component={Landing} />
-        <Route path="/dashboard/" component={Dashboard} />
-        <Route path="/profile/" component={Profile} />
-      </Router>
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <Router>
+          <Route exact path="/" component={Landing} />
+          <Route path="/dashboard/" component={Dashboard} />
+          <Route path="/profile/" component={Profile} />
+        </Router>
+      </MuiPickersUtilsProvider>
     </AppContainer>
   );
 }

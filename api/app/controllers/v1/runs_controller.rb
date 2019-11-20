@@ -39,19 +39,26 @@ module V1
     end
 
     def new_run_params
-      run_details = params.require("run_data").permit("distance", "minutes", "seconds")
+      run_details = params.require("run_data").permit("distance", "minutes", "seconds", "date")
       distance = run_details["distance"].to_i
 
       minutes = run_details["minutes"].to_i
       seconds = run_details["seconds"].to_i
       time_in_seconds = (minutes * 60) + seconds
 
-      { distance: distance, time: time_in_seconds }
+      { distance: distance, time: time_in_seconds, date: run_details["date"] }
     end
 
     def run_data_is_valid?
       @new_run_data = new_run_params
-      @new_run_data[:distance].positive? && @new_run_data[:time].positive?
+      @new_run_data[:distance].positive? && @new_run_data[:time].positive? && date_allowed?
+    end
+
+    def date_allowed?
+      given_date = @new_run_data[:date]
+      return true if given_date.nil?
+
+      Date.parse(given_date) <= Date.today
     end
 
     def serialized_runs

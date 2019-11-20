@@ -24,7 +24,7 @@ const TimeWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: top;
-  margin-left: 50px;
+  margin-left: 30px;
 
   @media (max-width: 420px) {
     margin 20px 0px 20px 0px;

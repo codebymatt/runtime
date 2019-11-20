@@ -18,7 +18,7 @@ describe V1::RunsController, type: :request do
               distance: 5000,
               seconds: 1257,
               pace: calculated_pace,
-              date: Date.today
+              date: Date.today.to_s
             }
           }.to_json
         end
@@ -31,6 +31,30 @@ describe V1::RunsController, type: :request do
 
         it "returns the correct info" do
           expect(response.body).to eq(expected_run_data)
+        end
+      end
+
+      context "with a date in the past" do
+        let(:past_run_details) do
+          { run_data: valid_run_details[:run_data].merge(date: 10.days.ago) }
+        end
+
+        before { post "/v1/runs.json", params: past_run_details }
+
+        it "returns successfully" do
+          expect(response).to have_http_status(:ok)
+        end
+      end
+
+      context "with a date in the future" do
+        let(:future_run_details) do
+          { run_data: valid_run_details[:run_data].merge(date: 10.days.from_now) }
+        end
+
+        before { post "/v1/runs.json", params: future_run_details }
+
+        it "returns unsuccessfully" do
+          expect(response).to have_http_status(:bad_request)
         end
       end
 

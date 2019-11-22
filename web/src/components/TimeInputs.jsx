@@ -63,7 +63,11 @@ const SecondsInput = ({ seconds, setSeconds }) => {
   );
 };
 
-const MinutesContainer = styled.div``;
+const MinutesContainer = styled.div`
+  @media (max-width: 420px) {
+    margin-top: 20px;
+  }
+`;
 
 const TimeColon = styled.div`
   font-size: 6px;

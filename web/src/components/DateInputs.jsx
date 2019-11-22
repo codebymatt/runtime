@@ -131,6 +131,11 @@ const DateContainerWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   margin-left: 70px;
+
+  @media (max-width: 420px) {
+    margin-top: 20px;
+    margin-left: 0px;
+  }
 `;
 
 const DateContainer = styled.div`

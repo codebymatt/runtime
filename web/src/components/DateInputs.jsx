@@ -165,6 +165,7 @@ const DateInput = styled.select`
   }
 
   @media (max-width: 420px) {
+    text-align: right;
     -webkit-appearance: none;
   }
 `;

@@ -1,6 +1,10 @@
 # runtime
 Track and visualise your runs.
 
+**Note**: work on this project has stalled, mainly due to the fact I've stopped running outside 
+as much since Ireland is cold in the winter, and exercise is far more enjoyable inside gyms
+with roofs.
+
 RunTime lets you record how far and fast you run, and then helps you track your progress using
 beautiful visualisations. The word *beautiful* is key here, otherwise I'll never use it.
 
@@ -31,9 +35,8 @@ All code will live in the same repository.
 Features should be developed in short, well encapsulated bursts, and should ideally differentiate 
 between technical and user features (where it makes sense).
 
-A balance needs to be found between beautifully architected, elegant code, and code that is
-shipped (my eternal struggle). Not that I write elegant code, or ship things often for that matter,
-but these are things I'm continuously working on.
+A balance needs to be found between 'proper' code (meaning tested out its ears), and code that is
+shipped (my eternal struggle).
 It's my hope that working in smaller bursts will allow for this; sticking to YAGNI is
 encouraged.
 
